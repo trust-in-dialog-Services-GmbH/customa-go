@@ -1,0 +1,14 @@
+#!/bin/sh
+# This script is used to generate a new API client using the OpenAPI Generator (https://openapi-generator.tech)
+
+if [ -z "$APIDOC_URL" ]; then
+	echo "Missing Api Doc URL, using live URL"
+	APIDOC_URL="https://www.customa.biz/api/v3/doc.json"
+fi
+
+rm -rf api
+rm -rf test
+rm *.go
+openapi-generator generate -i "$APIDOC_URL" -g go -o . -p packageName=customa -p goImportAlias=customa -p disallowAdditionalPropertiesIfNotPresent=false -p licenseName=MIT --git-host github.com --git-user-id trust-in-dialog-Services-GmbH --git-repo-id customa-go/v3
+go get -u ./...
+go mod tidy

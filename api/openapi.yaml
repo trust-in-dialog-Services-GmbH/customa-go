@@ -1,0 +1,2634 @@
+openapi: 3.0.0
+info:
+  description: E-Commerce BI & CRM Tool
+  title: Customa
+  version: 3.6.0
+servers:
+- description: Customa
+  url: https://www.customa.biz/
+security:
+- Token: []
+tags:
+- description: auth
+  name: auth
+- description: customer
+  name: customer
+- description: product
+  name: product
+- description: receipt
+  name: receipt
+- description: search
+  name: search
+- description: stats
+  name: stats
+paths:
+  /api/v3/auth/login:
+    post:
+      description: |-
+        A user is authenticated using their username and password and a project ID. If the credentials are valid, a token
+        is returned that can be used for further API requests. The token is valid for a limited time and can be refreshed
+        using the refresh endpoint. It is recommended to refresh the token at least 10 minutes before it expires to
+        ensure uninterrupted access to the API.
+      operationId: auth_login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthLoginRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthTokenResponse"
+          description: The authentication was successful.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: The request body is invalid or malformed.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Invalid credentials provided or insufficient permissions.
+      security: []
+      summary: Authentication of a user for the API
+      tags:
+      - auth
+  /api/v3/auth/logout:
+    post:
+      description: The logout endpoint allows a user to manually invalidate their
+        current API authentication token.
+      operationId: auth_logout
+      responses:
+        "200":
+          description: The current token was successfully deleted.
+      summary: Manually invalidate an API Auth Token.
+      tags:
+      - auth
+  /api/v3/auth/refresh:
+    post:
+      description: |-
+        This endpoint allows a user to refresh their current API authentication token. The current token will be
+        invalidated, and a new token will be issued with an updated expiration time.
+      operationId: auth_refresh
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthTokenResponse"
+          description: The current token was successfully refreshed.
+      summary: Refresh an API Auth Token
+      tags:
+      - auth
+  /api/v3/customer:
+    post:
+      description: A new customer is created and the ID of the created customer is
+        returned.
+      operationId: customer_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrictCustomer"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse"
+          description: The customer was successfully created.
+      summary: Creates a new Customer.
+      tags:
+      - customer
+  /api/v3/customer/{id}:
+    delete:
+      operationId: customer_delete
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The customer was found and deleted.
+        "404":
+          description: The customer was not found.
+        "409":
+          description: The customer could not be deleted because it is referenced
+            by other entities.
+      summary: Deletes a customer with the given ID.
+      tags:
+      - customer
+    get:
+      operationId: customer_get
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StrictCustomer"
+          description: The customer was found.
+        "404":
+          description: The customer was not found.
+      summary: Retrieves a customer by their ID.
+      tags:
+      - customer
+    patch:
+      description: |-
+        This method allows for partial updates to a customer's data. Only the fields provided in the request body will
+        be updated, leaving other fields unchanged.
+      operationId: customer_patch
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+        required: true
+      responses:
+        "200":
+          description: The customer was successfully updated.
+        "404":
+          description: The customer was not found.
+      summary: Updates a customer with the given ID partially.
+      tags:
+      - customer
+    put:
+      description: |-
+        The customer must already exist in the system. All customer data is replaced with the data provided in the
+        request body.
+      operationId: customer_put
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrictCustomer"
+        required: true
+      responses:
+        "200":
+          description: The customer was successfully updated.
+        "404":
+          description: The customer was not found.
+      summary: Overwrites a customer with the given ID.
+      tags:
+      - customer
+  /api/v3/customer/search:
+    post:
+      description: |-
+        Using the search endpoint, customers can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: customer_search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerSearchResponse"
+          description: A search response with customers matching the search criteria.
+      summary: Searches for customers by the given filters.
+      tags:
+      - customer
+  /api/v3/product:
+    post:
+      description: A new product is created using the provided data. The product ID
+        is returned in the response.
+      operationId: product_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrictProduct"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse"
+          description: The product was successfully created.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: A product with this number already exists.
+      summary: Creates a new Product.
+      tags:
+      - product
+  /api/v3/product/{id}:
+    delete:
+      operationId: product_delete
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The product was successfully deleted.
+        "404":
+          description: The product was not found.
+        "409":
+          description: The product cannot be deleted because it is referenced by other
+            entities.
+      summary: Deletes a product by its ID.
+      tags:
+      - product
+    get:
+      operationId: product_get
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StrictProduct"
+          description: The product was successfully retrieved.
+        "404":
+          description: The product was not found.
+      summary: Retrieves a product by its ID.
+      tags:
+      - product
+    patch:
+      description: |-
+        This method allows for partial updates to a product's data. Only the fields provided in the request body will be
+        updated.
+      operationId: product_patch
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+        required: true
+      responses:
+        "200":
+          description: The product was successfully updated.
+        "404":
+          description: The product was not found.
+      summary: Updates a product partially by its ID.
+      tags:
+      - product
+    put:
+      description: The product must already exist. The provided data will replace
+        the existing product data.
+      operationId: product_put
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrictProduct"
+        required: true
+      responses:
+        "200":
+          description: The product was successfully updated.
+        "404":
+          description: The product was not found.
+      summary: Overwrites an existing product with the given ID.
+      tags:
+      - product
+  /api/v3/product/search:
+    post:
+      description: |-
+        Using the search endpoint, products can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: product_search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductSearchResponse"
+          description: A search response with products matching the search criteria.
+      summary: Searches for products by the given filters.
+      tags:
+      - product
+  /api/v3/receipt:
+    post:
+      description: A receipt is created using the provided JSON data. The ID of the
+        created receipt is returned in the response.
+      operationId: receipt_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrictReceipt"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse"
+          description: The receipt was successfully created.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: A receipt with this number already exists.
+      summary: Creates a new receipt.
+      tags:
+      - receipt
+  /api/v3/receipt/{id}:
+    delete:
+      operationId: receipt_delete
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The receipt was successfully deleted.
+        "404":
+          description: The receipt was not found.
+      summary: Deletes a receipt by its ID.
+      tags:
+      - receipt
+    get:
+      operationId: receipt_get
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StrictReceipt"
+          description: The receipt was successfully retrieved.
+        "404":
+          description: The receipt was not found.
+      summary: Retrieves a receipt by its ID.
+      tags:
+      - receipt
+    patch:
+      description: |-
+        The receipt must already exist. The provided data will be merged with the existing receipt data. Any receipt
+        item that is not present in the request will remain unchanged. If the provided data contains receipt items, the
+        existing receipt items will be replaced with the provided items.
+      operationId: receipt_patch
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Receipt"
+        required: true
+      responses:
+        "200":
+          description: The receipt was successfully updated.
+        "404":
+          description: The receipt was not found.
+      summary: Partially updates an existing receipt with the given ID.
+      tags:
+      - receipt
+    put:
+      description: |-
+        The receipt must already exist. The provided data will replace the existing receipt data. Any receipt item that
+        is not present in the request will be removed from the receipt.
+      operationId: receipt_put
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrictReceipt"
+        required: true
+      responses:
+        "200":
+          description: The receipt was successfully updated.
+        "404":
+          description: The receipt was not found.
+      summary: Overwrites an existing receipt with the given ID.
+      tags:
+      - receipt
+  /api/v3/receipt/search:
+    post:
+      description: |-
+        Using the search endpoint, receipts can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: receipt_search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReceiptSearchResponse"
+          description: A search response with receipts matching the search criteria.
+      summary: Searches for receipts by the given filters.
+      tags:
+      - receipt
+  /api/v3/search:
+    post:
+      deprecated: true
+      description: |-
+        Using the search API, entities can be filtered based on various criteria, which are combined using the boolean
+        AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR operator.
+        The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LegacySearchResponse"
+          description: The result.
+      summary: Searches for entities by the given filters.
+      tags:
+      - search
+  /api/v3/stats/receipt:
+    post:
+      operationId: stats_receipt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatsReceiptRequest"
+        description: Request body for receipt statistics.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsReceiptResponse"
+          description: The result.
+      summary: Calculates receipt statistics
+      tags:
+      - stats
+  /api/v3/stats/receipt/groupings:
+    get:
+      operationId: stats_receipt_groupings
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChoicesResponse"
+          description: Grouping options for receipt statistics.
+      summary: Returns a list of grouping options for receipt statistics.
+      tags:
+      - stats
+  /api/v3/stats/receipt_item:
+    post:
+      operationId: stats_receipt_item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatsReceiptItemRequest"
+        description: Request body for receipt item statistics.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsReceiptItemResponse"
+          description: The result.
+      summary: Calculates receipt item statistics
+      tags:
+      - stats
+  /api/v3/stats/receipt_item/groupings:
+    get:
+      operationId: stats_receipt_item_groupings
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChoicesResponse"
+          description: Grouping options for receipt statistics.
+      summary: Returns a list of grouping options for receipt statistics.
+      tags:
+      - stats
+components:
+  schemas:
+    ErrorResponse:
+      description: Response returned if an error occured
+      example:
+        Message: Something bad happened.
+      properties:
+        Message:
+          description: A message giving feedback about the error. The recipient's
+            logic must not rely on its content.
+          example: Something bad happened.
+      required:
+      - Message
+      type: object
+    AuthLoginRequest:
+      description: Request body for authentication.
+      example:
+        Project: 10
+        Username: user@customa.biz
+        Password: secret123!
+      properties:
+        Username:
+          description: Username (E-Mail address) used for authentication with Customa.
+          example: user@customa.biz
+          format: email
+          type: string
+        Password:
+          description: Password for the User.
+          example: secret123!
+          type: string
+        Project:
+          description: ID of the project the user is authenticating for.
+          example: 10
+          type: integer
+      required:
+      - Password
+      - Project
+      - Username
+      type: object
+    AuthTokenResponse:
+      description: Response of a successful authentication login request or token
+        refresh.
+      example:
+        Expire: 2000-01-23T04:56:07.000+00:00
+        Token: 044600149b8a50a2d00a32bc4ff9ac4bbdcdf82565e6b0900ded9daa4db77b55cb75eb58c71ae17af8634da8cce5d464735379f9b45c9ca4d3367d6eea9ea185
+      properties:
+        Token:
+          description: "Random, hex encoded 64 Bytes used as a token for authentication."
+          example: 044600149b8a50a2d00a32bc4ff9ac4bbdcdf82565e6b0900ded9daa4db77b55cb75eb58c71ae17af8634da8cce5d464735379f9b45c9ca4d3367d6eea9ea185
+          type: string
+        Expire:
+          description: "The timestamp on which the token expires, provided in RFC3339\
+            \ Format."
+          format: date-time
+          type: string
+      required:
+      - Expire
+      - Token
+      type: object
+    SearchRequest:
+      description: Request body for searching items.
+      example:
+        EntityType: Customer
+        PageSize: 10
+        Filter:
+        - Field: EMail
+          Type: MatchSuffix
+          Values:
+          - '@example.com'
+          - '@example.com'
+        - Field: EMail
+          Type: MatchSuffix
+          Values:
+          - '@example.com'
+          - '@example.com'
+        Page: 1
+      properties:
+        Page:
+          description: Number of the result page to be returned.
+          example: 1
+          type: integer
+        PageSize:
+          description: "Number of items per result page. Customa may choose a lower\
+            \ value, please check the response."
+          example: 10
+          type: integer
+        EntityType:
+          deprecated: true
+          description: Type of the entity to be searched. Only required in the generic
+            search endpoint.
+          enum:
+          - Customer
+          - Product
+          - Receipt
+          example: Customer
+          type: string
+        Filter:
+          description: "Filters to be applied to the search. The filters are combined\
+            \ using boolean AND. If a filter contains multiple values, these are combined\
+            \ using boolean OR."
+          items:
+            $ref: "#/components/schemas/SearchFilter"
+          type: array
+      required:
+      - Filter
+      - Page
+      - PageSize
+      type: object
+    SearchFilter:
+      description: Filter to be applied to the search.
+      example:
+        Field: EMail
+        Type: MatchSuffix
+        Values:
+        - '@example.com'
+        - '@example.com'
+      properties:
+        Type:
+          description: Type of the filter.
+          enum:
+          - IsEmpty
+          - IsNotEmpty
+          - Match
+          - MatchPrefix
+          - MatchSuffix
+          - MatchInfix
+          - LessThan
+          - LessThanOrEqual
+          - GreaterThan
+          - GreaterThanOrEqual
+          example: MatchSuffix
+          type: string
+        Field:
+          description: Field to be filtered.
+          example: EMail
+          type: string
+        Values:
+          description: Values to be filtered using boolean OR.
+          items:
+            example: '@example.com'
+            type: string
+          type: array
+      required:
+      - Field
+      - Type
+      - Values
+      type: object
+    BasicSearchResponse:
+      properties:
+        TotalCount:
+          description: Total number of items.
+          example: 100
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          example: 1
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          example: 10
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          example: 10
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      type: object
+    CustomerSearchResponse:
+      allOf:
+      - $ref: "#/components/schemas/BasicSearchResponse"
+      - properties:
+          Customers:
+            description: List of customers.
+            items:
+              $ref: "#/components/schemas/StrictCustomer"
+            type: array
+        type: object
+      example:
+        TotalCount: 100
+        PageSize: 10
+        CurrentPage: 1
+        Customers:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Group: group1
+          Company: "ACME, Inc."
+          Address: Musterweg 42
+          Suburb: ""
+          ContactBan: false
+          PostalCode: "12345"
+          Birthday: 1980-01-01
+          Salutation: m
+          ExternalCustomerID: 12345
+          Segment: A1
+          Newsletter: false
+          ReferenceCustomer: false
+          Number: K123456
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Phone: 123 456 7890
+          ExternalOrderAccountID: 42
+          ID: "12345"
+          TestUser: false
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          FirstName: Max
+          RegisterDate: 2000-01-23T04:56:07.000+00:00
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          Title: Dr.
+          City: Musterstadt
+          EMail: EMail
+          ReferrerChannel: direct
+          ExternalCustomerExternalID: "12345"
+          Marketplace: shop
+          Referrer: example
+          PurchaseDate: 2025-04-04T09:39:19.931Z
+          Country: DE
+          LastName: Mustermann
+          ExternalOrderType: shop
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Group: group1
+          Company: "ACME, Inc."
+          Address: Musterweg 42
+          Suburb: ""
+          ContactBan: false
+          PostalCode: "12345"
+          Birthday: 1980-01-01
+          Salutation: m
+          ExternalCustomerID: 12345
+          Segment: A1
+          Newsletter: false
+          ReferenceCustomer: false
+          Number: K123456
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Phone: 123 456 7890
+          ExternalOrderAccountID: 42
+          ID: "12345"
+          TestUser: false
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          FirstName: Max
+          RegisterDate: 2000-01-23T04:56:07.000+00:00
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          Title: Dr.
+          City: Musterstadt
+          EMail: EMail
+          ReferrerChannel: direct
+          ExternalCustomerExternalID: "12345"
+          Marketplace: shop
+          Referrer: example
+          PurchaseDate: 2025-04-04T09:39:19.931Z
+          Country: DE
+          LastName: Mustermann
+          ExternalOrderType: shop
+        PagesCount: 10
+      required:
+      - Customers
+      type: object
+    ProductSearchResponse:
+      allOf:
+      - $ref: "#/components/schemas/BasicSearchResponse"
+      - properties:
+          Products:
+            description: List of products.
+            items:
+              $ref: "#/components/schemas/StrictProduct"
+            type: array
+        type: object
+      example:
+        TotalCount: 100
+        Products:
+        - Status: true
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          RecommendedRetailPrice:
+            Currency: EUR
+            Value: 19.99
+          Parent: "12344"
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          TaxClass: Normal
+          PurchasePrice:
+            Currency: EUR
+            Value: 19.99
+          Vendor: ACME Inc.
+          Name: Toaster
+          ShortDescription: A toaster made of stainless steel.
+          SalesPrice:
+            Currency: EUR
+            Value: 19.99
+          EAN: "1234567890123"
+          LongDescription: A toaster made of stainless steel with a 2-slice capacity
+            and a 7-setting browning control.
+          Number: PROD0001
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Manufacturer: ACME Inc.
+          ID: "12345"
+          ImageSource: https://example.com/image.jpg
+          Stock: 100
+        - Status: true
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          RecommendedRetailPrice:
+            Currency: EUR
+            Value: 19.99
+          Parent: "12344"
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          TaxClass: Normal
+          PurchasePrice:
+            Currency: EUR
+            Value: 19.99
+          Vendor: ACME Inc.
+          Name: Toaster
+          ShortDescription: A toaster made of stainless steel.
+          SalesPrice:
+            Currency: EUR
+            Value: 19.99
+          EAN: "1234567890123"
+          LongDescription: A toaster made of stainless steel with a 2-slice capacity
+            and a 7-setting browning control.
+          Number: PROD0001
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Manufacturer: ACME Inc.
+          ID: "12345"
+          ImageSource: https://example.com/image.jpg
+          Stock: 100
+        PageSize: 10
+        CurrentPage: 1
+        PagesCount: 10
+      required:
+      - Products
+      type: object
+    ReceiptSearchResponse:
+      allOf:
+      - $ref: "#/components/schemas/BasicSearchResponse"
+      - properties:
+          Receipts:
+            description: List of receipts.
+            items:
+              $ref: "#/components/schemas/StrictReceipt"
+            type: array
+        type: object
+      example:
+        TotalCount: 100
+        PageSize: 10
+        CurrentPage: 1
+        PagesCount: 10
+        Receipts:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          RevenueGross:
+            Currency: EUR
+            Value: 19.99
+          GoogleClickID: "1234567890"
+          CustomerID: "12345"
+          DeliveryDate: 2025-04-04T09:39:19.931Z
+          Number: RECEIPT0001
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ExternalOrderID: 1234
+          DeliveryStatus: Open
+          ExternalOrderAccountID: 42
+          Items:
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: "12345"
+            PurchasePrice:
+              Currency: EUR
+              Value: 19.99
+            TaxClass: Normal
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: EUR
+              Value: 19.99
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: "12345"
+            PurchasePrice:
+              Currency: EUR
+              Value: 19.99
+            TaxClass: Normal
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: EUR
+              Value: 19.99
+          ID: "12345"
+          PaymentStatus: New
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          ExternalOrderExternalID: "1234567890"
+          ReferrerChannel: direct
+          Type: RE
+          Marketplace: Marketplace
+          PurchaseDate: 2025-04-04T09:39:19.931Z
+          Referrer: example
+          PaymentMethod: Credit Card
+          ReceiptStatus: Open
+          RevenueNet:
+            Currency: EUR
+            Value: 19.99
+          ReceiptDate: 2025-04-04T09:39:19.931Z
+          ExternalOrderType: shop
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          RevenueGross:
+            Currency: EUR
+            Value: 19.99
+          GoogleClickID: "1234567890"
+          CustomerID: "12345"
+          DeliveryDate: 2025-04-04T09:39:19.931Z
+          Number: RECEIPT0001
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ExternalOrderID: 1234
+          DeliveryStatus: Open
+          ExternalOrderAccountID: 42
+          Items:
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: "12345"
+            PurchasePrice:
+              Currency: EUR
+              Value: 19.99
+            TaxClass: Normal
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: EUR
+              Value: 19.99
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: "12345"
+            PurchasePrice:
+              Currency: EUR
+              Value: 19.99
+            TaxClass: Normal
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: EUR
+              Value: 19.99
+          ID: "12345"
+          PaymentStatus: New
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          ExternalOrderExternalID: "1234567890"
+          ReferrerChannel: direct
+          Type: RE
+          Marketplace: Marketplace
+          PurchaseDate: 2025-04-04T09:39:19.931Z
+          Referrer: example
+          PaymentMethod: Credit Card
+          ReceiptStatus: Open
+          RevenueNet:
+            Currency: EUR
+            Value: 19.99
+          ReceiptDate: 2025-04-04T09:39:19.931Z
+          ExternalOrderType: shop
+      required:
+      - Receipts
+      type: object
+    LegacySearchResponse:
+      allOf:
+      - $ref: "#/components/schemas/CustomerSearchResponse"
+      - $ref: "#/components/schemas/ProductSearchResponse"
+      - $ref: "#/components/schemas/ReceiptSearchResponse"
+      deprecated: true
+      example:
+        TotalCount: 100
+        Products:
+        - Status: true
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          RecommendedRetailPrice:
+            Currency: EUR
+            Value: 19.99
+          Parent: "12344"
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          TaxClass: Normal
+          PurchasePrice:
+            Currency: EUR
+            Value: 19.99
+          Vendor: ACME Inc.
+          Name: Toaster
+          ShortDescription: A toaster made of stainless steel.
+          SalesPrice:
+            Currency: EUR
+            Value: 19.99
+          EAN: "1234567890123"
+          LongDescription: A toaster made of stainless steel with a 2-slice capacity
+            and a 7-setting browning control.
+          Number: PROD0001
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Manufacturer: ACME Inc.
+          ID: "12345"
+          ImageSource: https://example.com/image.jpg
+          Stock: 100
+        - Status: true
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          RecommendedRetailPrice:
+            Currency: EUR
+            Value: 19.99
+          Parent: "12344"
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          TaxClass: Normal
+          PurchasePrice:
+            Currency: EUR
+            Value: 19.99
+          Vendor: ACME Inc.
+          Name: Toaster
+          ShortDescription: A toaster made of stainless steel.
+          SalesPrice:
+            Currency: EUR
+            Value: 19.99
+          EAN: "1234567890123"
+          LongDescription: A toaster made of stainless steel with a 2-slice capacity
+            and a 7-setting browning control.
+          Number: PROD0001
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Manufacturer: ACME Inc.
+          ID: "12345"
+          ImageSource: https://example.com/image.jpg
+          Stock: 100
+        PageSize: 10
+        CurrentPage: 1
+        Customers:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Group: group1
+          Company: "ACME, Inc."
+          Address: Musterweg 42
+          Suburb: ""
+          ContactBan: false
+          PostalCode: "12345"
+          Birthday: 1980-01-01
+          Salutation: m
+          ExternalCustomerID: 12345
+          Segment: A1
+          Newsletter: false
+          ReferenceCustomer: false
+          Number: K123456
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Phone: 123 456 7890
+          ExternalOrderAccountID: 42
+          ID: "12345"
+          TestUser: false
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          FirstName: Max
+          RegisterDate: 2000-01-23T04:56:07.000+00:00
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          Title: Dr.
+          City: Musterstadt
+          EMail: EMail
+          ReferrerChannel: direct
+          ExternalCustomerExternalID: "12345"
+          Marketplace: shop
+          Referrer: example
+          PurchaseDate: 2025-04-04T09:39:19.931Z
+          Country: DE
+          LastName: Mustermann
+          ExternalOrderType: shop
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Group: group1
+          Company: "ACME, Inc."
+          Address: Musterweg 42
+          Suburb: ""
+          ContactBan: false
+          PostalCode: "12345"
+          Birthday: 1980-01-01
+          Salutation: m
+          ExternalCustomerID: 12345
+          Segment: A1
+          Newsletter: false
+          ReferenceCustomer: false
+          Number: K123456
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Phone: 123 456 7890
+          ExternalOrderAccountID: 42
+          ID: "12345"
+          TestUser: false
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          FirstName: Max
+          RegisterDate: 2000-01-23T04:56:07.000+00:00
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          Title: Dr.
+          City: Musterstadt
+          EMail: EMail
+          ReferrerChannel: direct
+          ExternalCustomerExternalID: "12345"
+          Marketplace: shop
+          Referrer: example
+          PurchaseDate: 2025-04-04T09:39:19.931Z
+          Country: DE
+          LastName: Mustermann
+          ExternalOrderType: shop
+        PagesCount: 10
+        Receipts:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          RevenueGross:
+            Currency: EUR
+            Value: 19.99
+          GoogleClickID: "1234567890"
+          CustomerID: "12345"
+          DeliveryDate: 2025-04-04T09:39:19.931Z
+          Number: RECEIPT0001
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ExternalOrderID: 1234
+          DeliveryStatus: Open
+          ExternalOrderAccountID: 42
+          Items:
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: "12345"
+            PurchasePrice:
+              Currency: EUR
+              Value: 19.99
+            TaxClass: Normal
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: EUR
+              Value: 19.99
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: "12345"
+            PurchasePrice:
+              Currency: EUR
+              Value: 19.99
+            TaxClass: Normal
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: EUR
+              Value: 19.99
+          ID: "12345"
+          PaymentStatus: New
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          ExternalOrderExternalID: "1234567890"
+          ReferrerChannel: direct
+          Type: RE
+          Marketplace: Marketplace
+          PurchaseDate: 2025-04-04T09:39:19.931Z
+          Referrer: example
+          PaymentMethod: Credit Card
+          ReceiptStatus: Open
+          RevenueNet:
+            Currency: EUR
+            Value: 19.99
+          ReceiptDate: 2025-04-04T09:39:19.931Z
+          ExternalOrderType: shop
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          RevenueGross:
+            Currency: EUR
+            Value: 19.99
+          GoogleClickID: "1234567890"
+          CustomerID: "12345"
+          DeliveryDate: 2025-04-04T09:39:19.931Z
+          Number: RECEIPT0001
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ExternalOrderID: 1234
+          DeliveryStatus: Open
+          ExternalOrderAccountID: 42
+          Items:
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: "12345"
+            PurchasePrice:
+              Currency: EUR
+              Value: 19.99
+            TaxClass: Normal
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: EUR
+              Value: 19.99
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: "12345"
+            PurchasePrice:
+              Currency: EUR
+              Value: 19.99
+            TaxClass: Normal
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: EUR
+              Value: 19.99
+          ID: "12345"
+          PaymentStatus: New
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          AdditionalFields:
+          - Value: "42"
+            Key: Example
+          - Value: "42"
+            Key: Example
+          ExternalOrderExternalID: "1234567890"
+          ReferrerChannel: direct
+          Type: RE
+          Marketplace: Marketplace
+          PurchaseDate: 2025-04-04T09:39:19.931Z
+          Referrer: example
+          PaymentMethod: Credit Card
+          ReceiptStatus: Open
+          RevenueNet:
+            Currency: EUR
+            Value: 19.99
+          ReceiptDate: 2025-04-04T09:39:19.931Z
+          ExternalOrderType: shop
+    ItemCreatedResponse:
+      example:
+        ID: "42"
+      properties:
+        ID:
+          description: ID of the created Item.
+          example: "42"
+          type: string
+      required:
+      - ID
+      type: object
+    Timestamped:
+      description: Response containing a timestamp.
+      properties:
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          type: string
+      type: object
+    Customer:
+      allOf:
+      - $ref: "#/components/schemas/Timestamped"
+      - properties:
+          ID:
+            description: "ID of the customer. Set internally by Customa, any given\
+              \ value is ignored."
+            example: "12345"
+            type: string
+          Number:
+            description: Customer number from e.g. an external Shop or ERP System.
+            example: K123456
+            maxLength: 32
+            type: string
+          Group:
+            description: Group name of the customer
+            example: group1
+            maxLength: 255
+            nullable: true
+            type: string
+          Salutation:
+            description: "Salutation of the customer. 'm' for male, 'f' for female\
+              \ and 'x' for neither or unknown."
+            enum:
+            - m
+            - f
+            - x
+            type: string
+          Title:
+            description: (Academical) title of the customer.
+            example: Dr.
+            maxLength: 30
+            type: string
+          FirstName:
+            description: First name of the customer.
+            example: Max
+            maxLength: 256
+            type: string
+          LastName:
+            description: Last name of the customer.
+            example: Mustermann
+            maxLength: 256
+            type: string
+          Company:
+            description: Company of the customer's address
+            example: "ACME, Inc."
+            maxLength: 256
+            type: string
+          Address:
+            description: (Street) address of the customer
+            example: Musterweg 42
+            maxLength: 256
+            type: string
+          PostalCode:
+            description: Postal code of the customer's address
+            example: "12345"
+            maxLength: 16
+            type: string
+          Suburb:
+            description: Suburb of the customer's address
+            example: ""
+            maxLength: 256
+            type: string
+          City:
+            description: City of the customer's address
+            example: Musterstadt
+            maxLength: 256
+            type: string
+          Country:
+            description: ISO3166-1 Alpha-2 Code of the customer's country
+            example: DE
+            maxLength: 2
+            type: string
+          EMail:
+            description: Email address of the customer.
+            format: email
+            maxLength: 128
+            type: string
+          Phone:
+            description: Phone number of the customer.
+            example: 123 456 7890
+            maxLength: 256
+            type: string
+          Birthday:
+            description: Date of birth of the customer.
+            example: 1980-01-01
+            format: date
+            nullable: true
+            type: string
+          Referrer:
+            description: Referrer (last cookie) of the customer.
+            example: example
+            maxLength: 256
+            type: string
+          ReferrerChannel:
+            description: Referrer Channel of the customer.
+            example: direct
+            maxLength: 32
+            type: string
+          RegisterDate:
+            description: Registration date of the customer.
+            format: date-time
+            type: string
+          PurchaseDate:
+            description: Purchase date of the customer.
+            example: 2025-04-04T09:39:19.931Z
+            format: date-time
+            nullable: true
+            type: string
+          AdditionalFields:
+            description: Additional data for the customer.
+            items:
+              $ref: "#/components/schemas/AdditionalField"
+            type: array
+          ReferenceCustomer:
+            description: Determines if the customer is a reference customer.
+            example: false
+            type: boolean
+          ContactBan:
+            description: Determines if the customer has an active contact ban.
+            example: false
+            type: boolean
+          ExternalCustomerID:
+            description: ID/Number of the customer in the source system (e.g. an ERP
+              System)
+            example: 12345
+            type: integer
+          ExternalCustomerExternalID:
+            description: ID/Number of the customer in a secondary source system (e.g.
+              the shop)
+            example: "12345"
+            maxLength: 64
+            nullable: true
+            type: string
+          ExternalOrderType:
+            example: shop
+            maxLength: 20
+            type: string
+          ExternalOrderAccountID:
+            example: 42
+            type: integer
+          ExternalOrderSubAccountID:
+            maxLength: 64
+            type: string
+          Marketplace:
+            description: Marketplace of the customer.
+            example: shop
+            maxLength: 64
+            type: string
+          TestUser:
+            example: false
+            type: boolean
+          Newsletter:
+            example: false
+            type: boolean
+          Segment:
+            description: "Segment of the customer. Read-only, changes via the API\
+              \ will have no effect. Will be required in Q1 2026."
+            example: A1
+            type: string
+        type: object
+      description: Customer object containing all customer data.
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Group: group1
+        Company: "ACME, Inc."
+        Address: Musterweg 42
+        Suburb: ""
+        ContactBan: false
+        PostalCode: "12345"
+        Birthday: 1980-01-01
+        Salutation: m
+        ExternalCustomerID: 12345
+        Segment: A1
+        Newsletter: false
+        ReferenceCustomer: false
+        Number: K123456
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Phone: 123 456 7890
+        ExternalOrderAccountID: 42
+        ID: "12345"
+        TestUser: false
+        ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        FirstName: Max
+        RegisterDate: 2000-01-23T04:56:07.000+00:00
+        AdditionalFields:
+        - Value: "42"
+          Key: Example
+        - Value: "42"
+          Key: Example
+        Title: Dr.
+        City: Musterstadt
+        EMail: EMail
+        ReferrerChannel: direct
+        ExternalCustomerExternalID: "12345"
+        Marketplace: shop
+        Referrer: example
+        PurchaseDate: 2025-04-04T09:39:19.931Z
+        Country: DE
+        LastName: Mustermann
+        ExternalOrderType: shop
+      type: object
+    StrictCustomer:
+      allOf:
+      - $ref: "#/components/schemas/Customer"
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Group: group1
+        Company: "ACME, Inc."
+        Address: Musterweg 42
+        Suburb: ""
+        ContactBan: false
+        PostalCode: "12345"
+        Birthday: 1980-01-01
+        Salutation: m
+        ExternalCustomerID: 12345
+        Segment: A1
+        Newsletter: false
+        ReferenceCustomer: false
+        Number: K123456
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Phone: 123 456 7890
+        ExternalOrderAccountID: 42
+        ID: "12345"
+        TestUser: false
+        ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        FirstName: Max
+        RegisterDate: 2000-01-23T04:56:07.000+00:00
+        AdditionalFields:
+        - Value: "42"
+          Key: Example
+        - Value: "42"
+          Key: Example
+        Title: Dr.
+        City: Musterstadt
+        EMail: EMail
+        ReferrerChannel: direct
+        ExternalCustomerExternalID: "12345"
+        Marketplace: shop
+        Referrer: example
+        PurchaseDate: 2025-04-04T09:39:19.931Z
+        Country: DE
+        LastName: Mustermann
+        ExternalOrderType: shop
+      required:
+      - AdditionalFields
+      - Address
+      - Birthday
+      - City
+      - Company
+      - ContactBan
+      - Country
+      - EMail
+      - ExternalCustomerExternalID
+      - ExternalCustomerID
+      - ExternalOrderAccountID
+      - ExternalOrderSubAccountID
+      - ExternalOrderType
+      - FirstName
+      - Group
+      - LastName
+      - Newsletter
+      - Number
+      - Phone
+      - PostalCode
+      - PurchaseDate
+      - ReferenceCustomer
+      - Referrer
+      - ReferrerChannel
+      - RegisterDate
+      - Salutation
+      - Suburb
+      - TestUser
+      - Title
+    Product:
+      allOf:
+      - $ref: "#/components/schemas/Timestamped"
+      - properties:
+          ID:
+            description: "ID of the product. Set internally by Customa, any given\
+              \ value is ignored."
+            example: "12345"
+            type: string
+          Parent:
+            description: ID of the parent product. The parent must be standalone and
+              not have a parent itself.
+            example: "12344"
+            nullable: true
+            type: string
+          Number:
+            description: "Product number, MUST be unique."
+            example: PROD0001
+            maxLength: 255
+            type: string
+          EAN:
+            description: EAN of the product.
+            example: "1234567890123"
+            maxLength: 32
+            type: string
+          Name:
+            description: Name of the product.
+            example: Toaster
+            maxLength: 255
+            type: string
+          Manufacturer:
+            description: Manufacturer of the product.
+            example: ACME Inc.
+            maxLength: 64
+            type: string
+          Vendor:
+            description: Vendor of the product.
+            example: ACME Inc.
+            maxLength: 128
+            type: string
+          ShortDescription:
+            description: Short description of the product.
+            example: A toaster made of stainless steel.
+            type: string
+          LongDescription:
+            description: Long description of the product.
+            example: A toaster made of stainless steel with a 2-slice capacity and
+              a 7-setting browning control.
+            type: string
+          ImageSource:
+            description: Source URI of the product image.
+            example: https://example.com/image.jpg
+            format: uri
+            type: string
+          Status:
+            description: Whether the product is active or inactive.
+            example: true
+            type: boolean
+          TaxClass:
+            description: "Tax class of the product. For example, in Germany, 19% VAT\
+              \ would be 'Normal' while 7% VAT would be 'Reduced'."
+            enum:
+            - Normal
+            - Reduced
+            - HighlyReduced
+            - None
+            type: string
+          Stock:
+            description: Stock of the product.
+            example: 100
+            type: integer
+          AdditionalFields:
+            description: Additional field data for the product.
+            items:
+              $ref: "#/components/schemas/AdditionalField"
+            type: array
+          PurchasePrice:
+            $ref: "#/components/schemas/Price"
+          SalesPrice:
+            $ref: "#/components/schemas/Price"
+          RecommendedRetailPrice:
+            $ref: "#/components/schemas/Price"
+        type: object
+      example:
+        Status: true
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        RecommendedRetailPrice:
+          Currency: EUR
+          Value: 19.99
+        Parent: "12344"
+        AdditionalFields:
+        - Value: "42"
+          Key: Example
+        - Value: "42"
+          Key: Example
+        TaxClass: Normal
+        PurchasePrice:
+          Currency: EUR
+          Value: 19.99
+        Vendor: ACME Inc.
+        Name: Toaster
+        ShortDescription: A toaster made of stainless steel.
+        SalesPrice:
+          Currency: EUR
+          Value: 19.99
+        EAN: "1234567890123"
+        LongDescription: A toaster made of stainless steel with a 2-slice capacity
+          and a 7-setting browning control.
+        Number: PROD0001
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Manufacturer: ACME Inc.
+        ID: "12345"
+        ImageSource: https://example.com/image.jpg
+        Stock: 100
+      type: object
+    StrictProduct:
+      allOf:
+      - $ref: "#/components/schemas/Product"
+      example:
+        Status: true
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        RecommendedRetailPrice:
+          Currency: EUR
+          Value: 19.99
+        Parent: "12344"
+        AdditionalFields:
+        - Value: "42"
+          Key: Example
+        - Value: "42"
+          Key: Example
+        TaxClass: Normal
+        PurchasePrice:
+          Currency: EUR
+          Value: 19.99
+        Vendor: ACME Inc.
+        Name: Toaster
+        ShortDescription: A toaster made of stainless steel.
+        SalesPrice:
+          Currency: EUR
+          Value: 19.99
+        EAN: "1234567890123"
+        LongDescription: A toaster made of stainless steel with a 2-slice capacity
+          and a 7-setting browning control.
+        Number: PROD0001
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Manufacturer: ACME Inc.
+        ID: "12345"
+        ImageSource: https://example.com/image.jpg
+        Stock: 100
+      required:
+      - AdditionalFields
+      - EAN
+      - ImageSource
+      - LongDescription
+      - Manufacturer
+      - Name
+      - Number
+      - Parent
+      - PurchasePrice
+      - RecommendedRetailPrice
+      - SalesPrice
+      - ShortDescription
+      - Status
+      - Stock
+      - TaxClass
+      - Vendor
+    Price:
+      example:
+        Currency: EUR
+        Value: 19.99
+      properties:
+        Value:
+          description: Value of the price.
+          example: 19.99
+          format: float
+          type: number
+        Currency:
+          description: Currency of the price.
+          example: EUR
+          maxLength: 3
+          type: string
+      required:
+      - Currency
+      - Value
+      type: object
+    Receipt:
+      allOf:
+      - $ref: "#/components/schemas/Timestamped"
+      - properties:
+          ID:
+            description: "ID of the receipt. Set internally by Customa, any given\
+              \ value is ignored."
+            example: "12345"
+            type: string
+          Type:
+            description: Type of the receipt.
+            example: RE
+            maxLength: 2
+            type: string
+          Number:
+            description: Receipt number
+            example: RECEIPT0001
+            maxLength: 255
+            type: string
+          CustomerID:
+            description: ID of the customer.
+            example: "12345"
+            type: string
+          ExternalOrderType:
+            example: shop
+            maxLength: 20
+            type: string
+          ExternalOrderID:
+            example: 1234
+            nullable: true
+            type: integer
+          ExternalOrderExternalID:
+            example: "1234567890"
+            maxLength: 64
+            nullable: true
+            type: string
+          ExternalOrderAccountID:
+            example: 42
+            type: integer
+          ExternalOrderSubAccountID:
+            maxLength: 64
+            type: string
+          Marketplace:
+            description: Marketplace of the receipt.
+            maxLength: 64
+            type: string
+          PurchaseDate:
+            description: Purchase date of the receipt.
+            example: 2025-04-04T09:39:19.931Z
+            format: date-time
+            type: string
+          DeliveryDate:
+            deprecated: true
+            description: Delivery date of the receipt. Will be removed in Q1 2026.
+              Please use ReceiptDate instead.
+            example: 2025-04-04T09:39:19.931Z
+            format: date-time
+            nullable: true
+            type: string
+          ReceiptDate:
+            description: Date of the receipt.
+            example: 2025-04-04T09:39:19.931Z
+            format: date-time
+            nullable: true
+            type: string
+          Referrer:
+            description: Referrer (last cookie) of the customer when creating this
+              receipt.
+            example: example
+            maxLength: 256
+            nullable: true
+            type: string
+          ReferrerChannel:
+            description: Referrer Channel of the customer when creating this receipt.
+            example: direct
+            maxLength: 32
+            nullable: true
+            type: string
+          PaymentMethod:
+            description: Payment method of the receipt.
+            example: Credit Card
+            maxLength: 64
+            type: string
+          RevenueNet:
+            $ref: "#/components/schemas/Price"
+          RevenueGross:
+            $ref: "#/components/schemas/Price"
+          ReceiptStatus:
+            description: Status of the receipt.
+            enum:
+            - Open
+            - InProgress
+            - Completed
+            - Cancelled
+            type: string
+          PaymentStatus:
+            description: Payment status of the receipt.
+            enum:
+            - New
+            - Paid
+            - Cancelled
+            - PaidPartially
+            - Reminded
+            - InProgress
+            - Authorized
+            - Refunded
+            - RefundedPartially
+            - Failed
+            - Chargeback
+            - Unconfirmed
+            type: string
+          DeliveryStatus:
+            description: Delivery status of the receipt.
+            enum:
+            - Open
+            - PartiallyShipped
+            - Shipped
+            - Returned
+            - PartiallyReturned
+            - Cancelled
+            type: string
+          GoogleClickID:
+            description: Google Click ID of this receipt.
+            example: "1234567890"
+            maxLength: 128
+            nullable: true
+            type: string
+          Items:
+            description: List of items in the receipt.
+            items:
+              $ref: "#/components/schemas/StrictReceiptItem"
+            type: array
+          AdditionalFields:
+            description: Additional field data for the receipt.
+            items:
+              $ref: "#/components/schemas/AdditionalField"
+            type: array
+        type: object
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        RevenueGross:
+          Currency: EUR
+          Value: 19.99
+        GoogleClickID: "1234567890"
+        CustomerID: "12345"
+        DeliveryDate: 2025-04-04T09:39:19.931Z
+        Number: RECEIPT0001
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ExternalOrderID: 1234
+        DeliveryStatus: Open
+        ExternalOrderAccountID: 42
+        Items:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Quantity: 1
+          ProductID: "12345"
+          PurchasePrice:
+            Currency: EUR
+            Value: 19.99
+          TaxClass: Normal
+          ProductNumber: ProductNumber
+          SellingPrice:
+            Currency: EUR
+            Value: 19.99
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Quantity: 1
+          ProductID: "12345"
+          PurchasePrice:
+            Currency: EUR
+            Value: 19.99
+          TaxClass: Normal
+          ProductNumber: ProductNumber
+          SellingPrice:
+            Currency: EUR
+            Value: 19.99
+        ID: "12345"
+        PaymentStatus: New
+        ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        AdditionalFields:
+        - Value: "42"
+          Key: Example
+        - Value: "42"
+          Key: Example
+        ExternalOrderExternalID: "1234567890"
+        ReferrerChannel: direct
+        Type: RE
+        Marketplace: Marketplace
+        PurchaseDate: 2025-04-04T09:39:19.931Z
+        Referrer: example
+        PaymentMethod: Credit Card
+        ReceiptStatus: Open
+        RevenueNet:
+          Currency: EUR
+          Value: 19.99
+        ReceiptDate: 2025-04-04T09:39:19.931Z
+        ExternalOrderType: shop
+      type: object
+    StrictReceipt:
+      allOf:
+      - $ref: "#/components/schemas/Receipt"
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        RevenueGross:
+          Currency: EUR
+          Value: 19.99
+        GoogleClickID: "1234567890"
+        CustomerID: "12345"
+        DeliveryDate: 2025-04-04T09:39:19.931Z
+        Number: RECEIPT0001
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ExternalOrderID: 1234
+        DeliveryStatus: Open
+        ExternalOrderAccountID: 42
+        Items:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Quantity: 1
+          ProductID: "12345"
+          PurchasePrice:
+            Currency: EUR
+            Value: 19.99
+          TaxClass: Normal
+          ProductNumber: ProductNumber
+          SellingPrice:
+            Currency: EUR
+            Value: 19.99
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Quantity: 1
+          ProductID: "12345"
+          PurchasePrice:
+            Currency: EUR
+            Value: 19.99
+          TaxClass: Normal
+          ProductNumber: ProductNumber
+          SellingPrice:
+            Currency: EUR
+            Value: 19.99
+        ID: "12345"
+        PaymentStatus: New
+        ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        AdditionalFields:
+        - Value: "42"
+          Key: Example
+        - Value: "42"
+          Key: Example
+        ExternalOrderExternalID: "1234567890"
+        ReferrerChannel: direct
+        Type: RE
+        Marketplace: Marketplace
+        PurchaseDate: 2025-04-04T09:39:19.931Z
+        Referrer: example
+        PaymentMethod: Credit Card
+        ReceiptStatus: Open
+        RevenueNet:
+          Currency: EUR
+          Value: 19.99
+        ReceiptDate: 2025-04-04T09:39:19.931Z
+        ExternalOrderType: shop
+      required:
+      - AdditionalFields
+      - CustomerID
+      - DeliveryStatus
+      - ExternalOrderAccountID
+      - ExternalOrderExternalID
+      - ExternalOrderID
+      - ExternalOrderSubAccountID
+      - ExternalOrderType
+      - GoogleClickID
+      - Items
+      - Number
+      - PaymentMethod
+      - PaymentStatus
+      - PurchaseDate
+      - ReceiptDate
+      - ReceiptStatus
+      - Referrer
+      - ReferrerChannel
+      - RevenueGross
+      - RevenueNet
+      - Type
+    ReceiptItem:
+      allOf:
+      - $ref: "#/components/schemas/Timestamped"
+      - properties:
+          ProductID:
+            description: ID of the product.
+            example: "12345"
+            type: string
+          ProductNumber:
+            description: Product number of the product.
+            type: string
+          Quantity:
+            description: Quantity of the product.
+            example: 1
+            type: integer
+          SellingPrice:
+            $ref: "#/components/schemas/Price"
+          PurchasePrice:
+            $ref: "#/components/schemas/Price"
+          TaxClass:
+            description: "Tax class of the item. For example, in Germany, 19% VAT\
+              \ would be 'Normal' while 7% VAT would be 'Reduced'."
+            enum:
+            - Normal
+            - Reduced
+            - HighlyReduced
+            - None
+            type: string
+        type: object
+      type: object
+    StrictReceiptItem:
+      allOf:
+      - $ref: "#/components/schemas/ReceiptItem"
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Quantity: 1
+        ProductID: "12345"
+        PurchasePrice:
+          Currency: EUR
+          Value: 19.99
+        TaxClass: Normal
+        ProductNumber: ProductNumber
+        SellingPrice:
+          Currency: EUR
+          Value: 19.99
+      required:
+      - ProductID
+      - ProductNumber
+      - Quantity
+      - SellingPrice
+      - TaxClass
+    AdditionalField:
+      description: Additional field data.
+      example:
+        Value: "42"
+        Key: Example
+      properties:
+        Key:
+          example: Example
+          type: string
+        Value:
+          example: "42"
+          type: string
+      required:
+      - Key
+      - Value
+      type: object
+    ChoicesResponse:
+      description: Response containing choices with key and value pairs.
+      example:
+        Choices:
+        - Label: Example Value
+          Key: example_key
+        - Label: Example Value
+          Key: example_key
+      properties:
+        Choices:
+          items:
+            $ref: "#/components/schemas/ChoicesResponse_Choices_inner"
+          type: array
+      required:
+      - Choices
+      type: object
+    StatsReceiptRequest:
+      description: Request body for statistics on receipts.
+      example:
+        GroupBy: day
+        Filter:
+        - Field: EMail
+          Type: MatchSuffix
+          Values:
+          - '@example.com'
+          - '@example.com'
+        - Field: EMail
+          Type: MatchSuffix
+          Values:
+          - '@example.com'
+          - '@example.com'
+        From: 2025-01-01T00:00:00Z
+        To: 2025-12-31T23:59:59.999Z
+        DateField: PurchaseDate
+      properties:
+        From:
+          description: Start date for the statistics in RFC3339 format.
+          example: 2025-01-01T00:00:00Z
+          format: date-time
+          type: string
+        To:
+          description: End date for the statistics in RFC3339 format.
+          example: 2025-12-31T23:59:59.999Z
+          format: date-time
+          type: string
+        DateField:
+          description: Type of the date to be used for the time range and time-based
+            grouping.
+          enum:
+          - PurchaseDate
+          - ReceiptDate
+          type: string
+        GroupBy:
+          description: Grouping criteria for the statistics. This may depend on dynamically
+            configured fields. Use the stats_receipt_groupings endpoint to retrieve
+            a list of available groupings.
+          example: day
+          type: string
+        Filter:
+          description: Optional filter for the statistics.
+          items:
+            $ref: "#/components/schemas/SearchFilter"
+          type: array
+      required:
+      - DateField
+      - Filter
+      - From
+      - GroupBy
+      - To
+      type: object
+    StatsReceiptResponse:
+      description: Response containing statistics on receipts.
+      example:
+        Groups:
+        - GroupName: 08/2025
+          Types:
+          - ReceiptType: RE
+            ReceiptCount: 123
+            Revenue:
+              Currency: EUR
+              Value: 19.99
+            CustomerCount: 456
+            CostOfGoodsSold:
+              Currency: EUR
+              Value: 19.99
+          - ReceiptType: RE
+            ReceiptCount: 123
+            Revenue:
+              Currency: EUR
+              Value: 19.99
+            CustomerCount: 456
+            CostOfGoodsSold:
+              Currency: EUR
+              Value: 19.99
+          GroupKey: 2025-08-01
+        - GroupName: 08/2025
+          Types:
+          - ReceiptType: RE
+            ReceiptCount: 123
+            Revenue:
+              Currency: EUR
+              Value: 19.99
+            CustomerCount: 456
+            CostOfGoodsSold:
+              Currency: EUR
+              Value: 19.99
+          - ReceiptType: RE
+            ReceiptCount: 123
+            Revenue:
+              Currency: EUR
+              Value: 19.99
+            CustomerCount: 456
+            CostOfGoodsSold:
+              Currency: EUR
+              Value: 19.99
+          GroupKey: 2025-08-01
+      properties:
+        Groups:
+          description: List of groups with statistics.
+          items:
+            $ref: "#/components/schemas/StatsReceiptResponse_Groups_inner"
+          type: array
+      required:
+      - Groups
+      type: object
+    StatsReceiptItemRequest:
+      description: Request body for statistics on receipt items.
+      example:
+        GroupBy: day
+        Filter:
+        - Field: EMail
+          Type: MatchSuffix
+          Values:
+          - '@example.com'
+          - '@example.com'
+        - Field: EMail
+          Type: MatchSuffix
+          Values:
+          - '@example.com'
+          - '@example.com'
+        From: 2025-01-01T00:00:00Z
+        To: 2025-12-31T23:59:59.999Z
+        DateField: PurchaseDate
+      properties:
+        From:
+          description: Start date for the statistics in RFC3339 format.
+          example: 2025-01-01T00:00:00Z
+          format: date-time
+          type: string
+        To:
+          description: End date for the statistics in RFC3339 format.
+          example: 2025-12-31T23:59:59.999Z
+          format: date-time
+          type: string
+        DateField:
+          description: Type of the date to be used for the time range and time-based
+            grouping.
+          enum:
+          - PurchaseDate
+          - ReceiptDate
+          type: string
+        GroupBy:
+          description: Grouping criteria for the statistics. This may depend on dynamically
+            configured fields. Use the stats_receipt_item_groupings endpoint to retrieve
+            a list of available groupings.
+          example: day
+          type: string
+        Filter:
+          description: Optional filter for the statistics.
+          items:
+            $ref: "#/components/schemas/SearchFilter"
+          type: array
+      required:
+      - DateField
+      - Filter
+      - From
+      - GroupBy
+      - To
+      type: object
+    StatsReceiptItemResponse:
+      description: Response containing statistics on receipt items.
+      example:
+        Groups:
+        - GroupName: 08/2025
+          Types:
+          - ReceiptType: RE
+            ReceiptCount: 123
+            Amount: 789
+            Revenue:
+              Currency: EUR
+              Value: 19.99
+            CustomerCount: 456
+            CostOfGoodsSold:
+              Currency: EUR
+              Value: 19.99
+          - ReceiptType: RE
+            ReceiptCount: 123
+            Amount: 789
+            Revenue:
+              Currency: EUR
+              Value: 19.99
+            CustomerCount: 456
+            CostOfGoodsSold:
+              Currency: EUR
+              Value: 19.99
+          GroupKey: 2025-08-01
+        - GroupName: 08/2025
+          Types:
+          - ReceiptType: RE
+            ReceiptCount: 123
+            Amount: 789
+            Revenue:
+              Currency: EUR
+              Value: 19.99
+            CustomerCount: 456
+            CostOfGoodsSold:
+              Currency: EUR
+              Value: 19.99
+          - ReceiptType: RE
+            ReceiptCount: 123
+            Amount: 789
+            Revenue:
+              Currency: EUR
+              Value: 19.99
+            CustomerCount: 456
+            CostOfGoodsSold:
+              Currency: EUR
+              Value: 19.99
+          GroupKey: 2025-08-01
+      properties:
+        Groups:
+          description: List of groups with statistics.
+          items:
+            $ref: "#/components/schemas/StatsReceiptItemResponse_Groups_inner"
+          type: array
+      required:
+      - Groups
+      type: object
+    ChoicesResponse_Choices_inner:
+      example:
+        Label: Example Value
+        Key: example_key
+      properties:
+        Key:
+          description: Key of the choice.
+          example: example_key
+          type: string
+        Label:
+          description: Human readable name of the choice. Must not be used for anything
+            else than display.
+          example: Example Value
+          type: string
+      required:
+      - Key
+      - Label
+      type: object
+    StatsReceiptResponse_Groups_inner_Types_inner:
+      description: Statistics for a specific receipt type.
+      example:
+        ReceiptType: RE
+        ReceiptCount: 123
+        Revenue:
+          Currency: EUR
+          Value: 19.99
+        CustomerCount: 456
+        CostOfGoodsSold:
+          Currency: EUR
+          Value: 19.99
+      properties:
+        ReceiptType:
+          description: Type of the receipt.
+          example: RE
+          type: string
+        ReceiptCount:
+          description: Number of receipts of this type in this group.
+          example: 123
+          type: integer
+        CustomerCount:
+          description: Number of unique customers with the receipt type in this group.
+          example: 456
+          type: integer
+        Revenue:
+          $ref: "#/components/schemas/Price"
+        CostOfGoodsSold:
+          $ref: "#/components/schemas/Price"
+      required:
+      - AverageShoppingCart
+      - CostOfGoodsSold
+      - CostOfGoodsSoldRatio
+      - CustomerCount
+      - ReceiptCount
+      - ReceiptType
+      - Revenue
+      type: object
+    StatsReceiptResponse_Groups_inner:
+      description: 'Group with statistics. '
+      example:
+        GroupName: 08/2025
+        Types:
+        - ReceiptType: RE
+          ReceiptCount: 123
+          Revenue:
+            Currency: EUR
+            Value: 19.99
+          CustomerCount: 456
+          CostOfGoodsSold:
+            Currency: EUR
+            Value: 19.99
+        - ReceiptType: RE
+          ReceiptCount: 123
+          Revenue:
+            Currency: EUR
+            Value: 19.99
+          CustomerCount: 456
+          CostOfGoodsSold:
+            Currency: EUR
+            Value: 19.99
+        GroupKey: 2025-08-01
+      properties:
+        GroupKey:
+          description: "Key for the group, use this when processing the response client-side."
+          example: 2025-08-01
+          type: string
+        GroupName:
+          description: "Group name, only used for display. _Never_ use this for anything\
+            \ else than display."
+          example: 08/2025
+          type: string
+        Types:
+          description: List of receipt types with statistics.
+          items:
+            $ref: "#/components/schemas/StatsReceiptResponse_Groups_inner_Types_inner"
+          type: array
+      required:
+      - GroupKey
+      - GroupName
+      - Types
+      type: object
+    StatsReceiptItemResponse_Groups_inner_Types_inner:
+      description: Statistics for a specific receipt type.
+      example:
+        ReceiptType: RE
+        ReceiptCount: 123
+        Amount: 789
+        Revenue:
+          Currency: EUR
+          Value: 19.99
+        CustomerCount: 456
+        CostOfGoodsSold:
+          Currency: EUR
+          Value: 19.99
+      properties:
+        ReceiptType:
+          description: Type of the receipt.
+          example: RE
+          type: string
+        ReceiptCount:
+          description: Number of receipts of this type in this group.
+          example: 123
+          type: integer
+        CustomerCount:
+          description: Number of unique customers with the receipt type in this group.
+          example: 456
+          type: integer
+        Amount:
+          description: Sum of the amount of items in the receipt positions.
+          example: 789
+          type: integer
+        Revenue:
+          $ref: "#/components/schemas/Price"
+        CostOfGoodsSold:
+          $ref: "#/components/schemas/Price"
+      required:
+      - AverageShoppingCart
+      - CostOfGoodsSold
+      - CostOfGoodsSoldRatio
+      - CustomerCount
+      - ReceiptCount
+      - ReceiptType
+      - Revenue
+      type: object
+    StatsReceiptItemResponse_Groups_inner:
+      description: 'Group with statistics. '
+      example:
+        GroupName: 08/2025
+        Types:
+        - ReceiptType: RE
+          ReceiptCount: 123
+          Amount: 789
+          Revenue:
+            Currency: EUR
+            Value: 19.99
+          CustomerCount: 456
+          CostOfGoodsSold:
+            Currency: EUR
+            Value: 19.99
+        - ReceiptType: RE
+          ReceiptCount: 123
+          Amount: 789
+          Revenue:
+            Currency: EUR
+            Value: 19.99
+          CustomerCount: 456
+          CostOfGoodsSold:
+            Currency: EUR
+            Value: 19.99
+        GroupKey: 2025-08-01
+      properties:
+        GroupKey:
+          description: "Key for the group, use this when processing the response client-side."
+          example: 2025-08-01
+          type: string
+        GroupName:
+          description: "Group name, only used for display. _Never_ use this for anything\
+            \ else than display."
+          example: 08/2025
+          type: string
+        Types:
+          description: List of receipt types with statistics.
+          items:
+            $ref: "#/components/schemas/StatsReceiptItemResponse_Groups_inner_Types_inner"
+          type: array
+      required:
+      - GroupKey
+      - GroupName
+      - Types
+      type: object
+  securitySchemes:
+    Token:
+      scheme: bearer
+      type: http

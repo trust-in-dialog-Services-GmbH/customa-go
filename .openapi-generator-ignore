@@ -1,0 +1,4 @@
+# OpenAPI Generator Ignore
+/.travis.yml
+/README.md
+/git_push.sh
