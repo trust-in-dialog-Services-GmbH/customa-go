@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.6.0
+  version: 3.7.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -13,6 +13,8 @@ tags:
   name: auth
 - description: customer
   name: customer
+- description: oauth
+  name: oauth
 - description: product
   name: product
 - description: receipt
@@ -231,6 +233,52 @@ paths:
       summary: Searches for customers by the given filters.
       tags:
       - customer
+  /api/v3/oauth/{app}/validate:
+    post:
+      deprecated: true
+      description: |-
+        This endpoint checks whether the provided ClientID and Secret are valid for the specified OAuth app within the context of the authenticated project. It returns a boolean indicating the validity of the credentials. If the app is inactive, false is returned.
+
+        This API is internal, made available for internal services and integrations only. There is no guarantee for stability or availability.
+      operationId: oauth_validate
+      parameters:
+      - explode: false
+        in: path
+        name: app
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OAuthValidationRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OAuthValidationResponse"
+          description: "The result of the validation. True if the provided credentials\
+            \ are valid, false otherwise."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: The request body is invalid or malformed.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: The request body is semantically invalid.
+      summary: "Internal API: Check the validity of OAuth credentials for a given\
+        \ app."
+      tags:
+      - oauth
   /api/v3/product:
     post:
       description: A new product is created using the provided data. The product ID
@@ -2438,6 +2486,36 @@ components:
           type: array
       required:
       - Groups
+      type: object
+    OAuthValidationRequest:
+      deprecated: true
+      description: Request body for OAuth Token validation.
+      example:
+        Secret: Secret
+        ClientID: ClientID
+      properties:
+        ClientID:
+          description: OAuth Client ID.
+          type: string
+        Secret:
+          description: OAuth Client Secret.
+          type: string
+      required:
+      - ClientID
+      - Secret
+      type: object
+    OAuthValidationResponse:
+      deprecated: true
+      description: Response for OAuth Token validation.
+      example:
+        Valid: true
+      properties:
+        Valid:
+          description: "Indicates whether the provided OAuth credentials are valid.\
+            \ If an OAuth App was deactivated, this will always be false."
+          type: boolean
+      required:
+      - Valid
       type: object
     ChoicesResponse_Choices_inner:
       example:

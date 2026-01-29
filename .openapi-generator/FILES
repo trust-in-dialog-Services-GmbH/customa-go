@@ -2,6 +2,7 @@
 api/openapi.yaml
 api_auth.go
 api_customer.go
+api_oauth.go
 api_product.go
 api_receipt.go
 api_search.go
@@ -21,6 +22,9 @@ docs/CustomerSearchResponse.md
 docs/ErrorResponse.md
 docs/ItemCreatedResponse.md
 docs/LegacySearchResponse.md
+docs/OAuthValidationRequest.md
+docs/OAuthValidationResponse.md
+docs/OauthAPI.md
 docs/Price.md
 docs/Product.md
 docs/ProductAPI.md
@@ -59,6 +63,8 @@ model_customer_search_response.go
 model_error_response.go
 model_item_created_response.go
 model_legacy_search_response.go
+model_o_auth_validation_request.go
+model_o_auth_validation_response.go
 model_price.go
 model_product.go
 model_product_search_response.go
@@ -83,6 +89,7 @@ model_timestamped.go
 response.go
 test/api_auth_test.go
 test/api_customer_test.go
+test/api_oauth_test.go
 test/api_product_test.go
 test/api_receipt_test.go
 test/api_search_test.go
