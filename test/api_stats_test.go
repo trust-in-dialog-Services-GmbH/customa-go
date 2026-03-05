@@ -22,11 +22,13 @@ func Test_customa_StatsAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
-	t.Run("Test StatsAPIService StatsReceipt", func(t *testing.T) {
+	t.Run("Test StatsAPIService StatsReceiptFieldsV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.StatsAPI.StatsReceipt(context.Background()).Execute()
+		var project string
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptFieldsV4(context.Background(), project).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,11 +36,11 @@ func Test_customa_StatsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test StatsAPIService StatsReceiptGroupings", func(t *testing.T) {
+	t.Run("Test StatsAPIService StatsReceiptGroupingsV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptGroupings(context.Background()).Execute()
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptGroupingsV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -46,11 +48,13 @@ func Test_customa_StatsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test StatsAPIService StatsReceiptItem", func(t *testing.T) {
+	t.Run("Test StatsAPIService StatsReceiptGroupingsV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItem(context.Background()).Execute()
+		var project string
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptGroupingsV4(context.Background(), project).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -58,11 +62,91 @@ func Test_customa_StatsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test StatsAPIService StatsReceiptItemGroupings", func(t *testing.T) {
+	t.Run("Test StatsAPIService StatsReceiptItemFieldsV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemGroupings(context.Background()).Execute()
+		var project string
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemFieldsV4(context.Background(), project).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StatsAPIService StatsReceiptItemGroupingsV3", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemGroupingsV3(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StatsAPIService StatsReceiptItemGroupingsV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemGroupingsV4(context.Background(), project).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StatsAPIService StatsReceiptItemV3", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemV3(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StatsAPIService StatsReceiptItemV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemV4(context.Background(), project).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StatsAPIService StatsReceiptV3", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptV3(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StatsAPIService StatsReceiptV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptV4(context.Background(), project).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

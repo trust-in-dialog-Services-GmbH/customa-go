@@ -22,26 +22,26 @@ func Test_customa_ProductAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
-	t.Run("Test ProductAPIService ProductDelete", func(t *testing.T) {
+	t.Run("Test ProductAPIService ProductDeleteV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.ProductAPI.ProductDelete(context.Background(), id).Execute()
+		httpRes, err := apiClient.ProductAPI.ProductDeleteV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test ProductAPIService ProductGet", func(t *testing.T) {
+	t.Run("Test ProductAPIService ProductGetV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		resp, httpRes, err := apiClient.ProductAPI.ProductGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.ProductAPI.ProductGetV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -49,24 +49,24 @@ func Test_customa_ProductAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ProductAPIService ProductPatch", func(t *testing.T) {
+	t.Run("Test ProductAPIService ProductPatchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.ProductAPI.ProductPatch(context.Background(), id).Execute()
+		httpRes, err := apiClient.ProductAPI.ProductPatchV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test ProductAPIService ProductPost", func(t *testing.T) {
+	t.Run("Test ProductAPIService ProductPostV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ProductAPI.ProductPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.ProductAPI.ProductPostV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -74,24 +74,24 @@ func Test_customa_ProductAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ProductAPIService ProductPut", func(t *testing.T) {
+	t.Run("Test ProductAPIService ProductPutV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.ProductAPI.ProductPut(context.Background(), id).Execute()
+		httpRes, err := apiClient.ProductAPI.ProductPutV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test ProductAPIService ProductSearch", func(t *testing.T) {
+	t.Run("Test ProductAPIService ProductSearchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ProductAPI.ProductSearch(context.Background()).Execute()
+		resp, httpRes, err := apiClient.ProductAPI.ProductSearchV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

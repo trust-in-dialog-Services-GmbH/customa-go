@@ -22,26 +22,26 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
-	t.Run("Test ReceiptAPIService ReceiptDelete", func(t *testing.T) {
+	t.Run("Test ReceiptAPIService ReceiptDeleteV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.ReceiptAPI.ReceiptDelete(context.Background(), id).Execute()
+		httpRes, err := apiClient.ReceiptAPI.ReceiptDeleteV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test ReceiptAPIService ReceiptGet", func(t *testing.T) {
+	t.Run("Test ReceiptAPIService ReceiptGetV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptGetV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -49,24 +49,24 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ReceiptAPIService ReceiptPatch", func(t *testing.T) {
+	t.Run("Test ReceiptAPIService ReceiptPatchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.ReceiptAPI.ReceiptPatch(context.Background(), id).Execute()
+		httpRes, err := apiClient.ReceiptAPI.ReceiptPatchV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test ReceiptAPIService ReceiptPost", func(t *testing.T) {
+	t.Run("Test ReceiptAPIService ReceiptPostV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptPostV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -74,24 +74,24 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ReceiptAPIService ReceiptPut", func(t *testing.T) {
+	t.Run("Test ReceiptAPIService ReceiptPutV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.ReceiptAPI.ReceiptPut(context.Background(), id).Execute()
+		httpRes, err := apiClient.ReceiptAPI.ReceiptPutV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test ReceiptAPIService ReceiptSearch", func(t *testing.T) {
+	t.Run("Test ReceiptAPIService ReceiptSearchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptSearch(context.Background()).Execute()
+		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptSearchV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

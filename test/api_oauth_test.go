@@ -22,13 +22,13 @@ func Test_customa_OauthAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
-	t.Run("Test OauthAPIService OauthValidate", func(t *testing.T) {
+	t.Run("Test OauthAPIService OauthValidateV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var app string
 
-		resp, httpRes, err := apiClient.OauthAPI.OauthValidate(context.Background(), app).Execute()
+		resp, httpRes, err := apiClient.OauthAPI.OauthValidateV3(context.Background(), app).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -4,18 +4,18 @@ All URIs are relative to *https://www.customa.biz*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ReceiptDelete**](ReceiptAPI.md#ReceiptDelete) | **Delete** /api/v3/receipt/{id} | Deletes a receipt by its ID.
-[**ReceiptGet**](ReceiptAPI.md#ReceiptGet) | **Get** /api/v3/receipt/{id} | Retrieves a receipt by its ID.
-[**ReceiptPatch**](ReceiptAPI.md#ReceiptPatch) | **Patch** /api/v3/receipt/{id} | Partially updates an existing receipt with the given ID.
-[**ReceiptPost**](ReceiptAPI.md#ReceiptPost) | **Post** /api/v3/receipt | Creates a new receipt.
-[**ReceiptPut**](ReceiptAPI.md#ReceiptPut) | **Put** /api/v3/receipt/{id} | Overwrites an existing receipt with the given ID.
-[**ReceiptSearch**](ReceiptAPI.md#ReceiptSearch) | **Post** /api/v3/receipt/search | Searches for receipts by the given filters.
+[**ReceiptDeleteV3**](ReceiptAPI.md#ReceiptDeleteV3) | **Delete** /api/v3/receipt/{id} | Deletes a receipt by its ID.
+[**ReceiptGetV3**](ReceiptAPI.md#ReceiptGetV3) | **Get** /api/v3/receipt/{id} | Retrieves a receipt by its ID.
+[**ReceiptPatchV3**](ReceiptAPI.md#ReceiptPatchV3) | **Patch** /api/v3/receipt/{id} | Partially updates an existing receipt with the given ID.
+[**ReceiptPostV3**](ReceiptAPI.md#ReceiptPostV3) | **Post** /api/v3/receipt | Creates a new receipt.
+[**ReceiptPutV3**](ReceiptAPI.md#ReceiptPutV3) | **Put** /api/v3/receipt/{id} | Overwrites an existing receipt with the given ID.
+[**ReceiptSearchV3**](ReceiptAPI.md#ReceiptSearchV3) | **Post** /api/v3/receipt/search | Searches for receipts by the given filters.
 
 
 
-## ReceiptDelete
+## ReceiptDeleteV3
 
-> ReceiptDelete(ctx, id).Execute()
+> ReceiptDeleteV3(ctx, id).Execute()
 
 Deletes a receipt by its ID.
 
@@ -36,9 +36,9 @@ func main() {
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
-	r, err := apiClient.ReceiptAPI.ReceiptDelete(context.Background(), id).Execute()
+	r, err := apiClient.ReceiptAPI.ReceiptDeleteV3(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptDelete``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptDeleteV3``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
 }
@@ -54,7 +54,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiReceiptDeleteRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiReceiptDeleteV3Request struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Token](../README.md#Token)
+[apiV3Token](../README.md#apiV3Token)
 
 ### HTTP request headers
 
@@ -79,9 +79,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ReceiptGet
+## ReceiptGetV3
 
-> StrictReceipt ReceiptGet(ctx, id).Execute()
+> StrictReceipt ReceiptGetV3(ctx, id).Execute()
 
 Retrieves a receipt by its ID.
 
@@ -102,13 +102,13 @@ func main() {
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReceiptAPI.ReceiptGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.ReceiptAPI.ReceiptGetV3(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptGetV3``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ReceiptGet`: StrictReceipt
-	fmt.Fprintf(os.Stdout, "Response from `ReceiptAPI.ReceiptGet`: %v\n", resp)
+	// response from `ReceiptGetV3`: StrictReceipt
+	fmt.Fprintf(os.Stdout, "Response from `ReceiptAPI.ReceiptGetV3`: %v\n", resp)
 }
 ```
 
@@ -122,7 +122,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiReceiptGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiReceiptGetV3Request struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -135,7 +135,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Token](../README.md#Token)
+[apiV3Token](../README.md#apiV3Token)
 
 ### HTTP request headers
 
@@ -147,9 +147,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ReceiptPatch
+## ReceiptPatchV3
 
-> ReceiptPatch(ctx, id).Receipt(receipt).Execute()
+> ReceiptPatchV3(ctx, id).Receipt(receipt).Execute()
 
 Partially updates an existing receipt with the given ID.
 
@@ -173,9 +173,9 @@ func main() {
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
-	r, err := apiClient.ReceiptAPI.ReceiptPatch(context.Background(), id).Receipt(receipt).Execute()
+	r, err := apiClient.ReceiptAPI.ReceiptPatchV3(context.Background(), id).Receipt(receipt).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptPatch``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptPatchV3``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
 }
@@ -191,7 +191,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiReceiptPatchRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiReceiptPatchV3Request struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -205,7 +205,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Token](../README.md#Token)
+[apiV3Token](../README.md#apiV3Token)
 
 ### HTTP request headers
 
@@ -217,9 +217,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ReceiptPost
+## ReceiptPostV3
 
-> ItemCreatedResponse ReceiptPost(ctx).StrictReceipt(strictReceipt).Execute()
+> ItemCreatedResponse ReceiptPostV3(ctx).StrictReceipt(strictReceipt).Execute()
 
 Creates a new receipt.
 
@@ -239,17 +239,17 @@ import (
 )
 
 func main() {
-	strictReceipt := *customa.NewStrictReceipt("RE", "RECEIPT0001", "12345", "shop", NullableInt32(1234), "1234567890", int32(42), "ExternalOrderSubAccountID_example", time.Now(), time.Now(), "example", "direct", "Credit Card", *customa.NewPrice(float32(19.99), "EUR"), *customa.NewPrice(float32(19.99), "EUR"), "ReceiptStatus_example", "PaymentStatus_example", "DeliveryStatus_example", "1234567890", []customa.StrictReceiptItem{*customa.NewStrictReceiptItem("12345", "ProductNumber_example", int32(1), *customa.NewPrice(float32(19.99), "EUR"), "TaxClass_example")}, []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}) // StrictReceipt | 
+	strictReceipt := *customa.NewStrictReceipt("RE", "RECEIPT0001", "12345", "shop", NullableInt32(1234), "1234567890", int32(42), "ExternalOrderSubAccountID_example", time.Now(), time.Now(), "example", "direct", "Credit Card", *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), "ReceiptStatus_example", "PaymentStatus_example", "DeliveryStatus_example", "1234567890", []customa.StrictReceiptItem{*customa.NewStrictReceiptItem("12345", "ProductNumber_example", int32(1), *customa.NewPrice(float32(123), "Currency_example"), "TaxClass_example")}, []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}) // StrictReceipt | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReceiptAPI.ReceiptPost(context.Background()).StrictReceipt(strictReceipt).Execute()
+	resp, r, err := apiClient.ReceiptAPI.ReceiptPostV3(context.Background()).StrictReceipt(strictReceipt).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptPostV3``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ReceiptPost`: ItemCreatedResponse
-	fmt.Fprintf(os.Stdout, "Response from `ReceiptAPI.ReceiptPost`: %v\n", resp)
+	// response from `ReceiptPostV3`: ItemCreatedResponse
+	fmt.Fprintf(os.Stdout, "Response from `ReceiptAPI.ReceiptPostV3`: %v\n", resp)
 }
 ```
 
@@ -259,7 +259,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiReceiptPostRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiReceiptPostV3Request struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -272,7 +272,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Token](../README.md#Token)
+[apiV3Token](../README.md#apiV3Token)
 
 ### HTTP request headers
 
@@ -284,9 +284,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ReceiptPut
+## ReceiptPutV3
 
-> ReceiptPut(ctx, id).StrictReceipt(strictReceipt).Execute()
+> ReceiptPutV3(ctx, id).StrictReceipt(strictReceipt).Execute()
 
 Overwrites an existing receipt with the given ID.
 
@@ -307,13 +307,13 @@ import (
 
 func main() {
 	id := "id_example" // string | 
-	strictReceipt := *customa.NewStrictReceipt("RE", "RECEIPT0001", "12345", "shop", NullableInt32(1234), "1234567890", int32(42), "ExternalOrderSubAccountID_example", time.Now(), time.Now(), "example", "direct", "Credit Card", *customa.NewPrice(float32(19.99), "EUR"), *customa.NewPrice(float32(19.99), "EUR"), "ReceiptStatus_example", "PaymentStatus_example", "DeliveryStatus_example", "1234567890", []customa.StrictReceiptItem{*customa.NewStrictReceiptItem("12345", "ProductNumber_example", int32(1), *customa.NewPrice(float32(19.99), "EUR"), "TaxClass_example")}, []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}) // StrictReceipt | 
+	strictReceipt := *customa.NewStrictReceipt("RE", "RECEIPT0001", "12345", "shop", NullableInt32(1234), "1234567890", int32(42), "ExternalOrderSubAccountID_example", time.Now(), time.Now(), "example", "direct", "Credit Card", *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), "ReceiptStatus_example", "PaymentStatus_example", "DeliveryStatus_example", "1234567890", []customa.StrictReceiptItem{*customa.NewStrictReceiptItem("12345", "ProductNumber_example", int32(1), *customa.NewPrice(float32(123), "Currency_example"), "TaxClass_example")}, []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}) // StrictReceipt | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
-	r, err := apiClient.ReceiptAPI.ReceiptPut(context.Background(), id).StrictReceipt(strictReceipt).Execute()
+	r, err := apiClient.ReceiptAPI.ReceiptPutV3(context.Background(), id).StrictReceipt(strictReceipt).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptPut``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptPutV3``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
 }
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiReceiptPutRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiReceiptPutV3Request struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -343,7 +343,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Token](../README.md#Token)
+[apiV3Token](../README.md#apiV3Token)
 
 ### HTTP request headers
 
@@ -355,9 +355,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ReceiptSearch
+## ReceiptSearchV3
 
-> ReceiptSearchResponse ReceiptSearch(ctx).SearchRequest(searchRequest).Execute()
+> ReceiptSearchResponse ReceiptSearchV3(ctx).SearchRequest(searchRequest).Execute()
 
 Searches for receipts by the given filters.
 
@@ -376,17 +376,17 @@ import (
 )
 
 func main() {
-	searchRequest := *customa.NewSearchRequest(int32(1), int32(10), []customa.SearchFilter{*customa.NewSearchFilter("MatchSuffix", "EMail", []string{"@example.com"})}) // SearchRequest | 
+	searchRequest := *customa.NewSearchRequest(int32(1), int32(10), []customa.Filter{*customa.NewFilter(customa.FilterType("IsEmpty"), "Field_example", []string{"Values_example"})}) // SearchRequest | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReceiptAPI.ReceiptSearch(context.Background()).SearchRequest(searchRequest).Execute()
+	resp, r, err := apiClient.ReceiptAPI.ReceiptSearchV3(context.Background()).SearchRequest(searchRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptSearch``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptSearchV3``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ReceiptSearch`: ReceiptSearchResponse
-	fmt.Fprintf(os.Stdout, "Response from `ReceiptAPI.ReceiptSearch`: %v\n", resp)
+	// response from `ReceiptSearchV3`: ReceiptSearchResponse
+	fmt.Fprintf(os.Stdout, "Response from `ReceiptAPI.ReceiptSearchV3`: %v\n", resp)
 }
 ```
 
@@ -396,7 +396,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiReceiptSearchRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiReceiptSearchV3Request struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -409,7 +409,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Token](../README.md#Token)
+[apiV3Token](../README.md#apiV3Token)
 
 ### HTTP request headers
 

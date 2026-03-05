@@ -6,14 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Page** | **int32** | Number of the result page to be returned. | 
 **PageSize** | **int32** | Number of items per result page. Customa may choose a lower value, please check the response. | 
-**EntityType** | Pointer to **string** | Type of the entity to be searched. Only required in the generic search endpoint. | [optional] 
-**Filter** | [**[]SearchFilter**](SearchFilter.md) | Filters to be applied to the search. The filters are combined using boolean AND. If a filter contains multiple values, these are combined using boolean OR. | 
+**Filter** | [**[]Filter**](Filter.md) | Filters to be applied to the search. The filters are combined using boolean AND. If a filter contains multiple values, these are combined using boolean OR. | 
 
 ## Methods
 
 ### NewSearchRequest
 
-`func NewSearchRequest(page int32, pageSize int32, filter []SearchFilter, ) *SearchRequest`
+`func NewSearchRequest(page int32, pageSize int32, filter []Filter, ) *SearchRequest`
 
 NewSearchRequest instantiates a new SearchRequest object
 This constructor will assign default values to properties that have it defined,
@@ -68,47 +67,22 @@ and a boolean to check if the value has been set.
 SetPageSize sets PageSize field to given value.
 
 
-### GetEntityType
-
-`func (o *SearchRequest) GetEntityType() string`
-
-GetEntityType returns the EntityType field if non-nil, zero value otherwise.
-
-### GetEntityTypeOk
-
-`func (o *SearchRequest) GetEntityTypeOk() (*string, bool)`
-
-GetEntityTypeOk returns a tuple with the EntityType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEntityType
-
-`func (o *SearchRequest) SetEntityType(v string)`
-
-SetEntityType sets EntityType field to given value.
-
-### HasEntityType
-
-`func (o *SearchRequest) HasEntityType() bool`
-
-HasEntityType returns a boolean if a field has been set.
-
 ### GetFilter
 
-`func (o *SearchRequest) GetFilter() []SearchFilter`
+`func (o *SearchRequest) GetFilter() []Filter`
 
 GetFilter returns the Filter field if non-nil, zero value otherwise.
 
 ### GetFilterOk
 
-`func (o *SearchRequest) GetFilterOk() (*[]SearchFilter, bool)`
+`func (o *SearchRequest) GetFilterOk() (*[]Filter, bool)`
 
 GetFilterOk returns a tuple with the Filter field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFilter
 
-`func (o *SearchRequest) SetFilter(v []SearchFilter)`
+`func (o *SearchRequest) SetFilter(v []Filter)`
 
 SetFilter sets Filter field to given value.
 

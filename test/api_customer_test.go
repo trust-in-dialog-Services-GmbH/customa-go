@@ -22,26 +22,26 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
-	t.Run("Test CustomerAPIService CustomerDelete", func(t *testing.T) {
+	t.Run("Test CustomerAPIService CustomerDeleteV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.CustomerAPI.CustomerDelete(context.Background(), id).Execute()
+		httpRes, err := apiClient.CustomerAPI.CustomerDeleteV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test CustomerAPIService CustomerGet", func(t *testing.T) {
+	t.Run("Test CustomerAPIService CustomerGetV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		resp, httpRes, err := apiClient.CustomerAPI.CustomerGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.CustomerAPI.CustomerGetV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -49,24 +49,24 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test CustomerAPIService CustomerPatch", func(t *testing.T) {
+	t.Run("Test CustomerAPIService CustomerPatchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.CustomerAPI.CustomerPatch(context.Background(), id).Execute()
+		httpRes, err := apiClient.CustomerAPI.CustomerPatchV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test CustomerAPIService CustomerPost", func(t *testing.T) {
+	t.Run("Test CustomerAPIService CustomerPostV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.CustomerAPI.CustomerPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.CustomerAPI.CustomerPostV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -74,24 +74,24 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test CustomerAPIService CustomerPut", func(t *testing.T) {
+	t.Run("Test CustomerAPIService CustomerPutV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id string
 
-		httpRes, err := apiClient.CustomerAPI.CustomerPut(context.Background(), id).Execute()
+		httpRes, err := apiClient.CustomerAPI.CustomerPutV3(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test CustomerAPIService CustomerSearch", func(t *testing.T) {
+	t.Run("Test CustomerAPIService CustomerSearchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.CustomerAPI.CustomerSearch(context.Background()).Execute()
+		resp, httpRes, err := apiClient.CustomerAPI.CustomerSearchV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

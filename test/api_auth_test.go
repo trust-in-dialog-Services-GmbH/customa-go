@@ -22,11 +22,11 @@ func Test_customa_AuthAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
-	t.Run("Test AuthAPIService AuthLogin", func(t *testing.T) {
+	t.Run("Test AuthAPIService AuthLoginV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.AuthAPI.AuthLogin(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthAPI.AuthLoginV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,22 +34,34 @@ func Test_customa_AuthAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AuthAPIService AuthLogout", func(t *testing.T) {
+	t.Run("Test AuthAPIService AuthLoginV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthAPI.AuthLogout(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthAPI.AuthLoginV4(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AuthAPIService AuthLogoutV3", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.AuthAPI.AuthLogoutV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test AuthAPIService AuthRefresh", func(t *testing.T) {
+	t.Run("Test AuthAPIService AuthRefreshV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.AuthAPI.AuthRefresh(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthAPI.AuthRefreshV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

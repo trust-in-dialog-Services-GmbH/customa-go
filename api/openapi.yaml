@@ -2,12 +2,10 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.7.0
+  version: 3.8.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
-security:
-- Token: []
 tags:
 - description: auth
   name: auth
@@ -19,10 +17,14 @@ tags:
   name: product
 - description: receipt
   name: receipt
-- description: search
-  name: search
+- description: segment
+  name: segment
+- description: settings
+  name: settings
 - description: stats
   name: stats
+- description: project
+  name: project
 paths:
   /api/v3/auth/login:
     post:
@@ -31,44 +33,52 @@ paths:
         is returned that can be used for further API requests. The token is valid for a limited time and can be refreshed
         using the refresh endpoint. It is recommended to refresh the token at least 10 minutes before it expires to
         ensure uninterrupted access to the API.
-      operationId: auth_login
+      operationId: auth_login_v3
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthLoginRequest"
+              $ref: "#/components/schemas/AuthLoginRequestV3"
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthTokenResponse"
+                $ref: "#/components/schemas/AuthTokenResponseV3"
           description: The authentication was successful.
         "400":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/ErrorResponseV3"
           description: The request body is invalid or malformed.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseV3"
+          description: Invalid credentials provided.
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-          description: Invalid credentials provided or insufficient permissions.
+                $ref: "#/components/schemas/ErrorResponseV3"
+          description: Insufficient permissions to access the API or the project.
       security: []
-      summary: Authentication of a user for the API
+      summary: Authentication of a user for the API.
       tags:
       - auth
   /api/v3/auth/logout:
     post:
       description: The logout endpoint allows a user to manually invalidate their
         current API authentication token.
-      operationId: auth_logout
+      operationId: auth_logout_v3
       responses:
         "200":
           description: The current token was successfully deleted.
+      security:
+      - apiV3Token: []
       summary: Manually invalidate an API Auth Token.
       tags:
       - auth
@@ -77,22 +87,24 @@ paths:
       description: |-
         This endpoint allows a user to refresh their current API authentication token. The current token will be
         invalidated, and a new token will be issued with an updated expiration time.
-      operationId: auth_refresh
+      operationId: auth_refresh_v3
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthTokenResponse"
+                $ref: "#/components/schemas/AuthTokenResponseV3"
           description: The current token was successfully refreshed.
-      summary: Refresh an API Auth Token
+      security:
+      - apiV3Token: []
+      summary: Refresh an API Auth Token.
       tags:
       - auth
   /api/v3/customer:
     post:
       description: A new customer is created and the ID of the created customer is
         returned.
-      operationId: customer_post
+      operationId: customer_post_v3
       requestBody:
         content:
           application/json:
@@ -106,12 +118,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/ItemCreatedResponse"
           description: The customer was successfully created.
+      security:
+      - apiV3Token: []
       summary: Creates a new Customer.
       tags:
       - customer
   /api/v3/customer/{id}:
     delete:
-      operationId: customer_delete
+      operationId: customer_delete_v3
       parameters:
       - explode: false
         in: path
@@ -128,11 +142,13 @@ paths:
         "409":
           description: The customer could not be deleted because it is referenced
             by other entities.
+      security:
+      - apiV3Token: []
       summary: Deletes a customer with the given ID.
       tags:
       - customer
     get:
-      operationId: customer_get
+      operationId: customer_get_v3
       parameters:
       - explode: false
         in: path
@@ -150,6 +166,8 @@ paths:
           description: The customer was found.
         "404":
           description: The customer was not found.
+      security:
+      - apiV3Token: []
       summary: Retrieves a customer by their ID.
       tags:
       - customer
@@ -157,7 +175,7 @@ paths:
       description: |-
         This method allows for partial updates to a customer's data. Only the fields provided in the request body will
         be updated, leaving other fields unchanged.
-      operationId: customer_patch
+      operationId: customer_patch_v3
       parameters:
       - explode: false
         in: path
@@ -177,6 +195,8 @@ paths:
           description: The customer was successfully updated.
         "404":
           description: The customer was not found.
+      security:
+      - apiV3Token: []
       summary: Updates a customer with the given ID partially.
       tags:
       - customer
@@ -184,7 +204,7 @@ paths:
       description: |-
         The customer must already exist in the system. All customer data is replaced with the data provided in the
         request body.
-      operationId: customer_put
+      operationId: customer_put_v3
       parameters:
       - explode: false
         in: path
@@ -204,6 +224,8 @@ paths:
           description: The customer was successfully updated.
         "404":
           description: The customer was not found.
+      security:
+      - apiV3Token: []
       summary: Overwrites a customer with the given ID.
       tags:
       - customer
@@ -216,7 +238,7 @@ paths:
 
         **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
         value returned by the first request when scrolling through multiple result pages.
-      operationId: customer_search
+      operationId: customer_search_v3
       requestBody:
         content:
           application/json:
@@ -230,6 +252,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/CustomerSearchResponse"
           description: A search response with customers matching the search criteria.
+      security:
+      - apiV3Token: []
       summary: Searches for customers by the given filters.
       tags:
       - customer
@@ -240,7 +264,7 @@ paths:
         This endpoint checks whether the provided ClientID and Secret are valid for the specified OAuth app within the context of the authenticated project. It returns a boolean indicating the validity of the credentials. If the app is inactive, false is returned.
 
         This API is internal, made available for internal services and integrations only. There is no guarantee for stability or availability.
-      operationId: oauth_validate
+      operationId: oauth_validate_v3
       parameters:
       - explode: false
         in: path
@@ -267,14 +291,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/ErrorResponseV3"
           description: The request body is invalid or malformed.
         "422":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/ErrorResponseV3"
           description: The request body is semantically invalid.
+      security:
+      - apiV3Token: []
       summary: "Internal API: Check the validity of OAuth credentials for a given\
         \ app."
       tags:
@@ -283,7 +309,7 @@ paths:
     post:
       description: A new product is created using the provided data. The product ID
         is returned in the response.
-      operationId: product_post
+      operationId: product_post_v3
       requestBody:
         content:
           application/json:
@@ -301,14 +327,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/ErrorResponseV3"
           description: A product with this number already exists.
+      security:
+      - apiV3Token: []
       summary: Creates a new Product.
       tags:
       - product
   /api/v3/product/{id}:
     delete:
-      operationId: product_delete
+      operationId: product_delete_v3
       parameters:
       - explode: false
         in: path
@@ -325,11 +353,13 @@ paths:
         "409":
           description: The product cannot be deleted because it is referenced by other
             entities.
+      security:
+      - apiV3Token: []
       summary: Deletes a product by its ID.
       tags:
       - product
     get:
-      operationId: product_get
+      operationId: product_get_v3
       parameters:
       - explode: false
         in: path
@@ -347,6 +377,8 @@ paths:
           description: The product was successfully retrieved.
         "404":
           description: The product was not found.
+      security:
+      - apiV3Token: []
       summary: Retrieves a product by its ID.
       tags:
       - product
@@ -354,7 +386,7 @@ paths:
       description: |-
         This method allows for partial updates to a product's data. Only the fields provided in the request body will be
         updated.
-      operationId: product_patch
+      operationId: product_patch_v3
       parameters:
       - explode: false
         in: path
@@ -374,13 +406,15 @@ paths:
           description: The product was successfully updated.
         "404":
           description: The product was not found.
+      security:
+      - apiV3Token: []
       summary: Updates a product partially by its ID.
       tags:
       - product
     put:
       description: The product must already exist. The provided data will replace
         the existing product data.
-      operationId: product_put
+      operationId: product_put_v3
       parameters:
       - explode: false
         in: path
@@ -400,6 +434,8 @@ paths:
           description: The product was successfully updated.
         "404":
           description: The product was not found.
+      security:
+      - apiV3Token: []
       summary: Overwrites an existing product with the given ID.
       tags:
       - product
@@ -412,7 +448,7 @@ paths:
 
         **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
         value returned by the first request when scrolling through multiple result pages.
-      operationId: product_search
+      operationId: product_search_v3
       requestBody:
         content:
           application/json:
@@ -426,6 +462,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/ProductSearchResponse"
           description: A search response with products matching the search criteria.
+      security:
+      - apiV3Token: []
       summary: Searches for products by the given filters.
       tags:
       - product
@@ -433,7 +471,7 @@ paths:
     post:
       description: A receipt is created using the provided JSON data. The ID of the
         created receipt is returned in the response.
-      operationId: receipt_post
+      operationId: receipt_post_v3
       requestBody:
         content:
           application/json:
@@ -451,14 +489,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/ErrorResponseV3"
           description: A receipt with this number already exists.
+      security:
+      - apiV3Token: []
       summary: Creates a new receipt.
       tags:
       - receipt
   /api/v3/receipt/{id}:
     delete:
-      operationId: receipt_delete
+      operationId: receipt_delete_v3
       parameters:
       - explode: false
         in: path
@@ -472,11 +512,13 @@ paths:
           description: The receipt was successfully deleted.
         "404":
           description: The receipt was not found.
+      security:
+      - apiV3Token: []
       summary: Deletes a receipt by its ID.
       tags:
       - receipt
     get:
-      operationId: receipt_get
+      operationId: receipt_get_v3
       parameters:
       - explode: false
         in: path
@@ -494,6 +536,8 @@ paths:
           description: The receipt was successfully retrieved.
         "404":
           description: The receipt was not found.
+      security:
+      - apiV3Token: []
       summary: Retrieves a receipt by its ID.
       tags:
       - receipt
@@ -502,7 +546,7 @@ paths:
         The receipt must already exist. The provided data will be merged with the existing receipt data. Any receipt
         item that is not present in the request will remain unchanged. If the provided data contains receipt items, the
         existing receipt items will be replaced with the provided items.
-      operationId: receipt_patch
+      operationId: receipt_patch_v3
       parameters:
       - explode: false
         in: path
@@ -522,6 +566,8 @@ paths:
           description: The receipt was successfully updated.
         "404":
           description: The receipt was not found.
+      security:
+      - apiV3Token: []
       summary: Partially updates an existing receipt with the given ID.
       tags:
       - receipt
@@ -529,7 +575,7 @@ paths:
       description: |-
         The receipt must already exist. The provided data will replace the existing receipt data. Any receipt item that
         is not present in the request will be removed from the receipt.
-      operationId: receipt_put
+      operationId: receipt_put_v3
       parameters:
       - explode: false
         in: path
@@ -549,6 +595,8 @@ paths:
           description: The receipt was successfully updated.
         "404":
           description: The receipt was not found.
+      security:
+      - apiV3Token: []
       summary: Overwrites an existing receipt with the given ID.
       tags:
       - receipt
@@ -561,7 +609,7 @@ paths:
 
         **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
         value returned by the first request when scrolling through multiple result pages.
-      operationId: receipt_search
+      operationId: receipt_search_v3
       requestBody:
         content:
           application/json:
@@ -575,247 +623,541 @@ paths:
               schema:
                 $ref: "#/components/schemas/ReceiptSearchResponse"
           description: A search response with receipts matching the search criteria.
+      security:
+      - apiV3Token: []
       summary: Searches for receipts by the given filters.
       tags:
       - receipt
-  /api/v3/search:
-    post:
-      deprecated: true
+  /api/v3/segment:
+    get:
       description: |-
-        Using the search API, entities can be filtered based on various criteria, which are combined using the boolean
-        AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR operator.
-        The results returned are paginated and sorted by the ID in ascending order.
-
-        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
-        value returned by the first request when scrolling through multiple result pages.
-      operationId: search
+        Returns an array of customer segments with their RFM metrics (Recency, Frequency, Monetary)
+        and lifetime value data for customer segmentation and analysis.
+      operationId: segments_get_v3
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SegmentList"
+          description: The result.
+      security:
+      - apiV3Token: []
+      summary: Retrieve Customer Segments.
+      tags:
+      - segment
+  /api/v3/segment/definition:
+    get:
+      operationId: definition_get_v3
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SegmentDefinition"
+          description: The result.
+      security:
+      - apiV3Token: []
+      summary: Returns Customer Segment Data.
+      tags:
+      - segment
+  /api/v3/settings:
+    get:
+      operationId: settings_list_v3
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingsDefinition"
+          description: The settings definition.
+      security:
+      - apiV3Token: []
+      summary: Returns a definition of the available settings.
+      tags:
+      - settings
+  /api/v3/settings/{name}:
+    get:
+      operationId: settings_get_v3
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Setting"
+          description: The setting was found.
+        "403":
+          description: The setting is confidential and is not readable via the API.
+        "404":
+          description: The setting was not found.
+      security:
+      - apiV3Token: []
+      summary: Returns the values of a given setting.
+      tags:
+      - settings
+  /api/v3/settings/{name}/validate:
+    post:
+      operationId: settings_validate_v3
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SearchRequest"
+              $ref: "#/components/schemas/Setting"
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LegacySearchResponse"
-          description: The result.
-      summary: Searches for entities by the given filters.
+                $ref: "#/components/schemas/SettingValidationResponse"
+          description: The setting was found validated.
+        "404":
+          description: The setting was not found.
+      security:
+      - apiV3Token: []
+      summary: Validates the given setting.
       tags:
-      - search
+      - settings
   /api/v3/stats/receipt:
     post:
-      operationId: stats_receipt
+      operationId: stats_receipt_v3
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StatsReceiptRequest"
+              $ref: "#/components/schemas/StatsRequest"
         description: Request body for receipt statistics.
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StatsReceiptResponse"
+                $ref: "#/components/schemas/StatsReceiptGroups"
           description: The result.
-      summary: Calculates receipt statistics
+      security:
+      - apiV3Token: []
+      summary: Calculates receipt statistics.
       tags:
       - stats
   /api/v3/stats/receipt/groupings:
     get:
-      operationId: stats_receipt_groupings
+      operationId: stats_receipt_groupings_v3
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ChoicesResponse"
+                $ref: "#/components/schemas/ChoicesList"
           description: Grouping options for receipt statistics.
+      security:
+      - apiV3Token: []
       summary: Returns a list of grouping options for receipt statistics.
       tags:
       - stats
   /api/v3/stats/receipt_item:
     post:
-      operationId: stats_receipt_item
+      operationId: stats_receipt_item_v3
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StatsReceiptItemRequest"
+              $ref: "#/components/schemas/StatsRequest"
         description: Request body for receipt item statistics.
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StatsReceiptItemResponse"
+                $ref: "#/components/schemas/StatsReceiptItemGroups"
           description: The result.
-      summary: Calculates receipt item statistics
+      security:
+      - apiV3Token: []
+      summary: Calculates receipt item statistics.
       tags:
       - stats
   /api/v3/stats/receipt_item/groupings:
     get:
-      operationId: stats_receipt_item_groupings
+      operationId: stats_receipt_item_groupings_v3
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ChoicesResponse"
+                $ref: "#/components/schemas/ChoicesList"
           description: Grouping options for receipt statistics.
+      security:
+      - apiV3Token: []
       summary: Returns a list of grouping options for receipt statistics.
+      tags:
+      - stats
+  /api/v4/auth/login:
+    post:
+      description: "This endpoint allows users to authenticate using their username\
+        \ and password. Upon successful authentication, a token is returned that can\
+        \ be used for subsequent API requests. The token is valid for a limited time\
+        \ and should be refreshed by reauthenticating before it expires to ensure\
+        \ uninterrupted access to the API."
+      operationId: auth_login_v4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthLoginRequestV4"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthTokenResponseV4"
+          description: The authentication was successful.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseV4"
+          description: The request body is invalid or malformed.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseV4"
+          description: Invalid credentials provided.
+      security: []
+      summary: API Endpoint for JSON authentication.
+      tags:
+      - auth
+  /api/v4/project:
+    get:
+      operationId: project_list_v4
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectList"
+          description: A list of projects the user has access to.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of the User's projects.
+      tags:
+      - project
+  /api/v4/segment/{project}:
+    get:
+      description: |-
+        Returns an array of customer segments with their RFM metrics (Recency, Frequency, Monetary)
+        and lifetime value data for customer segmentation and analysis.
+      operationId: segments_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SegmentList"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieve Customer Segments.
+      tags:
+      - segment
+  /api/v4/segment/{project}/definition:
+    get:
+      operationId: definition_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SegmentDefinition"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns Customer Segment Data.
+      tags:
+      - segment
+  /api/v4/settings:
+    get:
+      operationId: settings_list_v4
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingsDefinition"
+          description: The settings definition.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a definition of the available settings.
+      tags:
+      - settings
+  /api/v4/settings/{project}/{name}:
+    get:
+      operationId: settings_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Setting"
+          description: The setting was found.
+        "403":
+          description: The setting is confidential and is not readable via the API.
+        "404":
+          description: The setting was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns the values of a given setting.
+      tags:
+      - settings
+  /api/v4/settings/{project}/{name}/validate:
+    post:
+      operationId: settings_validate_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Setting"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingValidationResponse"
+          description: The setting was found validated.
+        "404":
+          description: The setting was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Validates the given setting.
+      tags:
+      - settings
+  /api/v4/stats/{project}/receipt:
+    post:
+      operationId: stats_receipt_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatsRequest"
+        description: Request body for receipt statistics.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsReceiptGroups"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Calculates receipt statistics.
+      tags:
+      - stats
+  /api/v4/stats/{project}/receipt/groupings:
+    get:
+      operationId: stats_receipt_groupings_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsGroupings"
+          description: Grouping options for receipt statistics.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of grouping options for receipt statistics.
+      tags:
+      - stats
+  /api/v4/stats/{project}/receipt/fields:
+    get:
+      operationId: stats_receipt_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsFields"
+          description: Fields and filters for receipt statistics.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for receipt statistics.
+      tags:
+      - stats
+  /api/v4/stats/{project}/receipt_item:
+    post:
+      operationId: stats_receipt_item_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatsRequest"
+        description: Request body for receipt item statistics.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsReceiptItemGroups"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Calculates receipt item statistics.
+      tags:
+      - stats
+  /api/v4/stats/{project}/receipt_item/groupings:
+    get:
+      operationId: stats_receipt_item_groupings_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsGroupings"
+          description: Grouping options for receipt statistics.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of grouping options for receipt statistics.
+      tags:
+      - stats
+  /api/v4/stats/{project}/receipt_item/fields:
+    get:
+      operationId: stats_receipt_item_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsFields"
+          description: Fields and filters for receipt item statistics.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for receipt item statistics.
       tags:
       - stats
 components:
   schemas:
-    ErrorResponse:
-      description: Response returned if an error occured
-      example:
-        Message: Something bad happened.
-      properties:
-        Message:
-          description: A message giving feedback about the error. The recipient's
-            logic must not rely on its content.
-          example: Something bad happened.
-      required:
-      - Message
-      type: object
-    AuthLoginRequest:
-      description: Request body for authentication.
-      example:
-        Project: 10
-        Username: user@customa.biz
-        Password: secret123!
-      properties:
-        Username:
-          description: Username (E-Mail address) used for authentication with Customa.
-          example: user@customa.biz
-          format: email
-          type: string
-        Password:
-          description: Password for the User.
-          example: secret123!
-          type: string
-        Project:
-          description: ID of the project the user is authenticating for.
-          example: 10
-          type: integer
-      required:
-      - Password
-      - Project
-      - Username
-      type: object
-    AuthTokenResponse:
-      description: Response of a successful authentication login request or token
-        refresh.
-      example:
-        Expire: 2000-01-23T04:56:07.000+00:00
-        Token: 044600149b8a50a2d00a32bc4ff9ac4bbdcdf82565e6b0900ded9daa4db77b55cb75eb58c71ae17af8634da8cce5d464735379f9b45c9ca4d3367d6eea9ea185
-      properties:
-        Token:
-          description: "Random, hex encoded 64 Bytes used as a token for authentication."
-          example: 044600149b8a50a2d00a32bc4ff9ac4bbdcdf82565e6b0900ded9daa4db77b55cb75eb58c71ae17af8634da8cce5d464735379f9b45c9ca4d3367d6eea9ea185
-          type: string
-        Expire:
-          description: "The timestamp on which the token expires, provided in RFC3339\
-            \ Format."
-          format: date-time
-          type: string
-      required:
-      - Expire
-      - Token
-      type: object
-    SearchRequest:
-      description: Request body for searching items.
-      example:
-        EntityType: Customer
-        PageSize: 10
-        Filter:
-        - Field: EMail
-          Type: MatchSuffix
-          Values:
-          - '@example.com'
-          - '@example.com'
-        - Field: EMail
-          Type: MatchSuffix
-          Values:
-          - '@example.com'
-          - '@example.com'
-        Page: 1
-      properties:
-        Page:
-          description: Number of the result page to be returned.
-          example: 1
-          type: integer
-        PageSize:
-          description: "Number of items per result page. Customa may choose a lower\
-            \ value, please check the response."
-          example: 10
-          type: integer
-        EntityType:
-          deprecated: true
-          description: Type of the entity to be searched. Only required in the generic
-            search endpoint.
-          enum:
-          - Customer
-          - Product
-          - Receipt
-          example: Customer
-          type: string
-        Filter:
-          description: "Filters to be applied to the search. The filters are combined\
-            \ using boolean AND. If a filter contains multiple values, these are combined\
-            \ using boolean OR."
-          items:
-            $ref: "#/components/schemas/SearchFilter"
-          type: array
-      required:
-      - Filter
-      - Page
-      - PageSize
-      type: object
-    SearchFilter:
-      description: Filter to be applied to the search.
-      example:
-        Field: EMail
-        Type: MatchSuffix
-        Values:
-        - '@example.com'
-        - '@example.com'
-      properties:
-        Type:
-          description: Type of the filter.
-          enum:
-          - IsEmpty
-          - IsNotEmpty
-          - Match
-          - MatchPrefix
-          - MatchSuffix
-          - MatchInfix
-          - LessThan
-          - LessThanOrEqual
-          - GreaterThan
-          - GreaterThanOrEqual
-          example: MatchSuffix
-          type: string
-        Field:
-          description: Field to be filtered.
-          example: EMail
-          type: string
-        Values:
-          description: Values to be filtered using boolean OR.
-          items:
-            example: '@example.com'
-            type: string
-          type: array
-      required:
-      - Field
-      - Type
-      - Values
-      type: object
     BasicSearchResponse:
       properties:
         TotalCount:
@@ -951,8 +1293,8 @@ components:
         - Status: true
           CreationDate: 2000-01-23T04:56:07.000+00:00
           RecommendedRetailPrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           Parent: "12344"
           AdditionalFields:
           - Value: "42"
@@ -961,14 +1303,14 @@ components:
             Key: Example
           TaxClass: Normal
           PurchasePrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           Vendor: ACME Inc.
           Name: Toaster
           ShortDescription: A toaster made of stainless steel.
           SalesPrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           EAN: "1234567890123"
           LongDescription: A toaster made of stainless steel with a 2-slice capacity
             and a 7-setting browning control.
@@ -981,8 +1323,8 @@ components:
         - Status: true
           CreationDate: 2000-01-23T04:56:07.000+00:00
           RecommendedRetailPrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           Parent: "12344"
           AdditionalFields:
           - Value: "42"
@@ -991,14 +1333,14 @@ components:
             Key: Example
           TaxClass: Normal
           PurchasePrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           Vendor: ACME Inc.
           Name: Toaster
           ShortDescription: A toaster made of stainless steel.
           SalesPrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           EAN: "1234567890123"
           LongDescription: A toaster made of stainless steel with a 2-slice capacity
             and a 7-setting browning control.
@@ -1032,8 +1374,8 @@ components:
         Receipts:
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           RevenueGross:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           GoogleClickID: "1234567890"
           CustomerID: "12345"
           DeliveryDate: 2025-04-04T09:39:19.931Z
@@ -1048,25 +1390,25 @@ components:
             Quantity: 1
             ProductID: "12345"
             PurchasePrice:
-              Currency: EUR
-              Value: 19.99
+              Currency: Currency
+              Value: 0.8008282
             TaxClass: Normal
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: EUR
-              Value: 19.99
+              Currency: Currency
+              Value: 0.8008282
           - CreationDate: 2000-01-23T04:56:07.000+00:00
             ModificationDate: 2000-01-23T04:56:07.000+00:00
             Quantity: 1
             ProductID: "12345"
             PurchasePrice:
-              Currency: EUR
-              Value: 19.99
+              Currency: Currency
+              Value: 0.8008282
             TaxClass: Normal
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: EUR
-              Value: 19.99
+              Currency: Currency
+              Value: 0.8008282
           ID: "12345"
           PaymentStatus: New
           ExternalOrderSubAccountID: ExternalOrderSubAccountID
@@ -1084,14 +1426,14 @@ components:
           PaymentMethod: Credit Card
           ReceiptStatus: Open
           RevenueNet:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           ReceiptDate: 2025-04-04T09:39:19.931Z
           ExternalOrderType: shop
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           RevenueGross:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           GoogleClickID: "1234567890"
           CustomerID: "12345"
           DeliveryDate: 2025-04-04T09:39:19.931Z
@@ -1106,25 +1448,25 @@ components:
             Quantity: 1
             ProductID: "12345"
             PurchasePrice:
-              Currency: EUR
-              Value: 19.99
+              Currency: Currency
+              Value: 0.8008282
             TaxClass: Normal
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: EUR
-              Value: 19.99
+              Currency: Currency
+              Value: 0.8008282
           - CreationDate: 2000-01-23T04:56:07.000+00:00
             ModificationDate: 2000-01-23T04:56:07.000+00:00
             Quantity: 1
             ProductID: "12345"
             PurchasePrice:
-              Currency: EUR
-              Value: 19.99
+              Currency: Currency
+              Value: 0.8008282
             TaxClass: Normal
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: EUR
-              Value: 19.99
+              Currency: Currency
+              Value: 0.8008282
           ID: "12345"
           PaymentStatus: New
           ExternalOrderSubAccountID: ExternalOrderSubAccountID
@@ -1142,8 +1484,8 @@ components:
           PaymentMethod: Credit Card
           ReceiptStatus: Open
           RevenueNet:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           ReceiptDate: 2025-04-04T09:39:19.931Z
           ExternalOrderType: shop
       required:
@@ -1155,266 +1497,6 @@ components:
       - $ref: "#/components/schemas/ProductSearchResponse"
       - $ref: "#/components/schemas/ReceiptSearchResponse"
       deprecated: true
-      example:
-        TotalCount: 100
-        Products:
-        - Status: true
-          CreationDate: 2000-01-23T04:56:07.000+00:00
-          RecommendedRetailPrice:
-            Currency: EUR
-            Value: 19.99
-          Parent: "12344"
-          AdditionalFields:
-          - Value: "42"
-            Key: Example
-          - Value: "42"
-            Key: Example
-          TaxClass: Normal
-          PurchasePrice:
-            Currency: EUR
-            Value: 19.99
-          Vendor: ACME Inc.
-          Name: Toaster
-          ShortDescription: A toaster made of stainless steel.
-          SalesPrice:
-            Currency: EUR
-            Value: 19.99
-          EAN: "1234567890123"
-          LongDescription: A toaster made of stainless steel with a 2-slice capacity
-            and a 7-setting browning control.
-          Number: PROD0001
-          ModificationDate: 2000-01-23T04:56:07.000+00:00
-          Manufacturer: ACME Inc.
-          ID: "12345"
-          ImageSource: https://example.com/image.jpg
-          Stock: 100
-        - Status: true
-          CreationDate: 2000-01-23T04:56:07.000+00:00
-          RecommendedRetailPrice:
-            Currency: EUR
-            Value: 19.99
-          Parent: "12344"
-          AdditionalFields:
-          - Value: "42"
-            Key: Example
-          - Value: "42"
-            Key: Example
-          TaxClass: Normal
-          PurchasePrice:
-            Currency: EUR
-            Value: 19.99
-          Vendor: ACME Inc.
-          Name: Toaster
-          ShortDescription: A toaster made of stainless steel.
-          SalesPrice:
-            Currency: EUR
-            Value: 19.99
-          EAN: "1234567890123"
-          LongDescription: A toaster made of stainless steel with a 2-slice capacity
-            and a 7-setting browning control.
-          Number: PROD0001
-          ModificationDate: 2000-01-23T04:56:07.000+00:00
-          Manufacturer: ACME Inc.
-          ID: "12345"
-          ImageSource: https://example.com/image.jpg
-          Stock: 100
-        PageSize: 10
-        CurrentPage: 1
-        Customers:
-        - CreationDate: 2000-01-23T04:56:07.000+00:00
-          Group: group1
-          Company: "ACME, Inc."
-          Address: Musterweg 42
-          Suburb: ""
-          ContactBan: false
-          PostalCode: "12345"
-          Birthday: 1980-01-01
-          Salutation: m
-          ExternalCustomerID: 12345
-          Segment: A1
-          Newsletter: false
-          ReferenceCustomer: false
-          Number: K123456
-          ModificationDate: 2000-01-23T04:56:07.000+00:00
-          Phone: 123 456 7890
-          ExternalOrderAccountID: 42
-          ID: "12345"
-          TestUser: false
-          ExternalOrderSubAccountID: ExternalOrderSubAccountID
-          FirstName: Max
-          RegisterDate: 2000-01-23T04:56:07.000+00:00
-          AdditionalFields:
-          - Value: "42"
-            Key: Example
-          - Value: "42"
-            Key: Example
-          Title: Dr.
-          City: Musterstadt
-          EMail: EMail
-          ReferrerChannel: direct
-          ExternalCustomerExternalID: "12345"
-          Marketplace: shop
-          Referrer: example
-          PurchaseDate: 2025-04-04T09:39:19.931Z
-          Country: DE
-          LastName: Mustermann
-          ExternalOrderType: shop
-        - CreationDate: 2000-01-23T04:56:07.000+00:00
-          Group: group1
-          Company: "ACME, Inc."
-          Address: Musterweg 42
-          Suburb: ""
-          ContactBan: false
-          PostalCode: "12345"
-          Birthday: 1980-01-01
-          Salutation: m
-          ExternalCustomerID: 12345
-          Segment: A1
-          Newsletter: false
-          ReferenceCustomer: false
-          Number: K123456
-          ModificationDate: 2000-01-23T04:56:07.000+00:00
-          Phone: 123 456 7890
-          ExternalOrderAccountID: 42
-          ID: "12345"
-          TestUser: false
-          ExternalOrderSubAccountID: ExternalOrderSubAccountID
-          FirstName: Max
-          RegisterDate: 2000-01-23T04:56:07.000+00:00
-          AdditionalFields:
-          - Value: "42"
-            Key: Example
-          - Value: "42"
-            Key: Example
-          Title: Dr.
-          City: Musterstadt
-          EMail: EMail
-          ReferrerChannel: direct
-          ExternalCustomerExternalID: "12345"
-          Marketplace: shop
-          Referrer: example
-          PurchaseDate: 2025-04-04T09:39:19.931Z
-          Country: DE
-          LastName: Mustermann
-          ExternalOrderType: shop
-        PagesCount: 10
-        Receipts:
-        - CreationDate: 2000-01-23T04:56:07.000+00:00
-          RevenueGross:
-            Currency: EUR
-            Value: 19.99
-          GoogleClickID: "1234567890"
-          CustomerID: "12345"
-          DeliveryDate: 2025-04-04T09:39:19.931Z
-          Number: RECEIPT0001
-          ModificationDate: 2000-01-23T04:56:07.000+00:00
-          ExternalOrderID: 1234
-          DeliveryStatus: Open
-          ExternalOrderAccountID: 42
-          Items:
-          - CreationDate: 2000-01-23T04:56:07.000+00:00
-            ModificationDate: 2000-01-23T04:56:07.000+00:00
-            Quantity: 1
-            ProductID: "12345"
-            PurchasePrice:
-              Currency: EUR
-              Value: 19.99
-            TaxClass: Normal
-            ProductNumber: ProductNumber
-            SellingPrice:
-              Currency: EUR
-              Value: 19.99
-          - CreationDate: 2000-01-23T04:56:07.000+00:00
-            ModificationDate: 2000-01-23T04:56:07.000+00:00
-            Quantity: 1
-            ProductID: "12345"
-            PurchasePrice:
-              Currency: EUR
-              Value: 19.99
-            TaxClass: Normal
-            ProductNumber: ProductNumber
-            SellingPrice:
-              Currency: EUR
-              Value: 19.99
-          ID: "12345"
-          PaymentStatus: New
-          ExternalOrderSubAccountID: ExternalOrderSubAccountID
-          AdditionalFields:
-          - Value: "42"
-            Key: Example
-          - Value: "42"
-            Key: Example
-          ExternalOrderExternalID: "1234567890"
-          ReferrerChannel: direct
-          Type: RE
-          Marketplace: Marketplace
-          PurchaseDate: 2025-04-04T09:39:19.931Z
-          Referrer: example
-          PaymentMethod: Credit Card
-          ReceiptStatus: Open
-          RevenueNet:
-            Currency: EUR
-            Value: 19.99
-          ReceiptDate: 2025-04-04T09:39:19.931Z
-          ExternalOrderType: shop
-        - CreationDate: 2000-01-23T04:56:07.000+00:00
-          RevenueGross:
-            Currency: EUR
-            Value: 19.99
-          GoogleClickID: "1234567890"
-          CustomerID: "12345"
-          DeliveryDate: 2025-04-04T09:39:19.931Z
-          Number: RECEIPT0001
-          ModificationDate: 2000-01-23T04:56:07.000+00:00
-          ExternalOrderID: 1234
-          DeliveryStatus: Open
-          ExternalOrderAccountID: 42
-          Items:
-          - CreationDate: 2000-01-23T04:56:07.000+00:00
-            ModificationDate: 2000-01-23T04:56:07.000+00:00
-            Quantity: 1
-            ProductID: "12345"
-            PurchasePrice:
-              Currency: EUR
-              Value: 19.99
-            TaxClass: Normal
-            ProductNumber: ProductNumber
-            SellingPrice:
-              Currency: EUR
-              Value: 19.99
-          - CreationDate: 2000-01-23T04:56:07.000+00:00
-            ModificationDate: 2000-01-23T04:56:07.000+00:00
-            Quantity: 1
-            ProductID: "12345"
-            PurchasePrice:
-              Currency: EUR
-              Value: 19.99
-            TaxClass: Normal
-            ProductNumber: ProductNumber
-            SellingPrice:
-              Currency: EUR
-              Value: 19.99
-          ID: "12345"
-          PaymentStatus: New
-          ExternalOrderSubAccountID: ExternalOrderSubAccountID
-          AdditionalFields:
-          - Value: "42"
-            Key: Example
-          - Value: "42"
-            Key: Example
-          ExternalOrderExternalID: "1234567890"
-          ReferrerChannel: direct
-          Type: RE
-          Marketplace: Marketplace
-          PurchaseDate: 2025-04-04T09:39:19.931Z
-          Referrer: example
-          PaymentMethod: Credit Card
-          ReceiptStatus: Open
-          RevenueNet:
-            Currency: EUR
-            Value: 19.99
-          ReceiptDate: 2025-04-04T09:39:19.931Z
-          ExternalOrderType: shop
     ItemCreatedResponse:
       example:
         ID: "42"
@@ -1801,8 +1883,8 @@ components:
         Status: true
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RecommendedRetailPrice:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         Parent: "12344"
         AdditionalFields:
         - Value: "42"
@@ -1811,14 +1893,14 @@ components:
           Key: Example
         TaxClass: Normal
         PurchasePrice:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         Vendor: ACME Inc.
         Name: Toaster
         ShortDescription: A toaster made of stainless steel.
         SalesPrice:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         EAN: "1234567890123"
         LongDescription: A toaster made of stainless steel with a 2-slice capacity
           and a 7-setting browning control.
@@ -1836,8 +1918,8 @@ components:
         Status: true
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RecommendedRetailPrice:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         Parent: "12344"
         AdditionalFields:
         - Value: "42"
@@ -1846,14 +1928,14 @@ components:
           Key: Example
         TaxClass: Normal
         PurchasePrice:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         Vendor: ACME Inc.
         Name: Toaster
         ShortDescription: A toaster made of stainless steel.
         SalesPrice:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         EAN: "1234567890123"
         LongDescription: A toaster made of stainless steel with a 2-slice capacity
           and a 7-setting browning control.
@@ -1880,25 +1962,6 @@ components:
       - Stock
       - TaxClass
       - Vendor
-    Price:
-      example:
-        Currency: EUR
-        Value: 19.99
-      properties:
-        Value:
-          description: Value of the price.
-          example: 19.99
-          format: float
-          type: number
-        Currency:
-          description: Currency of the price.
-          example: EUR
-          maxLength: 3
-          type: string
-      required:
-      - Currency
-      - Value
-      type: object
     Receipt:
       allOf:
       - $ref: "#/components/schemas/Timestamped"
@@ -2040,8 +2103,8 @@ components:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RevenueGross:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         GoogleClickID: "1234567890"
         CustomerID: "12345"
         DeliveryDate: 2025-04-04T09:39:19.931Z
@@ -2056,25 +2119,25 @@ components:
           Quantity: 1
           ProductID: "12345"
           PurchasePrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           TaxClass: Normal
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           Quantity: 1
           ProductID: "12345"
           PurchasePrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           TaxClass: Normal
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
         ID: "12345"
         PaymentStatus: New
         ExternalOrderSubAccountID: ExternalOrderSubAccountID
@@ -2092,8 +2155,8 @@ components:
         PaymentMethod: Credit Card
         ReceiptStatus: Open
         RevenueNet:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         ReceiptDate: 2025-04-04T09:39:19.931Z
         ExternalOrderType: shop
       type: object
@@ -2103,8 +2166,8 @@ components:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RevenueGross:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         GoogleClickID: "1234567890"
         CustomerID: "12345"
         DeliveryDate: 2025-04-04T09:39:19.931Z
@@ -2119,25 +2182,25 @@ components:
           Quantity: 1
           ProductID: "12345"
           PurchasePrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           TaxClass: Normal
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           Quantity: 1
           ProductID: "12345"
           PurchasePrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
           TaxClass: Normal
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: EUR
-            Value: 19.99
+            Currency: Currency
+            Value: 0.8008282
         ID: "12345"
         PaymentStatus: New
         ExternalOrderSubAccountID: ExternalOrderSubAccountID
@@ -2155,8 +2218,8 @@ components:
         PaymentMethod: Credit Card
         ReceiptStatus: Open
         RevenueNet:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         ReceiptDate: 2025-04-04T09:39:19.931Z
         ExternalOrderType: shop
       required:
@@ -2220,13 +2283,13 @@ components:
         Quantity: 1
         ProductID: "12345"
         PurchasePrice:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
         TaxClass: Normal
         ProductNumber: ProductNumber
         SellingPrice:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
       required:
       - ProductID
       - ProductNumber
@@ -2248,244 +2311,6 @@ components:
       required:
       - Key
       - Value
-      type: object
-    ChoicesResponse:
-      description: Response containing choices with key and value pairs.
-      example:
-        Choices:
-        - Label: Example Value
-          Key: example_key
-        - Label: Example Value
-          Key: example_key
-      properties:
-        Choices:
-          items:
-            $ref: "#/components/schemas/ChoicesResponse_Choices_inner"
-          type: array
-      required:
-      - Choices
-      type: object
-    StatsReceiptRequest:
-      description: Request body for statistics on receipts.
-      example:
-        GroupBy: day
-        Filter:
-        - Field: EMail
-          Type: MatchSuffix
-          Values:
-          - '@example.com'
-          - '@example.com'
-        - Field: EMail
-          Type: MatchSuffix
-          Values:
-          - '@example.com'
-          - '@example.com'
-        From: 2025-01-01T00:00:00Z
-        To: 2025-12-31T23:59:59.999Z
-        DateField: PurchaseDate
-      properties:
-        From:
-          description: Start date for the statistics in RFC3339 format.
-          example: 2025-01-01T00:00:00Z
-          format: date-time
-          type: string
-        To:
-          description: End date for the statistics in RFC3339 format.
-          example: 2025-12-31T23:59:59.999Z
-          format: date-time
-          type: string
-        DateField:
-          description: Type of the date to be used for the time range and time-based
-            grouping.
-          enum:
-          - PurchaseDate
-          - ReceiptDate
-          type: string
-        GroupBy:
-          description: Grouping criteria for the statistics. This may depend on dynamically
-            configured fields. Use the stats_receipt_groupings endpoint to retrieve
-            a list of available groupings.
-          example: day
-          type: string
-        Filter:
-          description: Optional filter for the statistics.
-          items:
-            $ref: "#/components/schemas/SearchFilter"
-          type: array
-      required:
-      - DateField
-      - Filter
-      - From
-      - GroupBy
-      - To
-      type: object
-    StatsReceiptResponse:
-      description: Response containing statistics on receipts.
-      example:
-        Groups:
-        - GroupName: 08/2025
-          Types:
-          - ReceiptType: RE
-            ReceiptCount: 123
-            Revenue:
-              Currency: EUR
-              Value: 19.99
-            CustomerCount: 456
-            CostOfGoodsSold:
-              Currency: EUR
-              Value: 19.99
-          - ReceiptType: RE
-            ReceiptCount: 123
-            Revenue:
-              Currency: EUR
-              Value: 19.99
-            CustomerCount: 456
-            CostOfGoodsSold:
-              Currency: EUR
-              Value: 19.99
-          GroupKey: 2025-08-01
-        - GroupName: 08/2025
-          Types:
-          - ReceiptType: RE
-            ReceiptCount: 123
-            Revenue:
-              Currency: EUR
-              Value: 19.99
-            CustomerCount: 456
-            CostOfGoodsSold:
-              Currency: EUR
-              Value: 19.99
-          - ReceiptType: RE
-            ReceiptCount: 123
-            Revenue:
-              Currency: EUR
-              Value: 19.99
-            CustomerCount: 456
-            CostOfGoodsSold:
-              Currency: EUR
-              Value: 19.99
-          GroupKey: 2025-08-01
-      properties:
-        Groups:
-          description: List of groups with statistics.
-          items:
-            $ref: "#/components/schemas/StatsReceiptResponse_Groups_inner"
-          type: array
-      required:
-      - Groups
-      type: object
-    StatsReceiptItemRequest:
-      description: Request body for statistics on receipt items.
-      example:
-        GroupBy: day
-        Filter:
-        - Field: EMail
-          Type: MatchSuffix
-          Values:
-          - '@example.com'
-          - '@example.com'
-        - Field: EMail
-          Type: MatchSuffix
-          Values:
-          - '@example.com'
-          - '@example.com'
-        From: 2025-01-01T00:00:00Z
-        To: 2025-12-31T23:59:59.999Z
-        DateField: PurchaseDate
-      properties:
-        From:
-          description: Start date for the statistics in RFC3339 format.
-          example: 2025-01-01T00:00:00Z
-          format: date-time
-          type: string
-        To:
-          description: End date for the statistics in RFC3339 format.
-          example: 2025-12-31T23:59:59.999Z
-          format: date-time
-          type: string
-        DateField:
-          description: Type of the date to be used for the time range and time-based
-            grouping.
-          enum:
-          - PurchaseDate
-          - ReceiptDate
-          type: string
-        GroupBy:
-          description: Grouping criteria for the statistics. This may depend on dynamically
-            configured fields. Use the stats_receipt_item_groupings endpoint to retrieve
-            a list of available groupings.
-          example: day
-          type: string
-        Filter:
-          description: Optional filter for the statistics.
-          items:
-            $ref: "#/components/schemas/SearchFilter"
-          type: array
-      required:
-      - DateField
-      - Filter
-      - From
-      - GroupBy
-      - To
-      type: object
-    StatsReceiptItemResponse:
-      description: Response containing statistics on receipt items.
-      example:
-        Groups:
-        - GroupName: 08/2025
-          Types:
-          - ReceiptType: RE
-            ReceiptCount: 123
-            Amount: 789
-            Revenue:
-              Currency: EUR
-              Value: 19.99
-            CustomerCount: 456
-            CostOfGoodsSold:
-              Currency: EUR
-              Value: 19.99
-          - ReceiptType: RE
-            ReceiptCount: 123
-            Amount: 789
-            Revenue:
-              Currency: EUR
-              Value: 19.99
-            CustomerCount: 456
-            CostOfGoodsSold:
-              Currency: EUR
-              Value: 19.99
-          GroupKey: 2025-08-01
-        - GroupName: 08/2025
-          Types:
-          - ReceiptType: RE
-            ReceiptCount: 123
-            Amount: 789
-            Revenue:
-              Currency: EUR
-              Value: 19.99
-            CustomerCount: 456
-            CostOfGoodsSold:
-              Currency: EUR
-              Value: 19.99
-          - ReceiptType: RE
-            ReceiptCount: 123
-            Amount: 789
-            Revenue:
-              Currency: EUR
-              Value: 19.99
-            CustomerCount: 456
-            CostOfGoodsSold:
-              Currency: EUR
-              Value: 19.99
-          GroupKey: 2025-08-01
-      properties:
-        Groups:
-          description: List of groups with statistics.
-          items:
-            $ref: "#/components/schemas/StatsReceiptItemResponse_Groups_inner"
-          type: array
-      required:
-      - Groups
       type: object
     OAuthValidationRequest:
       deprecated: true
@@ -2517,196 +2342,1059 @@ components:
       required:
       - Valid
       type: object
-    ChoicesResponse_Choices_inner:
+    AuthLoginRequestV3:
+      description: Request body for authentication.
       example:
-        Label: Example Value
-        Key: example_key
+        Project: 10
+        Username: user@customa.biz
+        Password: secret123!
+      properties:
+        Username:
+          description: Username (E-Mail address) used for authentication with Customa.
+          example: user@customa.biz
+          format: email
+          title: Username.
+          type: string
+        Password:
+          description: Password for the User.
+          example: secret123!
+          title: Password.
+          type: string
+        Project:
+          description: ID of the project the user is authenticating for.
+          example: 10
+          title: Project ID.
+          type: integer
+      required:
+      - Password
+      - Project
+      - Username
+      title: Login Authentication Request
+      type: object
+    AuthTokenResponseV3:
+      description: Response body of a successful authentication login request or token
+        refresh.
+      example:
+        Expire: 2024-12-31T23:59:59Z
+        Token: 044600149b8a50a2d00a32bc4ff9ac4bbdcdf82565e6b0900ded9daa4db77b55cb75eb58c71ae17af8634da8cce5d464735379f9b45c9ca4d3367d6eea9ea185
+      properties:
+        Token:
+          description: "Random, hex encoded 64 Bytes used as a token for authentication.\
+            \ The content of this token is not relevant, but it should be treated\
+            \ as a secret and stored securely. It is recommended to refresh the token\
+            \ at least 10 minutes before it expires to ensure uninterrupted access\
+            \ to the API."
+          example: 044600149b8a50a2d00a32bc4ff9ac4bbdcdf82565e6b0900ded9daa4db77b55cb75eb58c71ae17af8634da8cce5d464735379f9b45c9ca4d3367d6eea9ea185
+          title: API Access Token.
+          type: string
+        Expire:
+          description: "The timestamp on which the token expires, provided in RFC3339\
+            \ Format."
+          example: 2024-12-31T23:59:59Z
+          format: date-time
+          title: Expiration Timestamp.
+          type: string
+      required:
+      - Expire
+      - Token
+      title: Authentication Token Response
+      type: object
+    ErrorResponseV3:
+      description: Response body for an error response.
+      example:
+        Message: Something bad happened.
+      properties:
+        Message:
+          description: A message giving feedback about the error. The recipient's
+            logic must not rely on its content.
+          example: Something bad happened.
+          title: Error Message.
+          type: string
+      required:
+      - Message
+      title: Error Response
+      type: object
+    FilterType:
+      enum:
+      - IsEmpty
+      - IsNotEmpty
+      - Match
+      - MatchPrefix
+      - MatchSuffix
+      - MatchInfix
+      - LessThan
+      - LessThanOrEqual
+      - GreaterThan
+      - GreaterThanOrEqual
+      type: string
+    Filter:
+      description: Definition of a single filter.
+      example:
+        Field: Field
+        Type: IsEmpty
+        Values:
+        - Values
+        - Values
+      properties:
+        Type:
+          $ref: "#/components/schemas/FilterType"
+        Field:
+          description: The field is the name of the field in the data that should
+            be filtered. It must be a valid field name that can be used in the API
+            requests.
+          title: Field to be filtered.
+          type: string
+        Values:
+          description: Values to be filtered. The values are combined using boolean
+            OR.
+          items:
+            type: string
+          title: Filter values.
+          type: array
+      required:
+      - Field
+      - Type
+      - Values
+      title: Filter definition
+      type: object
+    SearchRequest:
+      description: Request body of a search request.
+      example:
+        PageSize: 10
+        Filter:
+        - Field: Field
+          Type: IsEmpty
+          Values:
+          - Values
+          - Values
+        - Field: Field
+          Type: IsEmpty
+          Values:
+          - Values
+          - Values
+        Page: 1
+      properties:
+        Page:
+          description: Number of the result page to be returned.
+          example: 1
+          exclusiveMinimum: true
+          minimum: 0
+          title: Page number.
+          type: integer
+        PageSize:
+          description: "Number of items per result page. Customa may choose a lower\
+            \ value, please check the response."
+          example: 10
+          exclusiveMinimum: true
+          minimum: 0
+          title: Page size.
+          type: integer
+        Filter:
+          description: "Filters to be applied to the search. The filters are combined\
+            \ using boolean AND. If a filter contains multiple values, these are combined\
+            \ using boolean OR."
+          items:
+            $ref: "#/components/schemas/Filter"
+          title: Filters.
+          type: array
+      required:
+      - Filter
+      - Page
+      - PageSize
+      title: Search Request
+      type: object
+    SegmentCondition:
+      enum:
+      - GreaterThan
+      - GreaterThanOrEqual
+      - LessThan
+      - LessThanOrEqual
+      - Equal
+      - Undefined
+      type: string
+    SegmentValue:
+      description: A single segment value.
+      example:
+        Condition: GreaterThan
+        Value: 0
+      properties:
+        Condition:
+          $ref: "#/components/schemas/SegmentCondition"
+        Value:
+          type: integer
+      required:
+      - Condition
+      - Value
+      title: Segment Value
+      type: object
+    Segment:
+      description: A single customer segment generated from the segment definition.
+      example:
+        Description: Description
+        CustomerLifetimeValue:
+          Condition: GreaterThan
+          Value: 0
+        Recency: 6
+        Monetary:
+          Condition: GreaterThan
+          Value: 0
+        Frequency:
+          Condition: GreaterThan
+          Value: 0
+      properties:
+        Frequency:
+          $ref: "#/components/schemas/SegmentValue"
+        Monetary:
+          $ref: "#/components/schemas/SegmentValue"
+        CustomerLifetimeValue:
+          $ref: "#/components/schemas/SegmentValue"
+        Recency:
+          type: integer
+        Description:
+          type: string
+      required:
+      - CustomerLifetimeValue
+      - Description
+      - Frequency
+      - Monetary
+      - Recency
+      title: Segment
+      type: object
+    SegmentList:
+      description: List of the defined segments.
+      example:
+        Segments:
+          key:
+            Description: Description
+            CustomerLifetimeValue:
+              Condition: GreaterThan
+              Value: 0
+            Recency: 6
+            Monetary:
+              Condition: GreaterThan
+              Value: 0
+            Frequency:
+              Condition: GreaterThan
+              Value: 0
+      properties:
+        Segments:
+          additionalProperties:
+            $ref: "#/components/schemas/Segment"
+          type: object
+      required:
+      - Segments
+      title: Segment List
+      type: object
+    SegmentRecency:
+      description: Configuration of the recency dimension of the customer segments.
+      example:
+        Description: Description
+        Recency: 0
+      properties:
+        Recency:
+          type: integer
+        Description:
+          type: string
+      required:
+      - Description
+      - Recency
+      title: Segment Recency Definition
+      type: object
+    SegmentMonetary:
+      description: Configuration of the monetary dimension of the customer segments.
+      example:
+        Description: Description
+        CustomerLifetimeValue:
+          Condition: GreaterThan
+          Value: 0
+        Monetary:
+          Condition: GreaterThan
+          Value: 0
+        Frequency:
+          Condition: GreaterThan
+          Value: 0
+      properties:
+        Frequency:
+          $ref: "#/components/schemas/SegmentValue"
+        Monetary:
+          $ref: "#/components/schemas/SegmentValue"
+        CustomerLifetimeValue:
+          $ref: "#/components/schemas/SegmentValue"
+        Description:
+          type: string
+      required:
+      - CustomerLifetimeValue
+      - Description
+      - Frequency
+      - Monetary
+      title: Segment Monetary Definition
+      type: object
+    SegmentDefinition:
+      description: Configuration which generates the customer segments.
+      example:
+        Recency:
+          key:
+            Description: Description
+            Recency: 0
+        Monetary:
+          key:
+            Description: Description
+            CustomerLifetimeValue:
+              Condition: GreaterThan
+              Value: 0
+            Monetary:
+              Condition: GreaterThan
+              Value: 0
+            Frequency:
+              Condition: GreaterThan
+              Value: 0
+      properties:
+        Recency:
+          additionalProperties:
+            $ref: "#/components/schemas/SegmentRecency"
+          description: The recency dimension of the customer segments is based on
+            the time since the last purchase.
+          title: Recency dimension.
+          type: object
+        Monetary:
+          additionalProperties:
+            $ref: "#/components/schemas/SegmentMonetary"
+          description: The monetary dimension of the customer segments is based on
+            the amount of money spent and frequency of purchases.
+          title: Monetary dimension.
+          type: object
+      required:
+      - Monetary
+      - Recency
+      title: Segment Definition
+      type: object
+    SettingType:
+      enum:
+      - String
+      - Integer
+      - Float
+      - Boolean
+      type: string
+    SettingDefinition:
+      description: Definition of a setting.
+      example:
+        Type: String
+        Description: Description
+        Label: Label
+        UseProjectFallback: true
+        IsConfidential: true
+      properties:
+        Label:
+          title: Display name of the setting.
+          type: string
+        Description:
+          description: "A detailed explanation of the setting's purpose and usage.\
+            \ This description should provide enough information for users to understand\
+            \ what the setting does, how it affects the application, and any important\
+            \ considerations or implications associated with changing its value."
+          title: Description of the setting.
+          type: string
+        Type:
+          $ref: "#/components/schemas/SettingType"
+        IsConfidential:
+          description: "A confidential setting contains sensitive information that\
+            \ should be protected and not exposed in logs, error messages, or any\
+            \ other output. Examples of confidential settings include API keys, passwords,\
+            \ and other credentials. When a setting is marked as confidential, its\
+            \ value cannot be retrieved through the API."
+          title: Indicates whether the setting is confidential.
+          type: boolean
+        UseProjectFallback:
+          description: "If true, the setting can fall back to a project-level value\
+            \ if no marketplace-specific value is set. This allows for a hierarchical\
+            \ configuration where a global value can be overridden by marketplace-specific\
+            \ values, and if those are not set, the system can use a project-level\
+            \ default value."
+          title: Indicates whether the setting supports project fallback.
+          type: boolean
+      required:
+      - Description
+      - IsConfidential
+      - Label
+      - Type
+      - UseProjectFallback
+      title: Setting Definition
+      type: object
+    SettingsDefinition:
+      description: Definition of all settings.
+      example:
+        Settings:
+          key:
+            Type: String
+            Description: Description
+            Label: Label
+            UseProjectFallback: true
+            IsConfidential: true
+      properties:
+        Settings:
+          additionalProperties:
+            $ref: "#/components/schemas/SettingDefinition"
+          type: object
+      required:
+      - Settings
+      title: Settings Definition
+      type: object
+    Setting:
+      description: Definition of a setting.
+      example:
+        Marketplaces:
+          shop1: 43
+          shop2: 44
+        Global: 42
+      properties:
+        Global:
+          $ref: "#/components/schemas/Global_Value_of_the_Setting_"
+        Marketplaces:
+          additionalProperties:
+            $ref: "#/components/schemas/Marketplace_specific_values_of_the_Setting__value"
+          description: "An associative array where the keys are marketplace identifiers\
+            \ (e.g., 'shop1', 'shop2') and the values are the marketplace-specific\
+            \ values for the setting. These values override the global value for their\
+            \ respective marketplaces. The values can be of type string, integer,\
+            \ float, or boolean, depending on the specific setting being represented."
+          example:
+            shop1: 43
+            shop2: 44
+          title: Marketplace specific values of the Setting.
+          type: object
+      required:
+      - Global
+      - Marketplaces
+      title: Setting
+      type: object
+    SettingValidationResponse:
+      description: Response body for validation of a setting.
+      example:
+        Marketplaces:
+          key: true
+        Global: true
+      properties:
+        Global:
+          type: boolean
+        Marketplaces:
+          additionalProperties:
+            type: boolean
+          type: object
+      required:
+      - Global
+      - Marketplaces
+      title: Setting Validation Response
+      type: object
+    DateField:
+      enum:
+      - PurchaseDate
+      - ReceiptDate
+      type: string
+    StatsRequest:
+      description: Request for statistics data.
+      example:
+        GroupBy: GroupBy
+        Filter:
+        - Field: Field
+          Type: IsEmpty
+          Values:
+          - Values
+          - Values
+        - Field: Field
+          Type: IsEmpty
+          Values:
+          - Values
+          - Values
+        From: 2000-01-23T04:56:07.000+00:00
+        To: 2000-01-23T04:56:07.000+00:00
+        DateField: PurchaseDate
+      properties:
+        From:
+          description: The start timestamp of the period for which the statistics
+            should be calculated.
+          format: date-time
+          title: Start timestamp.
+          type: string
+        To:
+          description: The end timestamp of the period for which the statistics should
+            be calculated. The end timestamp must be greater than the start timestamp.
+          format: date-time
+          title: End timestamp.
+          type: string
+        DateField:
+          $ref: "#/components/schemas/DateField"
+        GroupBy:
+          description: The grouping type determines how the data is grouped in the
+            response.
+          title: Grouping type.
+          type: string
+        Filter:
+          description: "Filters to be applied to the data before grouping. The filters\
+            \ are combined using boolean AND. If a filter contains multiple values,\
+            \ these are combined using boolean OR."
+          items:
+            $ref: "#/components/schemas/Filter"
+          title: Filter definitions.
+          type: array
+      required:
+      - DateField
+      - Filter
+      - From
+      - GroupBy
+      - To
+      title: Stats Request
+      type: object
+    Price:
+      description: A price value with its currency.
+      example:
+        Currency: Currency
+        Value: 0.8008282
+      properties:
+        Value:
+          description: A price value in the currency specified in the `Currency` property.
+          format: float
+          title: Price.
+          type: number
+        Currency:
+          description: "The currency of the price value specified in the `Value` property.\
+            \ The value is a three-letter ISO 4217 currency code, e.g. `EUR` for Euro\
+            \ or `USD` for US Dollar."
+          title: Currency.
+          type: string
+      required:
+      - Currency
+      - Value
+      title: Price
+      type: object
+    StatsReceiptType:
+      description: Statistics for a specific receipt type.
+      example:
+        ReceiptType: ReceiptType
+        ReceiptCount: 0
+        Revenue:
+          Currency: Currency
+          Value: 0.8008282
+        CustomerCount: 6
+        CostOfGoodsSold:
+          Currency: Currency
+          Value: 0.8008282
+      properties:
+        ReceiptType:
+          description: The type of the receipt.
+          title: Receipt Type.
+          type: string
+        ReceiptCount:
+          description: The number of receipts of the specified type.
+          title: Number of Receipts.
+          type: integer
+        CustomerCount:
+          description: The number of customers who had at least one receipt of the
+            specified type. This number may be lower than the `ReceiptCount` if some
+            customers had multiple receipts of the specified type.
+          title: Number of Customers.
+          type: integer
+        Revenue:
+          $ref: "#/components/schemas/Price"
+        CostOfGoodsSold:
+          $ref: "#/components/schemas/Price"
+      required:
+      - CostOfGoodsSold
+      - CustomerCount
+      - ReceiptCount
+      - ReceiptType
+      - Revenue
+      title: Receipt Statistics Type
+      type: object
+    StatsReceiptGroup:
+      description: A group of receipt statistics for a given period.
+      example:
+        GroupName: GroupName
+        Types:
+        - ReceiptType: ReceiptType
+          ReceiptCount: 0
+          Revenue:
+            Currency: Currency
+            Value: 0.8008282
+          CustomerCount: 6
+          CostOfGoodsSold:
+            Currency: Currency
+            Value: 0.8008282
+        - ReceiptType: ReceiptType
+          ReceiptCount: 0
+          Revenue:
+            Currency: Currency
+            Value: 0.8008282
+          CustomerCount: 6
+          CostOfGoodsSold:
+            Currency: Currency
+            Value: 0.8008282
+        GroupKey: GroupKey
+      properties:
+        GroupKey:
+          description: "The key of the group, e.g. a date for daily grouping, a week\
+            \ number for weekly grouping, a month number for monthly grouping or a\
+            \ year number for yearly grouping."
+          title: Group Key.
+          type: string
+        GroupName:
+          description: "A human-readable name of the group, e.g. a date for daily\
+            \ grouping, a week number for weekly grouping, a month name for monthly\
+            \ grouping or a year number for yearly grouping. This field is only for\
+            \ display purposes and may be localized, e.g. the month name may be localized\
+            \ to the language of the request. The `GroupKey` field should be used\
+            \ for grouping and filtering purposes, as it is not localized and has\
+            \ a consistent format."
+          title: Group Name.
+          type: string
+        Types:
+          description: Statistics for the different receipt types in the group.
+          items:
+            $ref: "#/components/schemas/StatsReceiptType"
+          title: Receipt Types.
+          type: array
+      required:
+      - GroupKey
+      - GroupName
+      - Types
+      title: Receipt Statistics Group
+      type: object
+    StatsReceiptGroups:
+      description: A grouped list of receipt statistics for a given period.
+      example:
+        Groups:
+        - GroupName: GroupName
+          Types:
+          - ReceiptType: ReceiptType
+            ReceiptCount: 0
+            Revenue:
+              Currency: Currency
+              Value: 0.8008282
+            CustomerCount: 6
+            CostOfGoodsSold:
+              Currency: Currency
+              Value: 0.8008282
+          - ReceiptType: ReceiptType
+            ReceiptCount: 0
+            Revenue:
+              Currency: Currency
+              Value: 0.8008282
+            CustomerCount: 6
+            CostOfGoodsSold:
+              Currency: Currency
+              Value: 0.8008282
+          GroupKey: GroupKey
+        - GroupName: GroupName
+          Types:
+          - ReceiptType: ReceiptType
+            ReceiptCount: 0
+            Revenue:
+              Currency: Currency
+              Value: 0.8008282
+            CustomerCount: 6
+            CostOfGoodsSold:
+              Currency: Currency
+              Value: 0.8008282
+          - ReceiptType: ReceiptType
+            ReceiptCount: 0
+            Revenue:
+              Currency: Currency
+              Value: 0.8008282
+            CustomerCount: 6
+            CostOfGoodsSold:
+              Currency: Currency
+              Value: 0.8008282
+          GroupKey: GroupKey
+      properties:
+        Groups:
+          description: "The data is grouped by the specified grouping key, e.g. by\
+            \ day, week, month or year."
+          items:
+            $ref: "#/components/schemas/StatsReceiptGroup"
+          title: Grouped data.
+          type: array
+      required:
+      - Groups
+      title: Receipt Statistics
+      type: object
+    Choice:
+      description: "A single choice, mapping a key to a label."
+      example:
+        Label: Label
+        Key: Key
       properties:
         Key:
-          description: Key of the choice.
-          example: example_key
+          description: The key identifies the choice and is used in the API requests.
+            It is unique among the choices of a field.
+          title: Key of the choice.
           type: string
         Label:
-          description: Human readable name of the choice. Must not be used for anything
-            else than display.
-          example: Example Value
+          description: "The label is a human-readable name for the choice, which can\
+            \ be displayed in user interfaces. It is not necessarily unique among\
+            \ the choices of a field, so it must not be used for anything other than\
+            \ display purposes."
+          title: Label of the choice.
           type: string
       required:
       - Key
       - Label
+      title: Choice
       type: object
-    StatsReceiptResponse_Groups_inner_Types_inner:
-      description: Statistics for a specific receipt type.
+    ChoicesList:
+      description: List of available choices.
       example:
-        ReceiptType: RE
-        ReceiptCount: 123
-        Revenue:
-          Currency: EUR
-          Value: 19.99
-        CustomerCount: 456
-        CostOfGoodsSold:
-          Currency: EUR
-          Value: 19.99
+        Choices:
+        - Label: Label
+          Key: Key
+        - Label: Label
+          Key: Key
       properties:
-        ReceiptType:
-          description: Type of the receipt.
-          example: RE
-          type: string
-        ReceiptCount:
-          description: Number of receipts of this type in this group.
-          example: 123
-          type: integer
-        CustomerCount:
-          description: Number of unique customers with the receipt type in this group.
-          example: 456
-          type: integer
-        Revenue:
-          $ref: "#/components/schemas/Price"
-        CostOfGoodsSold:
-          $ref: "#/components/schemas/Price"
-      required:
-      - AverageShoppingCart
-      - CostOfGoodsSold
-      - CostOfGoodsSoldRatio
-      - CustomerCount
-      - ReceiptCount
-      - ReceiptType
-      - Revenue
-      type: object
-    StatsReceiptResponse_Groups_inner:
-      description: 'Group with statistics. '
-      example:
-        GroupName: 08/2025
-        Types:
-        - ReceiptType: RE
-          ReceiptCount: 123
-          Revenue:
-            Currency: EUR
-            Value: 19.99
-          CustomerCount: 456
-          CostOfGoodsSold:
-            Currency: EUR
-            Value: 19.99
-        - ReceiptType: RE
-          ReceiptCount: 123
-          Revenue:
-            Currency: EUR
-            Value: 19.99
-          CustomerCount: 456
-          CostOfGoodsSold:
-            Currency: EUR
-            Value: 19.99
-        GroupKey: 2025-08-01
-      properties:
-        GroupKey:
-          description: "Key for the group, use this when processing the response client-side."
-          example: 2025-08-01
-          type: string
-        GroupName:
-          description: "Group name, only used for display. _Never_ use this for anything\
-            \ else than display."
-          example: 08/2025
-          type: string
-        Types:
-          description: List of receipt types with statistics.
+        Choices:
           items:
-            $ref: "#/components/schemas/StatsReceiptResponse_Groups_inner_Types_inner"
+            $ref: "#/components/schemas/Choice"
           type: array
       required:
-      - GroupKey
-      - GroupName
-      - Types
+      - Choices
+      title: List of Choices
       type: object
-    StatsReceiptItemResponse_Groups_inner_Types_inner:
+    StatsReceiptItemType:
       description: Statistics for a specific receipt type.
       example:
-        ReceiptType: RE
-        ReceiptCount: 123
-        Amount: 789
+        ReceiptType: ReceiptType
+        ReceiptCount: 0
+        Amount: 1
         Revenue:
-          Currency: EUR
-          Value: 19.99
-        CustomerCount: 456
+          Currency: Currency
+          Value: 0.8008282
+        CustomerCount: 6
         CostOfGoodsSold:
-          Currency: EUR
-          Value: 19.99
+          Currency: Currency
+          Value: 0.8008282
       properties:
         ReceiptType:
-          description: Type of the receipt.
-          example: RE
+          description: The type of the receipt.
+          title: Receipt Type.
           type: string
         ReceiptCount:
-          description: Number of receipts of this type in this group.
-          example: 123
+          description: The number of receipts of the specified type.
+          title: Number of Receipts.
           type: integer
         CustomerCount:
-          description: Number of unique customers with the receipt type in this group.
-          example: 456
+          description: The number of customers who had at least one receipt of the
+            specified type. This number may be lower than the `ReceiptCount` if some
+            customers had multiple receipts of the specified type.
+          title: Number of Customers.
           type: integer
         Amount:
-          description: Sum of the amount of items in the receipt positions.
-          example: 789
+          description: The total amount of items of the receipts of the specified
+            type. This is the sum of the amount of items of all receipts of the specified
+            type.
+          title: Amount of Items.
           type: integer
         Revenue:
           $ref: "#/components/schemas/Price"
         CostOfGoodsSold:
           $ref: "#/components/schemas/Price"
       required:
-      - AverageShoppingCart
+      - Amount
       - CostOfGoodsSold
-      - CostOfGoodsSoldRatio
       - CustomerCount
       - ReceiptCount
       - ReceiptType
       - Revenue
+      title: Receipt Item Statistics Type
       type: object
-    StatsReceiptItemResponse_Groups_inner:
-      description: 'Group with statistics. '
+    StatsReceiptItemGroup:
+      description: A group of receipt item statistics for a given period.
       example:
-        GroupName: 08/2025
+        GroupName: GroupName
         Types:
-        - ReceiptType: RE
-          ReceiptCount: 123
-          Amount: 789
+        - ReceiptType: ReceiptType
+          ReceiptCount: 0
+          Amount: 1
           Revenue:
-            Currency: EUR
-            Value: 19.99
-          CustomerCount: 456
+            Currency: Currency
+            Value: 0.8008282
+          CustomerCount: 6
           CostOfGoodsSold:
-            Currency: EUR
-            Value: 19.99
-        - ReceiptType: RE
-          ReceiptCount: 123
-          Amount: 789
+            Currency: Currency
+            Value: 0.8008282
+        - ReceiptType: ReceiptType
+          ReceiptCount: 0
+          Amount: 1
           Revenue:
-            Currency: EUR
-            Value: 19.99
-          CustomerCount: 456
+            Currency: Currency
+            Value: 0.8008282
+          CustomerCount: 6
           CostOfGoodsSold:
-            Currency: EUR
-            Value: 19.99
-        GroupKey: 2025-08-01
+            Currency: Currency
+            Value: 0.8008282
+        GroupKey: GroupKey
       properties:
         GroupKey:
-          description: "Key for the group, use this when processing the response client-side."
-          example: 2025-08-01
+          description: "The key of the group, e.g. a date for daily grouping, a week\
+            \ number for weekly grouping, a month number for monthly grouping or a\
+            \ year number for yearly grouping."
+          title: Group Key.
           type: string
         GroupName:
-          description: "Group name, only used for display. _Never_ use this for anything\
-            \ else than display."
-          example: 08/2025
+          description: "A human-readable name of the group, e.g. a date for daily\
+            \ grouping, a week number for weekly grouping, a month name for monthly\
+            \ grouping or a year number for yearly grouping. This field is only for\
+            \ display purposes and may be localized, e.g. the month name may be localized\
+            \ to the language of the request. The `GroupKey` field should be used\
+            \ for grouping and filtering purposes, as it is not localized and has\
+            \ a consistent format."
+          title: Group Name.
           type: string
         Types:
-          description: List of receipt types with statistics.
+          description: Statistics for the different receipt types in the group.
           items:
-            $ref: "#/components/schemas/StatsReceiptItemResponse_Groups_inner_Types_inner"
+            $ref: "#/components/schemas/StatsReceiptItemType"
+          title: Receipt Types.
           type: array
       required:
       - GroupKey
       - GroupName
       - Types
+      title: Receipt Item Statistics Group
       type: object
+    StatsReceiptItemGroups:
+      description: A grouped list of receipt item statistics for a given period.
+      example:
+        Groups:
+        - GroupName: GroupName
+          Types:
+          - ReceiptType: ReceiptType
+            ReceiptCount: 0
+            Amount: 1
+            Revenue:
+              Currency: Currency
+              Value: 0.8008282
+            CustomerCount: 6
+            CostOfGoodsSold:
+              Currency: Currency
+              Value: 0.8008282
+          - ReceiptType: ReceiptType
+            ReceiptCount: 0
+            Amount: 1
+            Revenue:
+              Currency: Currency
+              Value: 0.8008282
+            CustomerCount: 6
+            CostOfGoodsSold:
+              Currency: Currency
+              Value: 0.8008282
+          GroupKey: GroupKey
+        - GroupName: GroupName
+          Types:
+          - ReceiptType: ReceiptType
+            ReceiptCount: 0
+            Amount: 1
+            Revenue:
+              Currency: Currency
+              Value: 0.8008282
+            CustomerCount: 6
+            CostOfGoodsSold:
+              Currency: Currency
+              Value: 0.8008282
+          - ReceiptType: ReceiptType
+            ReceiptCount: 0
+            Amount: 1
+            Revenue:
+              Currency: Currency
+              Value: 0.8008282
+            CustomerCount: 6
+            CostOfGoodsSold:
+              Currency: Currency
+              Value: 0.8008282
+          GroupKey: GroupKey
+      properties:
+        Groups:
+          description: "The data is grouped by the specified grouping key, e.g. by\
+            \ day, week, month or year."
+          items:
+            $ref: "#/components/schemas/StatsReceiptItemGroup"
+          title: Grouped data.
+          type: array
+      required:
+      - Groups
+      title: Receipt Item Statistics
+      type: object
+    AuthLoginRequestV4:
+      description: Request body for JSON authentication.
+      example:
+        Username: user@customa.biz
+        Password: secret123!
+      properties:
+        Username:
+          description: Username (E-Mail address) used for authentication with Customa.
+          example: user@customa.biz
+          format: email
+          title: Username.
+          type: string
+        Password:
+          description: Password for the User.
+          example: secret123!
+          title: Password.
+          type: string
+      required:
+      - Password
+      - Username
+      title: Login Authentication Request
+      type: object
+    AuthTokenResponseV4:
+      description: Response body of a successful authentication login request or token
+        refresh.
+      example:
+        Token: 044600149b8a50a2d00a32bc4ff9ac4bbdcdf82565e6b0900ded9daa4db77b55cb75eb58c71ae17af8634da8cce5d464735379f9b45c9ca4d3367d6eea9ea185
+        ValidUntil: 2024-12-31T23:59:59Z
+      properties:
+        Token:
+          description: "Random, hex encoded 64 Bytes used as a token for authentication.\
+            \ The content of this token is not relevant, but it should be treated\
+            \ as a secret and stored securely. It is recommended to refresh the token\
+            \ at least 10 minutes before it expires to ensure uninterrupted access\
+            \ to the API."
+          example: 044600149b8a50a2d00a32bc4ff9ac4bbdcdf82565e6b0900ded9daa4db77b55cb75eb58c71ae17af8634da8cce5d464735379f9b45c9ca4d3367d6eea9ea185
+          title: API Access Token.
+          type: string
+        ValidUntil:
+          description: "The timestamp on which the token expires, provided in RFC3339\
+            \ Format."
+          example: 2024-12-31T23:59:59Z
+          format: date-time
+          title: Expiration Timestamp.
+          type: string
+      required:
+      - Token
+      - ValidUntil
+      title: Authentication Token Response
+      type: object
+    ErrorResponseV4:
+      description: Response body for an error response.
+      example:
+        Message: Something bad happened.
+        Code: 42
+      properties:
+        Code:
+          default: 0
+          description: A numeric code representing the error. A list of error codes
+            and their meanings can be found in the documentation.
+          example: 42
+          title: Error Code.
+          type: integer
+        Message:
+          default: ""
+          description: A message giving feedback about the error. The recipient's
+            logic must not rely on its content.
+          example: Something bad happened.
+          title: Error Message.
+          type: string
+      title: Error Response
+      type: object
+    Project:
+      example:
+        AssignedModules:
+        - AssignedModules
+        - AssignedModules
+        Name: Name
+      properties:
+        Name:
+          title: Name of the project.
+          type: string
+        AssignedModules:
+          items:
+            type: string
+          title: Modules assigned to the current user.
+          type: array
+      required:
+      - AssignedModules
+      - Name
+      type: object
+    ProjectList:
+      example:
+        Projects:
+          key:
+            AssignedModules:
+            - AssignedModules
+            - AssignedModules
+            Name: Name
+      properties:
+        Projects:
+          additionalProperties:
+            $ref: "#/components/schemas/Project"
+          title: A list of projects.
+          type: object
+      required:
+      - Projects
+      type: object
+    StatsGroupings:
+      example:
+        Groupings:
+          key: Groupings
+      properties:
+        Groupings:
+          additionalProperties:
+            type: string
+          title: A map of grouping types.
+          type: object
+      required:
+      - Groupings
+      type: object
+    StatsField:
+      example:
+        AllowedFilters:
+        - AllowedFilters
+        - AllowedFilters
+      properties:
+        AllowedFilters:
+          items:
+            type: string
+          type: array
+      required:
+      - AllowedFilters
+      type: object
+    StatsFields:
+      example:
+        Fields:
+          key:
+            AllowedFilters:
+            - AllowedFilters
+            - AllowedFilters
+      properties:
+        Fields:
+          additionalProperties:
+            $ref: "#/components/schemas/StatsField"
+          type: object
+      required:
+      - Fields
+      type: object
+    Global_Value_of_the_Setting_:
+      description: "The global value of the setting, which applies when no marketplace-specific\
+        \ value is set and a project fallback is used. This value can be of type string,\
+        \ integer, float, or boolean, depending on the specific setting being represented."
+      example: 42
+      oneOf:
+      - type: string
+      - type: integer
+      - format: float
+        type: number
+      - type: boolean
+      title: Global Value of the Setting.
+    Marketplace_specific_values_of_the_Setting__value:
+      oneOf:
+      - type: string
+      - type: integer
+      - format: float
+        type: number
+      - type: boolean
   securitySchemes:
-    Token:
+    apiV3Token:
       scheme: bearer
+      type: http
+    apiV4Token:
+      scheme: bearer
+      type: http
+    apiV4BasicAuth:
+      scheme: basic
       type: http
