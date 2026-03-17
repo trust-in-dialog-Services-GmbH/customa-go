@@ -16,58 +16,41 @@ import (
 	"fmt"
 )
 
-// checks if the StrictProduct type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &StrictProduct{}
+// checks if the ProductV4 type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProductV4{}
 
-// StrictProduct struct for StrictProduct
-type StrictProduct struct {
-	// Creation Timestamp of the item. Set internally by Customa, any given value is ignored.
-	CreationDate *time.Time `json:"CreationDate,omitempty"`
-	// Timestamp of the last change of the item in the database. Set internally by Customa, any given value is ignored.
-	ModificationDate *time.Time `json:"ModificationDate,omitempty"`
-	// ID of the product. Set internally by Customa, any given value is ignored.
-	ID *string `json:"ID,omitempty"`
-	// ID of the parent product. The parent must be standalone and not have a parent itself.
-	Parent NullableString `json:"Parent"`
-	// Product number, MUST be unique.
+// ProductV4 struct for ProductV4
+type ProductV4 struct {
+	ID NullableString `json:"ID,omitempty"`
 	Number string `json:"Number"`
-	// EAN of the product.
+	Parent NullableString `json:"Parent,omitempty"`
 	EAN string `json:"EAN"`
-	// Name of the product.
 	Name string `json:"Name"`
-	// Manufacturer of the product.
 	Manufacturer string `json:"Manufacturer"`
-	// Vendor of the product.
 	Vendor string `json:"Vendor"`
-	// Short description of the product.
 	ShortDescription string `json:"ShortDescription"`
-	// Long description of the product.
 	LongDescription string `json:"LongDescription"`
-	// Source URI of the product image.
 	ImageSource string `json:"ImageSource"`
-	// Whether the product is active or inactive.
-	Status bool `json:"Status"`
-	// Tax class of the product. For example, in Germany, 19% VAT would be 'Normal' while 7% VAT would be 'Reduced'.
-	TaxClass string `json:"TaxClass"`
-	// Stock of the product.
+	Active bool `json:"Active"`
+	TaxClass TaxClass `json:"TaxClass"`
 	Stock int32 `json:"Stock"`
-	// Additional field data for the product.
-	AdditionalFields []AdditionalField `json:"AdditionalFields"`
+	AdditionalFields map[string]string `json:"AdditionalFields"`
 	PurchasePrice Price `json:"PurchasePrice"`
 	SalesPrice Price `json:"SalesPrice"`
 	RecommendedRetailPrice Price `json:"RecommendedRetailPrice"`
+	CreationDate time.Time `json:"CreationDate"`
+	ModificationDate time.Time `json:"ModificationDate"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _StrictProduct StrictProduct
+type _ProductV4 ProductV4
 
-// NewStrictProduct instantiates a new StrictProduct object
+// NewProductV4 instantiates a new ProductV4 object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStrictProduct(parent NullableString, number string, eAN string, name string, manufacturer string, vendor string, shortDescription string, longDescription string, imageSource string, status bool, taxClass string, stock int32, additionalFields []AdditionalField, purchasePrice Price, salesPrice Price, recommendedRetailPrice Price) *StrictProduct {
-	this := StrictProduct{}
-	this.Parent = parent
+func NewProductV4(number string, eAN string, name string, manufacturer string, vendor string, shortDescription string, longDescription string, imageSource string, active bool, taxClass TaxClass, stock int32, additionalFields map[string]string, purchasePrice Price, salesPrice Price, recommendedRetailPrice Price, creationDate time.Time, modificationDate time.Time) *ProductV4 {
+	this := ProductV4{}
 	this.Number = number
 	this.EAN = eAN
 	this.Name = name
@@ -76,148 +59,70 @@ func NewStrictProduct(parent NullableString, number string, eAN string, name str
 	this.ShortDescription = shortDescription
 	this.LongDescription = longDescription
 	this.ImageSource = imageSource
-	this.Status = status
+	this.Active = active
 	this.TaxClass = taxClass
 	this.Stock = stock
 	this.AdditionalFields = additionalFields
 	this.PurchasePrice = purchasePrice
 	this.SalesPrice = salesPrice
 	this.RecommendedRetailPrice = recommendedRetailPrice
+	this.CreationDate = creationDate
+	this.ModificationDate = modificationDate
 	return &this
 }
 
-// NewStrictProductWithDefaults instantiates a new StrictProduct object
+// NewProductV4WithDefaults instantiates a new ProductV4 object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewStrictProductWithDefaults() *StrictProduct {
-	this := StrictProduct{}
+func NewProductV4WithDefaults() *ProductV4 {
+	this := ProductV4{}
 	return &this
 }
 
-// GetCreationDate returns the CreationDate field value if set, zero value otherwise.
-func (o *StrictProduct) GetCreationDate() time.Time {
-	if o == nil || IsNil(o.CreationDate) {
-		var ret time.Time
-		return ret
-	}
-	return *o.CreationDate
-}
-
-// GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *StrictProduct) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil || IsNil(o.CreationDate) {
-		return nil, false
-	}
-	return o.CreationDate, true
-}
-
-// HasCreationDate returns a boolean if a field has been set.
-func (o *StrictProduct) HasCreationDate() bool {
-	if o != nil && !IsNil(o.CreationDate) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreationDate gets a reference to the given time.Time and assigns it to the CreationDate field.
-func (o *StrictProduct) SetCreationDate(v time.Time) {
-	o.CreationDate = &v
-}
-
-// GetModificationDate returns the ModificationDate field value if set, zero value otherwise.
-func (o *StrictProduct) GetModificationDate() time.Time {
-	if o == nil || IsNil(o.ModificationDate) {
-		var ret time.Time
-		return ret
-	}
-	return *o.ModificationDate
-}
-
-// GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *StrictProduct) GetModificationDateOk() (*time.Time, bool) {
-	if o == nil || IsNil(o.ModificationDate) {
-		return nil, false
-	}
-	return o.ModificationDate, true
-}
-
-// HasModificationDate returns a boolean if a field has been set.
-func (o *StrictProduct) HasModificationDate() bool {
-	if o != nil && !IsNil(o.ModificationDate) {
-		return true
-	}
-
-	return false
-}
-
-// SetModificationDate gets a reference to the given time.Time and assigns it to the ModificationDate field.
-func (o *StrictProduct) SetModificationDate(v time.Time) {
-	o.ModificationDate = &v
-}
-
-// GetID returns the ID field value if set, zero value otherwise.
-func (o *StrictProduct) GetID() string {
-	if o == nil || IsNil(o.ID) {
+// GetID returns the ID field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProductV4) GetID() string {
+	if o == nil || IsNil(o.ID.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.ID
+	return *o.ID.Get()
 }
 
 // GetIDOk returns a tuple with the ID field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetIDOk() (*string, bool) {
-	if o == nil || IsNil(o.ID) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProductV4) GetIDOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ID, true
+	return o.ID.Get(), o.ID.IsSet()
 }
 
 // HasID returns a boolean if a field has been set.
-func (o *StrictProduct) HasID() bool {
-	if o != nil && !IsNil(o.ID) {
+func (o *ProductV4) HasID() bool {
+	if o != nil && o.ID.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetID gets a reference to the given string and assigns it to the ID field.
-func (o *StrictProduct) SetID(v string) {
-	o.ID = &v
+// SetID gets a reference to the given NullableString and assigns it to the ID field.
+func (o *ProductV4) SetID(v string) {
+	o.ID.Set(&v)
+}
+// SetIDNil sets the value for ID to be an explicit nil
+func (o *ProductV4) SetIDNil() {
+	o.ID.Set(nil)
 }
 
-// GetParent returns the Parent field value
-// If the value is explicit nil, the zero value for string will be returned
-func (o *StrictProduct) GetParent() string {
-	if o == nil || o.Parent.Get() == nil {
-		var ret string
-		return ret
-	}
-
-	return *o.Parent.Get()
-}
-
-// GetParentOk returns a tuple with the Parent field value
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *StrictProduct) GetParentOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Parent.Get(), o.Parent.IsSet()
-}
-
-// SetParent sets field value
-func (o *StrictProduct) SetParent(v string) {
-	o.Parent.Set(&v)
+// UnsetID ensures that no value is present for ID, not even an explicit nil
+func (o *ProductV4) UnsetID() {
+	o.ID.Unset()
 }
 
 // GetNumber returns the Number field value
-func (o *StrictProduct) GetNumber() string {
+func (o *ProductV4) GetNumber() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -228,7 +133,7 @@ func (o *StrictProduct) GetNumber() string {
 
 // GetNumberOk returns a tuple with the Number field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetNumberOk() (*string, bool) {
+func (o *ProductV4) GetNumberOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -236,12 +141,54 @@ func (o *StrictProduct) GetNumberOk() (*string, bool) {
 }
 
 // SetNumber sets field value
-func (o *StrictProduct) SetNumber(v string) {
+func (o *ProductV4) SetNumber(v string) {
 	o.Number = v
 }
 
+// GetParent returns the Parent field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProductV4) GetParent() string {
+	if o == nil || IsNil(o.Parent.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Parent.Get()
+}
+
+// GetParentOk returns a tuple with the Parent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProductV4) GetParentOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Parent.Get(), o.Parent.IsSet()
+}
+
+// HasParent returns a boolean if a field has been set.
+func (o *ProductV4) HasParent() bool {
+	if o != nil && o.Parent.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetParent gets a reference to the given NullableString and assigns it to the Parent field.
+func (o *ProductV4) SetParent(v string) {
+	o.Parent.Set(&v)
+}
+// SetParentNil sets the value for Parent to be an explicit nil
+func (o *ProductV4) SetParentNil() {
+	o.Parent.Set(nil)
+}
+
+// UnsetParent ensures that no value is present for Parent, not even an explicit nil
+func (o *ProductV4) UnsetParent() {
+	o.Parent.Unset()
+}
+
 // GetEAN returns the EAN field value
-func (o *StrictProduct) GetEAN() string {
+func (o *ProductV4) GetEAN() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -252,7 +199,7 @@ func (o *StrictProduct) GetEAN() string {
 
 // GetEANOk returns a tuple with the EAN field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetEANOk() (*string, bool) {
+func (o *ProductV4) GetEANOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -260,12 +207,12 @@ func (o *StrictProduct) GetEANOk() (*string, bool) {
 }
 
 // SetEAN sets field value
-func (o *StrictProduct) SetEAN(v string) {
+func (o *ProductV4) SetEAN(v string) {
 	o.EAN = v
 }
 
 // GetName returns the Name field value
-func (o *StrictProduct) GetName() string {
+func (o *ProductV4) GetName() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -276,7 +223,7 @@ func (o *StrictProduct) GetName() string {
 
 // GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetNameOk() (*string, bool) {
+func (o *ProductV4) GetNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -284,12 +231,12 @@ func (o *StrictProduct) GetNameOk() (*string, bool) {
 }
 
 // SetName sets field value
-func (o *StrictProduct) SetName(v string) {
+func (o *ProductV4) SetName(v string) {
 	o.Name = v
 }
 
 // GetManufacturer returns the Manufacturer field value
-func (o *StrictProduct) GetManufacturer() string {
+func (o *ProductV4) GetManufacturer() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -300,7 +247,7 @@ func (o *StrictProduct) GetManufacturer() string {
 
 // GetManufacturerOk returns a tuple with the Manufacturer field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetManufacturerOk() (*string, bool) {
+func (o *ProductV4) GetManufacturerOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -308,12 +255,12 @@ func (o *StrictProduct) GetManufacturerOk() (*string, bool) {
 }
 
 // SetManufacturer sets field value
-func (o *StrictProduct) SetManufacturer(v string) {
+func (o *ProductV4) SetManufacturer(v string) {
 	o.Manufacturer = v
 }
 
 // GetVendor returns the Vendor field value
-func (o *StrictProduct) GetVendor() string {
+func (o *ProductV4) GetVendor() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -324,7 +271,7 @@ func (o *StrictProduct) GetVendor() string {
 
 // GetVendorOk returns a tuple with the Vendor field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetVendorOk() (*string, bool) {
+func (o *ProductV4) GetVendorOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -332,12 +279,12 @@ func (o *StrictProduct) GetVendorOk() (*string, bool) {
 }
 
 // SetVendor sets field value
-func (o *StrictProduct) SetVendor(v string) {
+func (o *ProductV4) SetVendor(v string) {
 	o.Vendor = v
 }
 
 // GetShortDescription returns the ShortDescription field value
-func (o *StrictProduct) GetShortDescription() string {
+func (o *ProductV4) GetShortDescription() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -348,7 +295,7 @@ func (o *StrictProduct) GetShortDescription() string {
 
 // GetShortDescriptionOk returns a tuple with the ShortDescription field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetShortDescriptionOk() (*string, bool) {
+func (o *ProductV4) GetShortDescriptionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -356,12 +303,12 @@ func (o *StrictProduct) GetShortDescriptionOk() (*string, bool) {
 }
 
 // SetShortDescription sets field value
-func (o *StrictProduct) SetShortDescription(v string) {
+func (o *ProductV4) SetShortDescription(v string) {
 	o.ShortDescription = v
 }
 
 // GetLongDescription returns the LongDescription field value
-func (o *StrictProduct) GetLongDescription() string {
+func (o *ProductV4) GetLongDescription() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -372,7 +319,7 @@ func (o *StrictProduct) GetLongDescription() string {
 
 // GetLongDescriptionOk returns a tuple with the LongDescription field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetLongDescriptionOk() (*string, bool) {
+func (o *ProductV4) GetLongDescriptionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -380,12 +327,12 @@ func (o *StrictProduct) GetLongDescriptionOk() (*string, bool) {
 }
 
 // SetLongDescription sets field value
-func (o *StrictProduct) SetLongDescription(v string) {
+func (o *ProductV4) SetLongDescription(v string) {
 	o.LongDescription = v
 }
 
 // GetImageSource returns the ImageSource field value
-func (o *StrictProduct) GetImageSource() string {
+func (o *ProductV4) GetImageSource() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -396,7 +343,7 @@ func (o *StrictProduct) GetImageSource() string {
 
 // GetImageSourceOk returns a tuple with the ImageSource field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetImageSourceOk() (*string, bool) {
+func (o *ProductV4) GetImageSourceOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -404,38 +351,38 @@ func (o *StrictProduct) GetImageSourceOk() (*string, bool) {
 }
 
 // SetImageSource sets field value
-func (o *StrictProduct) SetImageSource(v string) {
+func (o *ProductV4) SetImageSource(v string) {
 	o.ImageSource = v
 }
 
-// GetStatus returns the Status field value
-func (o *StrictProduct) GetStatus() bool {
+// GetActive returns the Active field value
+func (o *ProductV4) GetActive() bool {
 	if o == nil {
 		var ret bool
 		return ret
 	}
 
-	return o.Status
+	return o.Active
 }
 
-// GetStatusOk returns a tuple with the Status field value
+// GetActiveOk returns a tuple with the Active field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetStatusOk() (*bool, bool) {
+func (o *ProductV4) GetActiveOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Status, true
+	return &o.Active, true
 }
 
-// SetStatus sets field value
-func (o *StrictProduct) SetStatus(v bool) {
-	o.Status = v
+// SetActive sets field value
+func (o *ProductV4) SetActive(v bool) {
+	o.Active = v
 }
 
 // GetTaxClass returns the TaxClass field value
-func (o *StrictProduct) GetTaxClass() string {
+func (o *ProductV4) GetTaxClass() TaxClass {
 	if o == nil {
-		var ret string
+		var ret TaxClass
 		return ret
 	}
 
@@ -444,7 +391,7 @@ func (o *StrictProduct) GetTaxClass() string {
 
 // GetTaxClassOk returns a tuple with the TaxClass field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetTaxClassOk() (*string, bool) {
+func (o *ProductV4) GetTaxClassOk() (*TaxClass, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -452,12 +399,12 @@ func (o *StrictProduct) GetTaxClassOk() (*string, bool) {
 }
 
 // SetTaxClass sets field value
-func (o *StrictProduct) SetTaxClass(v string) {
+func (o *ProductV4) SetTaxClass(v TaxClass) {
 	o.TaxClass = v
 }
 
 // GetStock returns the Stock field value
-func (o *StrictProduct) GetStock() int32 {
+func (o *ProductV4) GetStock() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -468,7 +415,7 @@ func (o *StrictProduct) GetStock() int32 {
 
 // GetStockOk returns a tuple with the Stock field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetStockOk() (*int32, bool) {
+func (o *ProductV4) GetStockOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -476,14 +423,14 @@ func (o *StrictProduct) GetStockOk() (*int32, bool) {
 }
 
 // SetStock sets field value
-func (o *StrictProduct) SetStock(v int32) {
+func (o *ProductV4) SetStock(v int32) {
 	o.Stock = v
 }
 
 // GetAdditionalFields returns the AdditionalFields field value
-func (o *StrictProduct) GetAdditionalFields() []AdditionalField {
+func (o *ProductV4) GetAdditionalFields() map[string]string {
 	if o == nil {
-		var ret []AdditionalField
+		var ret map[string]string
 		return ret
 	}
 
@@ -492,20 +439,20 @@ func (o *StrictProduct) GetAdditionalFields() []AdditionalField {
 
 // GetAdditionalFieldsOk returns a tuple with the AdditionalFields field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetAdditionalFieldsOk() ([]AdditionalField, bool) {
+func (o *ProductV4) GetAdditionalFieldsOk() (*map[string]string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.AdditionalFields, true
+	return &o.AdditionalFields, true
 }
 
 // SetAdditionalFields sets field value
-func (o *StrictProduct) SetAdditionalFields(v []AdditionalField) {
+func (o *ProductV4) SetAdditionalFields(v map[string]string) {
 	o.AdditionalFields = v
 }
 
 // GetPurchasePrice returns the PurchasePrice field value
-func (o *StrictProduct) GetPurchasePrice() Price {
+func (o *ProductV4) GetPurchasePrice() Price {
 	if o == nil {
 		var ret Price
 		return ret
@@ -516,7 +463,7 @@ func (o *StrictProduct) GetPurchasePrice() Price {
 
 // GetPurchasePriceOk returns a tuple with the PurchasePrice field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetPurchasePriceOk() (*Price, bool) {
+func (o *ProductV4) GetPurchasePriceOk() (*Price, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -524,12 +471,12 @@ func (o *StrictProduct) GetPurchasePriceOk() (*Price, bool) {
 }
 
 // SetPurchasePrice sets field value
-func (o *StrictProduct) SetPurchasePrice(v Price) {
+func (o *ProductV4) SetPurchasePrice(v Price) {
 	o.PurchasePrice = v
 }
 
 // GetSalesPrice returns the SalesPrice field value
-func (o *StrictProduct) GetSalesPrice() Price {
+func (o *ProductV4) GetSalesPrice() Price {
 	if o == nil {
 		var ret Price
 		return ret
@@ -540,7 +487,7 @@ func (o *StrictProduct) GetSalesPrice() Price {
 
 // GetSalesPriceOk returns a tuple with the SalesPrice field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetSalesPriceOk() (*Price, bool) {
+func (o *ProductV4) GetSalesPriceOk() (*Price, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -548,12 +495,12 @@ func (o *StrictProduct) GetSalesPriceOk() (*Price, bool) {
 }
 
 // SetSalesPrice sets field value
-func (o *StrictProduct) SetSalesPrice(v Price) {
+func (o *ProductV4) SetSalesPrice(v Price) {
 	o.SalesPrice = v
 }
 
 // GetRecommendedRetailPrice returns the RecommendedRetailPrice field value
-func (o *StrictProduct) GetRecommendedRetailPrice() Price {
+func (o *ProductV4) GetRecommendedRetailPrice() Price {
 	if o == nil {
 		var ret Price
 		return ret
@@ -564,7 +511,7 @@ func (o *StrictProduct) GetRecommendedRetailPrice() Price {
 
 // GetRecommendedRetailPriceOk returns a tuple with the RecommendedRetailPrice field value
 // and a boolean to check if the value has been set.
-func (o *StrictProduct) GetRecommendedRetailPriceOk() (*Price, bool) {
+func (o *ProductV4) GetRecommendedRetailPriceOk() (*Price, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -572,11 +519,59 @@ func (o *StrictProduct) GetRecommendedRetailPriceOk() (*Price, bool) {
 }
 
 // SetRecommendedRetailPrice sets field value
-func (o *StrictProduct) SetRecommendedRetailPrice(v Price) {
+func (o *ProductV4) SetRecommendedRetailPrice(v Price) {
 	o.RecommendedRetailPrice = v
 }
 
-func (o StrictProduct) MarshalJSON() ([]byte, error) {
+// GetCreationDate returns the CreationDate field value
+func (o *ProductV4) GetCreationDate() time.Time {
+	if o == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return o.CreationDate
+}
+
+// GetCreationDateOk returns a tuple with the CreationDate field value
+// and a boolean to check if the value has been set.
+func (o *ProductV4) GetCreationDateOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreationDate, true
+}
+
+// SetCreationDate sets field value
+func (o *ProductV4) SetCreationDate(v time.Time) {
+	o.CreationDate = v
+}
+
+// GetModificationDate returns the ModificationDate field value
+func (o *ProductV4) GetModificationDate() time.Time {
+	if o == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return o.ModificationDate
+}
+
+// GetModificationDateOk returns a tuple with the ModificationDate field value
+// and a boolean to check if the value has been set.
+func (o *ProductV4) GetModificationDateOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ModificationDate, true
+}
+
+// SetModificationDate sets field value
+func (o *ProductV4) SetModificationDate(v time.Time) {
+	o.ModificationDate = v
+}
+
+func (o ProductV4) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -584,19 +579,15 @@ func (o StrictProduct) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o StrictProduct) ToMap() (map[string]interface{}, error) {
+func (o ProductV4) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.CreationDate) {
-		toSerialize["CreationDate"] = o.CreationDate
+	if o.ID.IsSet() {
+		toSerialize["ID"] = o.ID.Get()
 	}
-	if !IsNil(o.ModificationDate) {
-		toSerialize["ModificationDate"] = o.ModificationDate
-	}
-	if !IsNil(o.ID) {
-		toSerialize["ID"] = o.ID
-	}
-	toSerialize["Parent"] = o.Parent.Get()
 	toSerialize["Number"] = o.Number
+	if o.Parent.IsSet() {
+		toSerialize["Parent"] = o.Parent.Get()
+	}
 	toSerialize["EAN"] = o.EAN
 	toSerialize["Name"] = o.Name
 	toSerialize["Manufacturer"] = o.Manufacturer
@@ -604,13 +595,15 @@ func (o StrictProduct) ToMap() (map[string]interface{}, error) {
 	toSerialize["ShortDescription"] = o.ShortDescription
 	toSerialize["LongDescription"] = o.LongDescription
 	toSerialize["ImageSource"] = o.ImageSource
-	toSerialize["Status"] = o.Status
+	toSerialize["Active"] = o.Active
 	toSerialize["TaxClass"] = o.TaxClass
 	toSerialize["Stock"] = o.Stock
 	toSerialize["AdditionalFields"] = o.AdditionalFields
 	toSerialize["PurchasePrice"] = o.PurchasePrice
 	toSerialize["SalesPrice"] = o.SalesPrice
 	toSerialize["RecommendedRetailPrice"] = o.RecommendedRetailPrice
+	toSerialize["CreationDate"] = o.CreationDate
+	toSerialize["ModificationDate"] = o.ModificationDate
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -619,12 +612,11 @@ func (o StrictProduct) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *StrictProduct) UnmarshalJSON(data []byte) (err error) {
+func (o *ProductV4) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"Parent",
 		"Number",
 		"EAN",
 		"Name",
@@ -633,13 +625,15 @@ func (o *StrictProduct) UnmarshalJSON(data []byte) (err error) {
 		"ShortDescription",
 		"LongDescription",
 		"ImageSource",
-		"Status",
+		"Active",
 		"TaxClass",
 		"Stock",
 		"AdditionalFields",
 		"PurchasePrice",
 		"SalesPrice",
 		"RecommendedRetailPrice",
+		"CreationDate",
+		"ModificationDate",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -656,24 +650,22 @@ func (o *StrictProduct) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varStrictProduct := _StrictProduct{}
+	varProductV4 := _ProductV4{}
 
-	err = json.Unmarshal(data, &varStrictProduct)
+	err = json.Unmarshal(data, &varProductV4)
 
 	if err != nil {
 		return err
 	}
 
-	*o = StrictProduct(varStrictProduct)
+	*o = ProductV4(varProductV4)
 
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
-		delete(additionalProperties, "CreationDate")
-		delete(additionalProperties, "ModificationDate")
 		delete(additionalProperties, "ID")
-		delete(additionalProperties, "Parent")
 		delete(additionalProperties, "Number")
+		delete(additionalProperties, "Parent")
 		delete(additionalProperties, "EAN")
 		delete(additionalProperties, "Name")
 		delete(additionalProperties, "Manufacturer")
@@ -681,51 +673,53 @@ func (o *StrictProduct) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "ShortDescription")
 		delete(additionalProperties, "LongDescription")
 		delete(additionalProperties, "ImageSource")
-		delete(additionalProperties, "Status")
+		delete(additionalProperties, "Active")
 		delete(additionalProperties, "TaxClass")
 		delete(additionalProperties, "Stock")
 		delete(additionalProperties, "AdditionalFields")
 		delete(additionalProperties, "PurchasePrice")
 		delete(additionalProperties, "SalesPrice")
 		delete(additionalProperties, "RecommendedRetailPrice")
+		delete(additionalProperties, "CreationDate")
+		delete(additionalProperties, "ModificationDate")
 		o.AdditionalProperties = additionalProperties
 	}
 
 	return err
 }
 
-type NullableStrictProduct struct {
-	value *StrictProduct
+type NullableProductV4 struct {
+	value *ProductV4
 	isSet bool
 }
 
-func (v NullableStrictProduct) Get() *StrictProduct {
+func (v NullableProductV4) Get() *ProductV4 {
 	return v.value
 }
 
-func (v *NullableStrictProduct) Set(val *StrictProduct) {
+func (v *NullableProductV4) Set(val *ProductV4) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableStrictProduct) IsSet() bool {
+func (v NullableProductV4) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableStrictProduct) Unset() {
+func (v *NullableProductV4) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableStrictProduct(val *StrictProduct) *NullableStrictProduct {
-	return &NullableStrictProduct{value: val, isSet: true}
+func NewNullableProductV4(val *ProductV4) *NullableProductV4 {
+	return &NullableProductV4{value: val, isSet: true}
 }
 
-func (v NullableStrictProduct) MarshalJSON() ([]byte, error) {
+func (v NullableProductV4) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableStrictProduct) UnmarshalJSON(src []byte) error {
+func (v *NullableProductV4) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

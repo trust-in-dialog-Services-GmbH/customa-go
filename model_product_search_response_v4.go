@@ -15,50 +15,76 @@ import (
 	"fmt"
 )
 
-// checks if the ProductSearchResponse type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &ProductSearchResponse{}
+// checks if the ProductSearchResponseV4 type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProductSearchResponseV4{}
 
-// ProductSearchResponse struct for ProductSearchResponse
-type ProductSearchResponse struct {
-	// Total number of items.
+// ProductSearchResponseV4 struct for ProductSearchResponseV4
+type ProductSearchResponseV4 struct {
+	Products []ProductV4 `json:"Products,omitempty"`
 	TotalCount int32 `json:"TotalCount"`
-	// Current page number.
 	CurrentPage int32 `json:"CurrentPage"`
-	// Total number of pages.
 	PagesCount int32 `json:"PagesCount"`
-	// Number of items per page.
 	PageSize int32 `json:"PageSize"`
-	// List of products.
-	Products []StrictProduct `json:"Products"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _ProductSearchResponse ProductSearchResponse
+type _ProductSearchResponseV4 ProductSearchResponseV4
 
-// NewProductSearchResponse instantiates a new ProductSearchResponse object
+// NewProductSearchResponseV4 instantiates a new ProductSearchResponseV4 object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProductSearchResponse(totalCount int32, currentPage int32, pagesCount int32, pageSize int32, products []StrictProduct) *ProductSearchResponse {
-	this := ProductSearchResponse{}
+func NewProductSearchResponseV4(totalCount int32, currentPage int32, pagesCount int32, pageSize int32) *ProductSearchResponseV4 {
+	this := ProductSearchResponseV4{}
 	this.TotalCount = totalCount
 	this.CurrentPage = currentPage
 	this.PagesCount = pagesCount
 	this.PageSize = pageSize
-	this.Products = products
 	return &this
 }
 
-// NewProductSearchResponseWithDefaults instantiates a new ProductSearchResponse object
+// NewProductSearchResponseV4WithDefaults instantiates a new ProductSearchResponseV4 object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewProductSearchResponseWithDefaults() *ProductSearchResponse {
-	this := ProductSearchResponse{}
+func NewProductSearchResponseV4WithDefaults() *ProductSearchResponseV4 {
+	this := ProductSearchResponseV4{}
 	return &this
+}
+
+// GetProducts returns the Products field value if set, zero value otherwise.
+func (o *ProductSearchResponseV4) GetProducts() []ProductV4 {
+	if o == nil || IsNil(o.Products) {
+		var ret []ProductV4
+		return ret
+	}
+	return o.Products
+}
+
+// GetProductsOk returns a tuple with the Products field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductSearchResponseV4) GetProductsOk() ([]ProductV4, bool) {
+	if o == nil || IsNil(o.Products) {
+		return nil, false
+	}
+	return o.Products, true
+}
+
+// HasProducts returns a boolean if a field has been set.
+func (o *ProductSearchResponseV4) HasProducts() bool {
+	if o != nil && !IsNil(o.Products) {
+		return true
+	}
+
+	return false
+}
+
+// SetProducts gets a reference to the given []ProductV4 and assigns it to the Products field.
+func (o *ProductSearchResponseV4) SetProducts(v []ProductV4) {
+	o.Products = v
 }
 
 // GetTotalCount returns the TotalCount field value
-func (o *ProductSearchResponse) GetTotalCount() int32 {
+func (o *ProductSearchResponseV4) GetTotalCount() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -69,7 +95,7 @@ func (o *ProductSearchResponse) GetTotalCount() int32 {
 
 // GetTotalCountOk returns a tuple with the TotalCount field value
 // and a boolean to check if the value has been set.
-func (o *ProductSearchResponse) GetTotalCountOk() (*int32, bool) {
+func (o *ProductSearchResponseV4) GetTotalCountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -77,12 +103,12 @@ func (o *ProductSearchResponse) GetTotalCountOk() (*int32, bool) {
 }
 
 // SetTotalCount sets field value
-func (o *ProductSearchResponse) SetTotalCount(v int32) {
+func (o *ProductSearchResponseV4) SetTotalCount(v int32) {
 	o.TotalCount = v
 }
 
 // GetCurrentPage returns the CurrentPage field value
-func (o *ProductSearchResponse) GetCurrentPage() int32 {
+func (o *ProductSearchResponseV4) GetCurrentPage() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -93,7 +119,7 @@ func (o *ProductSearchResponse) GetCurrentPage() int32 {
 
 // GetCurrentPageOk returns a tuple with the CurrentPage field value
 // and a boolean to check if the value has been set.
-func (o *ProductSearchResponse) GetCurrentPageOk() (*int32, bool) {
+func (o *ProductSearchResponseV4) GetCurrentPageOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -101,12 +127,12 @@ func (o *ProductSearchResponse) GetCurrentPageOk() (*int32, bool) {
 }
 
 // SetCurrentPage sets field value
-func (o *ProductSearchResponse) SetCurrentPage(v int32) {
+func (o *ProductSearchResponseV4) SetCurrentPage(v int32) {
 	o.CurrentPage = v
 }
 
 // GetPagesCount returns the PagesCount field value
-func (o *ProductSearchResponse) GetPagesCount() int32 {
+func (o *ProductSearchResponseV4) GetPagesCount() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -117,7 +143,7 @@ func (o *ProductSearchResponse) GetPagesCount() int32 {
 
 // GetPagesCountOk returns a tuple with the PagesCount field value
 // and a boolean to check if the value has been set.
-func (o *ProductSearchResponse) GetPagesCountOk() (*int32, bool) {
+func (o *ProductSearchResponseV4) GetPagesCountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -125,12 +151,12 @@ func (o *ProductSearchResponse) GetPagesCountOk() (*int32, bool) {
 }
 
 // SetPagesCount sets field value
-func (o *ProductSearchResponse) SetPagesCount(v int32) {
+func (o *ProductSearchResponseV4) SetPagesCount(v int32) {
 	o.PagesCount = v
 }
 
 // GetPageSize returns the PageSize field value
-func (o *ProductSearchResponse) GetPageSize() int32 {
+func (o *ProductSearchResponseV4) GetPageSize() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -141,7 +167,7 @@ func (o *ProductSearchResponse) GetPageSize() int32 {
 
 // GetPageSizeOk returns a tuple with the PageSize field value
 // and a boolean to check if the value has been set.
-func (o *ProductSearchResponse) GetPageSizeOk() (*int32, bool) {
+func (o *ProductSearchResponseV4) GetPageSizeOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -149,35 +175,11 @@ func (o *ProductSearchResponse) GetPageSizeOk() (*int32, bool) {
 }
 
 // SetPageSize sets field value
-func (o *ProductSearchResponse) SetPageSize(v int32) {
+func (o *ProductSearchResponseV4) SetPageSize(v int32) {
 	o.PageSize = v
 }
 
-// GetProducts returns the Products field value
-func (o *ProductSearchResponse) GetProducts() []StrictProduct {
-	if o == nil {
-		var ret []StrictProduct
-		return ret
-	}
-
-	return o.Products
-}
-
-// GetProductsOk returns a tuple with the Products field value
-// and a boolean to check if the value has been set.
-func (o *ProductSearchResponse) GetProductsOk() ([]StrictProduct, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Products, true
-}
-
-// SetProducts sets field value
-func (o *ProductSearchResponse) SetProducts(v []StrictProduct) {
-	o.Products = v
-}
-
-func (o ProductSearchResponse) MarshalJSON() ([]byte, error) {
+func (o ProductSearchResponseV4) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -185,13 +187,15 @@ func (o ProductSearchResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o ProductSearchResponse) ToMap() (map[string]interface{}, error) {
+func (o ProductSearchResponseV4) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Products) {
+		toSerialize["Products"] = o.Products
+	}
 	toSerialize["TotalCount"] = o.TotalCount
 	toSerialize["CurrentPage"] = o.CurrentPage
 	toSerialize["PagesCount"] = o.PagesCount
 	toSerialize["PageSize"] = o.PageSize
-	toSerialize["Products"] = o.Products
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -200,7 +204,7 @@ func (o ProductSearchResponse) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *ProductSearchResponse) UnmarshalJSON(data []byte) (err error) {
+func (o *ProductSearchResponseV4) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -209,7 +213,6 @@ func (o *ProductSearchResponse) UnmarshalJSON(data []byte) (err error) {
 		"CurrentPage",
 		"PagesCount",
 		"PageSize",
-		"Products",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -226,62 +229,62 @@ func (o *ProductSearchResponse) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varProductSearchResponse := _ProductSearchResponse{}
+	varProductSearchResponseV4 := _ProductSearchResponseV4{}
 
-	err = json.Unmarshal(data, &varProductSearchResponse)
+	err = json.Unmarshal(data, &varProductSearchResponseV4)
 
 	if err != nil {
 		return err
 	}
 
-	*o = ProductSearchResponse(varProductSearchResponse)
+	*o = ProductSearchResponseV4(varProductSearchResponseV4)
 
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "Products")
 		delete(additionalProperties, "TotalCount")
 		delete(additionalProperties, "CurrentPage")
 		delete(additionalProperties, "PagesCount")
 		delete(additionalProperties, "PageSize")
-		delete(additionalProperties, "Products")
 		o.AdditionalProperties = additionalProperties
 	}
 
 	return err
 }
 
-type NullableProductSearchResponse struct {
-	value *ProductSearchResponse
+type NullableProductSearchResponseV4 struct {
+	value *ProductSearchResponseV4
 	isSet bool
 }
 
-func (v NullableProductSearchResponse) Get() *ProductSearchResponse {
+func (v NullableProductSearchResponseV4) Get() *ProductSearchResponseV4 {
 	return v.value
 }
 
-func (v *NullableProductSearchResponse) Set(val *ProductSearchResponse) {
+func (v *NullableProductSearchResponseV4) Set(val *ProductSearchResponseV4) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableProductSearchResponse) IsSet() bool {
+func (v NullableProductSearchResponseV4) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableProductSearchResponse) Unset() {
+func (v *NullableProductSearchResponseV4) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableProductSearchResponse(val *ProductSearchResponse) *NullableProductSearchResponse {
-	return &NullableProductSearchResponse{value: val, isSet: true}
+func NewNullableProductSearchResponseV4(val *ProductSearchResponseV4) *NullableProductSearchResponseV4 {
+	return &NullableProductSearchResponseV4{value: val, isSet: true}
 }
 
-func (v NullableProductSearchResponse) MarshalJSON() ([]byte, error) {
+func (v NullableProductSearchResponseV4) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableProductSearchResponse) UnmarshalJSON(src []byte) error {
+func (v *NullableProductSearchResponseV4) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

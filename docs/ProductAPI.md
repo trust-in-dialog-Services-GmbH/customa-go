@@ -6,10 +6,12 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ProductDeleteV3**](ProductAPI.md#ProductDeleteV3) | **Delete** /api/v3/product/{id} | Deletes a product by its ID.
 [**ProductGetV3**](ProductAPI.md#ProductGetV3) | **Get** /api/v3/product/{id} | Retrieves a product by its ID.
+[**ProductGetV4**](ProductAPI.md#ProductGetV4) | **Get** /api/v4/product/{project}/{id} | Retrieves a product by its ID.
 [**ProductPatchV3**](ProductAPI.md#ProductPatchV3) | **Patch** /api/v3/product/{id} | Updates a product partially by its ID.
 [**ProductPostV3**](ProductAPI.md#ProductPostV3) | **Post** /api/v3/product | Creates a new Product.
 [**ProductPutV3**](ProductAPI.md#ProductPutV3) | **Put** /api/v3/product/{id} | Overwrites an existing product with the given ID.
 [**ProductSearchV3**](ProductAPI.md#ProductSearchV3) | **Post** /api/v3/product/search | Searches for products by the given filters.
+[**ProductSearchV4**](ProductAPI.md#ProductSearchV4) | **Post** /api/v4/product/{project}/search | Searches for products by the given filters.
 
 
 
@@ -136,6 +138,77 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [apiV3Token](../README.md#apiV3Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ProductGetV4
+
+> ProductV4 ProductGetV4(ctx, project, id).Execute()
+
+Retrieves a product by its ID.
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	id := "id_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProductAPI.ProductGetV4(context.Background(), project, id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductGetV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ProductGetV4`: ProductV4
+	fmt.Fprintf(os.Stdout, "Response from `ProductAPI.ProductGetV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiProductGetV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**ProductV4**](ProductV4.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
 
 ### HTTP request headers
 
@@ -408,6 +481,78 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [apiV3Token](../README.md#apiV3Token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ProductSearchV4
+
+> ProductSearchResponseV4 ProductSearchV4(ctx, project).SearchRequest(searchRequest).Execute()
+
+Searches for products by the given filters.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	searchRequest := *customa.NewSearchRequest(int32(1), int32(10), []customa.Filter{*customa.NewFilter(customa.FilterType("IsEmpty"), "Field_example", []string{"Values_example"})}) // SearchRequest | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProductAPI.ProductSearchV4(context.Background(), project).SearchRequest(searchRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductSearchV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ProductSearchV4`: ProductSearchResponseV4
+	fmt.Fprintf(os.Stdout, "Response from `ProductAPI.ProductSearchV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiProductSearchV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **searchRequest** | [**SearchRequest**](SearchRequest.md) |  | 
+
+### Return type
+
+[**ProductSearchResponseV4**](ProductSearchResponseV4.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
 
 ### HTTP request headers
 

@@ -2,7 +2,6 @@
 api/openapi.yaml
 api_auth.go
 api_customer.go
-api_oauth.go
 api_product.go
 api_project.go
 api_receipt.go
@@ -34,11 +33,12 @@ docs/LegacySearchResponse.md
 docs/MarketplaceSpecificValuesOfTheSettingValue.md
 docs/OAuthValidationRequest.md
 docs/OAuthValidationResponse.md
-docs/OauthAPI.md
 docs/Price.md
 docs/Product.md
 docs/ProductAPI.md
 docs/ProductSearchResponse.md
+docs/ProductSearchResponseV4.md
+docs/ProductV4.md
 docs/Project.md
 docs/ProjectAPI.md
 docs/ProjectList.md
@@ -76,6 +76,7 @@ docs/StrictCustomer.md
 docs/StrictProduct.md
 docs/StrictReceipt.md
 docs/StrictReceiptItem.md
+docs/TaxClass.md
 docs/Timestamped.md
 go.mod
 go.sum
@@ -103,6 +104,8 @@ model_o_auth_validation_response.go
 model_price.go
 model_product.go
 model_product_search_response.go
+model_product_search_response_v4.go
+model_product_v4.go
 model_project.go
 model_project_list.go
 model_receipt.go
@@ -135,11 +138,11 @@ model_strict_customer.go
 model_strict_product.go
 model_strict_receipt.go
 model_strict_receipt_item.go
+model_tax_class.go
 model_timestamped.go
 response.go
 test/api_auth_test.go
 test/api_customer_test.go
-test/api_oauth_test.go
 test/api_product_test.go
 test/api_project_test.go
 test/api_receipt_test.go

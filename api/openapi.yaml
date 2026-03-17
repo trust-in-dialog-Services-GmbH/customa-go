@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.8.0
+  version: 3.9.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -11,8 +11,6 @@ tags:
   name: auth
 - description: customer
   name: customer
-- description: oauth
-  name: oauth
 - description: product
   name: product
 - description: receipt
@@ -257,54 +255,6 @@ paths:
       summary: Searches for customers by the given filters.
       tags:
       - customer
-  /api/v3/oauth/{app}/validate:
-    post:
-      deprecated: true
-      description: |-
-        This endpoint checks whether the provided ClientID and Secret are valid for the specified OAuth app within the context of the authenticated project. It returns a boolean indicating the validity of the credentials. If the app is inactive, false is returned.
-
-        This API is internal, made available for internal services and integrations only. There is no guarantee for stability or availability.
-      operationId: oauth_validate_v3
-      parameters:
-      - explode: false
-        in: path
-        name: app
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/OAuthValidationRequest"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/OAuthValidationResponse"
-          description: "The result of the validation. True if the provided credentials\
-            \ are valid, false otherwise."
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseV3"
-          description: The request body is invalid or malformed.
-        "422":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseV3"
-          description: The request body is semantically invalid.
-      security:
-      - apiV3Token: []
-      summary: "Internal API: Check the validity of OAuth credentials for a given\
-        \ app."
-      tags:
-      - oauth
   /api/v3/product:
     post:
       description: A new product is created using the provided data. The product ID
@@ -843,6 +793,76 @@ paths:
       summary: API Endpoint for JSON authentication.
       tags:
       - auth
+  /api/v4/product/{project}/{id}:
+    get:
+      operationId: product_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductV4"
+          description: The product was successfully retrieved.
+        "404":
+          description: The product was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a product by its ID.
+      tags:
+      - product
+  /api/v4/product/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, products can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: product_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductSearchResponseV4"
+          description: A search response with products matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for products by the given filters.
+      tags:
+      - product
   /api/v4/project:
     get:
       operationId: project_list_v4
@@ -2315,9 +2335,6 @@ components:
     OAuthValidationRequest:
       deprecated: true
       description: Request body for OAuth Token validation.
-      example:
-        Secret: Secret
-        ClientID: ClientID
       properties:
         ClientID:
           description: OAuth Client ID.
@@ -2332,8 +2349,6 @@ components:
     OAuthValidationResponse:
       deprecated: true
       description: Response for OAuth Token validation.
-      example:
-        Valid: true
       properties:
         Valid:
           description: "Indicates whether the provided OAuth credentials are valid.\
@@ -3291,6 +3306,186 @@ components:
           title: Error Message.
           type: string
       title: Error Response
+      type: object
+    TaxClass:
+      enum:
+      - NormalTax
+      - ReducedTax
+      - HighlyReducedTax
+      - NoTax
+      type: string
+    ProductV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        RecommendedRetailPrice:
+          Currency: Currency
+          Value: 0.8008282
+        Parent: Parent
+        AdditionalFields:
+          key: AdditionalFields
+        TaxClass: NormalTax
+        PurchasePrice:
+          Currency: Currency
+          Value: 0.8008282
+        Vendor: Vendor
+        Name: Name
+        ShortDescription: ShortDescription
+        SalesPrice:
+          Currency: Currency
+          Value: 0.8008282
+        Active: true
+        EAN: EAN
+        LongDescription: LongDescription
+        Number: Number
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Manufacturer: Manufacturer
+        ID: ID
+        ImageSource: ImageSource
+        Stock: 0
+      properties:
+        ID:
+          nullable: true
+          type: string
+        Number:
+          type: string
+        Parent:
+          nullable: true
+          type: string
+        EAN:
+          type: string
+        Name:
+          type: string
+        Manufacturer:
+          type: string
+        Vendor:
+          type: string
+        ShortDescription:
+          type: string
+        LongDescription:
+          type: string
+        ImageSource:
+          type: string
+        Active:
+          type: boolean
+        TaxClass:
+          $ref: "#/components/schemas/TaxClass"
+        Stock:
+          type: integer
+        AdditionalFields:
+          additionalProperties:
+            type: string
+          type: object
+        PurchasePrice:
+          $ref: "#/components/schemas/Price"
+        SalesPrice:
+          $ref: "#/components/schemas/Price"
+        RecommendedRetailPrice:
+          $ref: "#/components/schemas/Price"
+        CreationDate:
+          format: date-time
+          type: string
+        ModificationDate:
+          format: date-time
+          type: string
+      required:
+      - Active
+      - AdditionalFields
+      - CreationDate
+      - EAN
+      - ImageSource
+      - LongDescription
+      - Manufacturer
+      - ModificationDate
+      - Name
+      - Number
+      - PurchasePrice
+      - RecommendedRetailPrice
+      - SalesPrice
+      - ShortDescription
+      - Stock
+      - TaxClass
+      - Vendor
+      title: Product
+      type: object
+    ProductSearchResponseV4:
+      example:
+        Products:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          RecommendedRetailPrice:
+            Currency: Currency
+            Value: 0.8008282
+          Parent: Parent
+          AdditionalFields:
+            key: AdditionalFields
+          TaxClass: NormalTax
+          PurchasePrice:
+            Currency: Currency
+            Value: 0.8008282
+          Vendor: Vendor
+          Name: Name
+          ShortDescription: ShortDescription
+          SalesPrice:
+            Currency: Currency
+            Value: 0.8008282
+          Active: true
+          EAN: EAN
+          LongDescription: LongDescription
+          Number: Number
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Manufacturer: Manufacturer
+          ID: ID
+          ImageSource: ImageSource
+          Stock: 0
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          RecommendedRetailPrice:
+            Currency: Currency
+            Value: 0.8008282
+          Parent: Parent
+          AdditionalFields:
+            key: AdditionalFields
+          TaxClass: NormalTax
+          PurchasePrice:
+            Currency: Currency
+            Value: 0.8008282
+          Vendor: Vendor
+          Name: Name
+          ShortDescription: ShortDescription
+          SalesPrice:
+            Currency: Currency
+            Value: 0.8008282
+          Active: true
+          EAN: EAN
+          LongDescription: LongDescription
+          Number: Number
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Manufacturer: Manufacturer
+          ID: ID
+          ImageSource: ImageSource
+          Stock: 0
+        TotalCount: 0
+        PageSize: 5
+        CurrentPage: 6
+        PagesCount: 1
+      properties:
+        Products:
+          default: []
+          items:
+            $ref: "#/components/schemas/ProductV4"
+          type: array
+        TotalCount:
+          type: integer
+        CurrentPage:
+          type: integer
+        PagesCount:
+          type: integer
+        PageSize:
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Product Search Response
       type: object
     Project:
       example:

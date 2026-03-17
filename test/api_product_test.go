@@ -49,6 +49,21 @@ func Test_customa_ProductAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ProductAPIService ProductGetV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		resp, httpRes, err := apiClient.ProductAPI.ProductGetV4(context.Background(), project, id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ProductAPIService ProductPatchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -92,6 +107,20 @@ func Test_customa_ProductAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ProductAPI.ProductSearchV3(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ProductAPIService ProductSearchV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.ProductAPI.ProductSearchV4(context.Background(), project).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
