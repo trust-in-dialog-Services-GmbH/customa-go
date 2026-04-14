@@ -35,6 +35,20 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test CustomerAPIService CustomerDeleteV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		httpRes, err := apiClient.CustomerAPI.CustomerDeleteV4(context.Background(), project, id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CustomerAPIService CustomerGetV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -42,6 +56,21 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 		var id string
 
 		resp, httpRes, err := apiClient.CustomerAPI.CustomerGetV3(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test CustomerAPIService CustomerGetV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		resp, httpRes, err := apiClient.CustomerAPI.CustomerGetV4(context.Background(), project, id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -74,6 +103,20 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test CustomerAPIService CustomerPostV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.CustomerAPI.CustomerPostV4(context.Background(), project).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CustomerAPIService CustomerPutV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -87,11 +130,39 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test CustomerAPIService CustomerPutV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		httpRes, err := apiClient.CustomerAPI.CustomerPutV4(context.Background(), project, id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CustomerAPIService CustomerSearchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.CustomerAPI.CustomerSearchV3(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test CustomerAPIService CustomerSearchV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.CustomerAPI.CustomerSearchV4(context.Background(), project).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

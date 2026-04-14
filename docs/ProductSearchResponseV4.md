@@ -5,10 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Products** | Pointer to [**[]ProductV4**](ProductV4.md) |  | [optional] [default to []]
-**TotalCount** | **int32** |  | 
-**CurrentPage** | **int32** |  | 
-**PagesCount** | **int32** |  | 
-**PageSize** | **int32** |  | 
+**TotalCount** | **int32** | Total number of items. | 
+**CurrentPage** | **int32** | Current page number. | 
+**PagesCount** | **int32** | Total number of pages. | 
+**PageSize** | **int32** | Number of items per page. | 
 
 ## Methods
 

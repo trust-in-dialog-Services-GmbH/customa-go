@@ -290,7 +290,7 @@ import (
 
 func main() {
 	name := "name_example" // string | 
-	setting := *customa.NewSetting(customa.Global_Value_of_the_Setting_{Bool: new(bool)}, map[string]MarketplaceSpecificValuesOfTheSettingValue{"key": customa.Marketplace_specific_values_of_the_Setting__value{Bool: new(bool)}}) // Setting | 
+	setting := *customa.NewSetting(customa.Global_Setting_Value_{Bool: new(bool)}, map[string]MarketplaceSettingValueValue{"key": customa.Marketplace_Setting_Value__value{Bool: new(bool)}}) // Setting | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -361,7 +361,7 @@ import (
 func main() {
 	project := "project_example" // string | 
 	name := "name_example" // string | 
-	setting := *customa.NewSetting(customa.Global_Value_of_the_Setting_{Bool: new(bool)}, map[string]MarketplaceSpecificValuesOfTheSettingValue{"key": customa.Marketplace_specific_values_of_the_Setting__value{Bool: new(bool)}}) // Setting | 
+	setting := *customa.NewSetting(customa.Global_Setting_Value_{Bool: new(bool)}, map[string]MarketplaceSettingValueValue{"key": customa.Marketplace_Setting_Value__value{Bool: new(bool)}}) // Setting | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)

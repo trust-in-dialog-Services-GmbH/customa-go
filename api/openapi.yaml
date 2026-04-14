@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.9.0
+  version: 3.10.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -26,6 +26,7 @@ tags:
 paths:
   /api/v3/auth/login:
     post:
+      deprecated: true
       description: |-
         A user is authenticated using their username and password and a project ID. If the credentials are valid, a token
         is returned that can be used for further API requests. The token is valid for a limited time and can be refreshed
@@ -69,6 +70,7 @@ paths:
       - auth
   /api/v3/auth/logout:
     post:
+      deprecated: true
       description: The logout endpoint allows a user to manually invalidate their
         current API authentication token.
       operationId: auth_logout_v3
@@ -82,6 +84,7 @@ paths:
       - auth
   /api/v3/auth/refresh:
     post:
+      deprecated: true
       description: |-
         This endpoint allows a user to refresh their current API authentication token. The current token will be
         invalidated, and a new token will be issued with an updated expiration time.
@@ -100,6 +103,7 @@ paths:
       - auth
   /api/v3/customer:
     post:
+      deprecated: true
       description: A new customer is created and the ID of the created customer is
         returned.
       operationId: customer_post_v3
@@ -123,6 +127,7 @@ paths:
       - customer
   /api/v3/customer/{id}:
     delete:
+      deprecated: true
       operationId: customer_delete_v3
       parameters:
       - explode: false
@@ -146,6 +151,7 @@ paths:
       tags:
       - customer
     get:
+      deprecated: true
       operationId: customer_get_v3
       parameters:
       - explode: false
@@ -170,6 +176,7 @@ paths:
       tags:
       - customer
     patch:
+      deprecated: true
       description: |-
         This method allows for partial updates to a customer's data. Only the fields provided in the request body will
         be updated, leaving other fields unchanged.
@@ -199,6 +206,7 @@ paths:
       tags:
       - customer
     put:
+      deprecated: true
       description: |-
         The customer must already exist in the system. All customer data is replaced with the data provided in the
         request body.
@@ -229,6 +237,7 @@ paths:
       - customer
   /api/v3/customer/search:
     post:
+      deprecated: true
       description: |-
         Using the search endpoint, customers can be filtered based on various criteria, which are combined using the
         boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
@@ -257,6 +266,7 @@ paths:
       - customer
   /api/v3/product:
     post:
+      deprecated: true
       description: A new product is created using the provided data. The product ID
         is returned in the response.
       operationId: product_post_v3
@@ -286,6 +296,7 @@ paths:
       - product
   /api/v3/product/{id}:
     delete:
+      deprecated: true
       operationId: product_delete_v3
       parameters:
       - explode: false
@@ -309,6 +320,7 @@ paths:
       tags:
       - product
     get:
+      deprecated: true
       operationId: product_get_v3
       parameters:
       - explode: false
@@ -333,6 +345,7 @@ paths:
       tags:
       - product
     patch:
+      deprecated: true
       description: |-
         This method allows for partial updates to a product's data. Only the fields provided in the request body will be
         updated.
@@ -362,6 +375,7 @@ paths:
       tags:
       - product
     put:
+      deprecated: true
       description: The product must already exist. The provided data will replace
         the existing product data.
       operationId: product_put_v3
@@ -391,6 +405,7 @@ paths:
       - product
   /api/v3/product/search:
     post:
+      deprecated: true
       description: |-
         Using the search endpoint, products can be filtered based on various criteria, which are combined using the
         boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
@@ -419,6 +434,7 @@ paths:
       - product
   /api/v3/receipt:
     post:
+      deprecated: true
       description: A receipt is created using the provided JSON data. The ID of the
         created receipt is returned in the response.
       operationId: receipt_post_v3
@@ -448,6 +464,7 @@ paths:
       - receipt
   /api/v3/receipt/{id}:
     delete:
+      deprecated: true
       operationId: receipt_delete_v3
       parameters:
       - explode: false
@@ -468,6 +485,7 @@ paths:
       tags:
       - receipt
     get:
+      deprecated: true
       operationId: receipt_get_v3
       parameters:
       - explode: false
@@ -492,6 +510,7 @@ paths:
       tags:
       - receipt
     patch:
+      deprecated: true
       description: |-
         The receipt must already exist. The provided data will be merged with the existing receipt data. Any receipt
         item that is not present in the request will remain unchanged. If the provided data contains receipt items, the
@@ -522,6 +541,7 @@ paths:
       tags:
       - receipt
     put:
+      deprecated: true
       description: |-
         The receipt must already exist. The provided data will replace the existing receipt data. Any receipt item that
         is not present in the request will be removed from the receipt.
@@ -552,6 +572,7 @@ paths:
       - receipt
   /api/v3/receipt/search:
     post:
+      deprecated: true
       description: |-
         Using the search endpoint, receipts can be filtered based on various criteria, which are combined using the
         boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
@@ -580,6 +601,7 @@ paths:
       - receipt
   /api/v3/segment:
     get:
+      deprecated: true
       description: |-
         Returns an array of customer segments with their RFM metrics (Recency, Frequency, Monetary)
         and lifetime value data for customer segmentation and analysis.
@@ -598,6 +620,7 @@ paths:
       - segment
   /api/v3/segment/definition:
     get:
+      deprecated: true
       operationId: definition_get_v3
       responses:
         "200":
@@ -613,6 +636,7 @@ paths:
       - segment
   /api/v3/settings:
     get:
+      deprecated: true
       operationId: settings_list_v3
       responses:
         "200":
@@ -628,6 +652,7 @@ paths:
       - settings
   /api/v3/settings/{name}:
     get:
+      deprecated: true
       operationId: settings_get_v3
       parameters:
       - explode: false
@@ -655,6 +680,7 @@ paths:
       - settings
   /api/v3/settings/{name}/validate:
     post:
+      deprecated: true
       operationId: settings_validate_v3
       parameters:
       - explode: false
@@ -686,6 +712,7 @@ paths:
       - settings
   /api/v3/stats/receipt:
     post:
+      deprecated: true
       operationId: stats_receipt_v3
       requestBody:
         content:
@@ -707,6 +734,7 @@ paths:
       - stats
   /api/v3/stats/receipt/groupings:
     get:
+      deprecated: true
       operationId: stats_receipt_groupings_v3
       responses:
         "200":
@@ -722,6 +750,7 @@ paths:
       - stats
   /api/v3/stats/receipt_item:
     post:
+      deprecated: true
       operationId: stats_receipt_item_v3
       requestBody:
         content:
@@ -743,6 +772,7 @@ paths:
       - stats
   /api/v3/stats/receipt_item/groupings:
     get:
+      deprecated: true
       operationId: stats_receipt_item_groupings_v3
       responses:
         "200":
@@ -793,7 +823,243 @@ paths:
       summary: API Endpoint for JSON authentication.
       tags:
       - auth
+  /api/v4/customer/{project}:
+    post:
+      description: A new customer is created using the provided data. The customer
+        ID is returned in the response.
+      operationId: customer_post_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerV4"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse2"
+          description: The customer was successfully created.
+        "422":
+          description: The request data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Creates a new customer.
+      tags:
+      - customer
+  /api/v4/customer/{project}/{id}:
+    delete:
+      operationId: customer_delete_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The customer was successfully deleted.
+        "404":
+          description: The customer was not found.
+        "409":
+          description: The customer cannot be deleted because it is referenced by
+            other entities.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Deletes a customer by their ID.
+      tags:
+      - customer
+    get:
+      operationId: customer_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerV4"
+          description: The customer was successfully retrieved.
+        "404":
+          description: The customer was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a customer by their ID.
+      tags:
+      - customer
+    put:
+      description: The customer must already exist. The provided data will replace
+        the existing customer data.
+      operationId: customer_put_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerV4"
+        required: true
+      responses:
+        "200":
+          description: The customer was successfully updated.
+        "404":
+          description: The customer was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Overwrites an existing customer with the given ID.
+      tags:
+      - customer
+  /api/v4/customer/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, customers can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: customer_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerSearchResponseV4"
+          description: A search response with customers matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for customers by the given filters.
+      tags:
+      - customer
+  /api/v4/product/{project}:
+    post:
+      description: A new product is created using the provided data. The product ID
+        is returned in the response.
+      operationId: product_post_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductV4"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse2"
+          description: The product was successfully created.
+        "422":
+          description: A product with this number already exists.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Creates a new product.
+      tags:
+      - product
   /api/v4/product/{project}/{id}:
+    delete:
+      operationId: product_delete_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The product was successfully deleted.
+        "404":
+          description: The product was not found.
+        "409":
+          description: The product cannot be deleted because it is referenced by other
+            entities.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Deletes a product by its ID.
+      tags:
+      - product
     get:
       operationId: product_get_v4
       parameters:
@@ -824,6 +1090,42 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Retrieves a product by its ID.
+      tags:
+      - product
+    put:
+      description: The product must already exist. The provided data will replace
+        the existing product data.
+      operationId: product_put_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductV4"
+        required: true
+      responses:
+        "200":
+          description: The product was successfully updated.
+        "404":
+          description: The product was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Overwrites an existing product with the given ID.
       tags:
       - product
   /api/v4/product/{project}/search:
@@ -879,6 +1181,176 @@ paths:
       summary: Returns a list of the User's projects.
       tags:
       - project
+  /api/v4/receipt/{project}:
+    post:
+      description: A new receipt is created using the provided data. The receipt ID
+        is returned in the response.
+      operationId: receipt_post_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReceiptV4"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse2"
+          description: The receipt was successfully created.
+        "422":
+          description: A receipt with this number already exists or the request data
+            is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Creates a new receipt.
+      tags:
+      - receipt
+  /api/v4/receipt/{project}/{id}:
+    delete:
+      operationId: receipt_delete_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The receipt was successfully deleted.
+        "404":
+          description: The receipt was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Deletes a receipt by its ID.
+      tags:
+      - receipt
+    get:
+      operationId: receipt_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReceiptV4"
+          description: The receipt was successfully retrieved.
+        "404":
+          description: The receipt was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a receipt by its ID.
+      tags:
+      - receipt
+    put:
+      description: |-
+        The receipt must already exist. The provided data will replace the existing receipt data. Any receipt item
+        that is not present in the request will be removed from the receipt.
+      operationId: receipt_put_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReceiptV4"
+        required: true
+      responses:
+        "200":
+          description: The receipt was successfully updated.
+        "404":
+          description: The receipt was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Overwrites an existing receipt with the given ID.
+      tags:
+      - receipt
+  /api/v4/receipt/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, receipts can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: receipt_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReceiptSearchResponseV4"
+          description: A search response with receipts matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for receipts by the given filters.
+      tags:
+      - receipt
   /api/v4/segment/{project}:
     get:
       description: |-
@@ -2763,10 +3235,10 @@ components:
         Global: 42
       properties:
         Global:
-          $ref: "#/components/schemas/Global_Value_of_the_Setting_"
+          $ref: "#/components/schemas/Global_Setting_Value_"
         Marketplaces:
           additionalProperties:
-            $ref: "#/components/schemas/Marketplace_specific_values_of_the_Setting__value"
+            $ref: "#/components/schemas/Marketplace_Setting_Value__value"
           description: "An associative array where the keys are marketplace identifiers\
             \ (e.g., 'shop1', 'shop2') and the values are the marketplace-specific\
             \ values for the setting. These values override the global value for their\
@@ -2775,7 +3247,7 @@ components:
           example:
             shop1: 43
             shop2: 44
-          title: Marketplace specific values of the Setting.
+          title: Marketplace Setting Value.
           type: object
       required:
       - Global
@@ -3307,6 +3779,311 @@ components:
           type: string
       title: Error Response
       type: object
+    Salutation:
+      enum:
+      - m
+      - f
+      - x
+      type: string
+    CustomerV4:
+      example:
+        Group: Group
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Company: Company
+        Address: Address
+        Suburb: Suburb
+        ContactBan: true
+        PostalCode: PostalCode
+        Birthday: 2000-01-23T04:56:07.000+00:00
+        Salutation: m
+        ExternalCustomerID: 0
+        Segment: Segment
+        Newsletter: true
+        ReferenceCustomer: true
+        Number: Number
+        Phone: Phone
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ExternalOrderAccountID: 6
+        ID: ID
+        TestUser: true
+        ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        FirstName: FirstName
+        RegisterDate: 2000-01-23T04:56:07.000+00:00
+        AdditionalFields:
+          key: AdditionalFields
+        Title: Title
+        City: City
+        EMail: EMail
+        ReferrerChannel: ReferrerChannel
+        ExternalCustomerExternalID: ExternalCustomerExternalID
+        Marketplace: Marketplace
+        Referrer: Referrer
+        PurchaseDate: 2000-01-23T04:56:07.000+00:00
+        Country: Country
+        LastName: LastName
+        ExternalOrderType: ExternalOrderType
+      properties:
+        ID:
+          description: "ID of the customer. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Number:
+          description: Customer number from e.g. an external Shop or ERP System.
+          type: string
+        Group:
+          description: Group name of the customer
+          nullable: true
+          type: string
+        Salutation:
+          $ref: "#/components/schemas/Salutation"
+        Title:
+          description: (Academical) title of the customer.
+          type: string
+        FirstName:
+          description: First name of the customer.
+          type: string
+        LastName:
+          description: Last name of the customer.
+          type: string
+        Company:
+          description: Company of the customer's address
+          type: string
+        Address:
+          description: (Street) address of the customer
+          type: string
+        PostalCode:
+          description: Postal code of the customer's address
+          type: string
+        Suburb:
+          description: Suburb of the customer's address
+          type: string
+        City:
+          description: City of the customer's address
+          type: string
+        Country:
+          description: ISO3166-1 Alpha-2 Code of the customer's country
+          type: string
+        EMail:
+          description: Email address of the customer.
+          type: string
+        Phone:
+          description: Phone number of the customer.
+          type: string
+        Birthday:
+          description: Date of birth of the customer.
+          format: date-time
+          nullable: true
+          type: string
+        Referrer:
+          description: Referrer (last cookie) of the customer.
+          type: string
+        ReferrerChannel:
+          description: Referrer Channel of the customer.
+          type: string
+        RegisterDate:
+          description: Registration date of the customer.
+          format: date-time
+          type: string
+        PurchaseDate:
+          description: Purchase date of the customer.
+          format: date-time
+          nullable: true
+          type: string
+        AdditionalFields:
+          additionalProperties:
+            type: string
+          description: Additional data for the customer.
+          type: object
+        ReferenceCustomer:
+          description: Determines if the customer is a reference customer.
+          type: boolean
+        ContactBan:
+          description: Determines if the customer has an active contact ban.
+          type: boolean
+        ExternalCustomerID:
+          description: ID/Number of the customer in the source system (e.g. an ERP
+            System)
+          type: integer
+        ExternalCustomerExternalID:
+          description: ID/Number of the customer in a secondary source system (e.g.
+            the shop)
+          nullable: true
+          type: string
+        ExternalOrderType:
+          type: string
+        ExternalOrderAccountID:
+          type: integer
+        ExternalOrderSubAccountID:
+          type: string
+        Marketplace:
+          description: Marketplace of the customer.
+          type: string
+        TestUser:
+          type: boolean
+        Newsletter:
+          type: boolean
+        Segment:
+          description: "Segment of the customer. Read-only, changes via the API will\
+            \ have no effect."
+          type: string
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - AdditionalFields
+      - Address
+      - City
+      - Company
+      - ContactBan
+      - Country
+      - EMail
+      - ExternalCustomerID
+      - ExternalOrderAccountID
+      - ExternalOrderSubAccountID
+      - ExternalOrderType
+      - FirstName
+      - LastName
+      - Marketplace
+      - Newsletter
+      - Number
+      - Phone
+      - PostalCode
+      - ReferenceCustomer
+      - Referrer
+      - ReferrerChannel
+      - RegisterDate
+      - Salutation
+      - Segment
+      - Suburb
+      - TestUser
+      - Title
+      title: Customer
+      type: object
+    ItemCreatedResponse2:
+      description: Response body after successfully creating a new item.
+      example:
+        ID: "42"
+      properties:
+        ID:
+          example: "42"
+          title: ID of the created item.
+          type: string
+      required:
+      - ID
+      title: Item Created Response
+      type: object
+    CustomerSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        Customers:
+        - Group: Group
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          Company: Company
+          Address: Address
+          Suburb: Suburb
+          ContactBan: true
+          PostalCode: PostalCode
+          Birthday: 2000-01-23T04:56:07.000+00:00
+          Salutation: m
+          ExternalCustomerID: 0
+          Segment: Segment
+          Newsletter: true
+          ReferenceCustomer: true
+          Number: Number
+          Phone: Phone
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ExternalOrderAccountID: 6
+          ID: ID
+          TestUser: true
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          FirstName: FirstName
+          RegisterDate: 2000-01-23T04:56:07.000+00:00
+          AdditionalFields:
+            key: AdditionalFields
+          Title: Title
+          City: City
+          EMail: EMail
+          ReferrerChannel: ReferrerChannel
+          ExternalCustomerExternalID: ExternalCustomerExternalID
+          Marketplace: Marketplace
+          Referrer: Referrer
+          PurchaseDate: 2000-01-23T04:56:07.000+00:00
+          Country: Country
+          LastName: LastName
+          ExternalOrderType: ExternalOrderType
+        - Group: Group
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          Company: Company
+          Address: Address
+          Suburb: Suburb
+          ContactBan: true
+          PostalCode: PostalCode
+          Birthday: 2000-01-23T04:56:07.000+00:00
+          Salutation: m
+          ExternalCustomerID: 0
+          Segment: Segment
+          Newsletter: true
+          ReferenceCustomer: true
+          Number: Number
+          Phone: Phone
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ExternalOrderAccountID: 6
+          ID: ID
+          TestUser: true
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          FirstName: FirstName
+          RegisterDate: 2000-01-23T04:56:07.000+00:00
+          AdditionalFields:
+            key: AdditionalFields
+          Title: Title
+          City: City
+          EMail: EMail
+          ReferrerChannel: ReferrerChannel
+          ExternalCustomerExternalID: ExternalCustomerExternalID
+          Marketplace: Marketplace
+          Referrer: Referrer
+          PurchaseDate: 2000-01-23T04:56:07.000+00:00
+          Country: Country
+          LastName: LastName
+          ExternalOrderType: ExternalOrderType
+        CurrentPage: 6
+        PagesCount: 1
+      properties:
+        Customers:
+          default: []
+          items:
+            $ref: "#/components/schemas/CustomerV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Customer Search Response
+      type: object
     TaxClass:
       enum:
       - NormalTax
@@ -3344,36 +4121,51 @@ components:
         Stock: 0
       properties:
         ID:
+          description: "ID of the product. Set internally by Customa, any given value\
+            \ is ignored."
           nullable: true
           type: string
         Number:
+          description: "Product number, MUST be unique."
           type: string
         Parent:
+          description: ID of the parent product. The parent must be standalone and
+            not have a parent itself.
           nullable: true
           type: string
         EAN:
+          description: EAN of the product.
           type: string
         Name:
+          description: Name of the product.
           type: string
         Manufacturer:
+          description: Manufacturer of the product.
           type: string
         Vendor:
+          description: Vendor of the product.
           type: string
         ShortDescription:
+          description: Short description of the product.
           type: string
         LongDescription:
+          description: Long description of the product.
           type: string
         ImageSource:
+          description: Source URI of the product image.
           type: string
         Active:
+          description: Whether the product is active or inactive.
           type: boolean
         TaxClass:
           $ref: "#/components/schemas/TaxClass"
         Stock:
+          description: Stock of the product.
           type: integer
         AdditionalFields:
           additionalProperties:
             type: string
+          description: Additional field data for the product.
           type: object
         PurchasePrice:
           $ref: "#/components/schemas/Price"
@@ -3382,20 +4174,24 @@ components:
         RecommendedRetailPrice:
           $ref: "#/components/schemas/Price"
         CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
           format: date-time
+          nullable: true
           type: string
         ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
           format: date-time
+          nullable: true
           type: string
       required:
       - Active
       - AdditionalFields
-      - CreationDate
       - EAN
       - ImageSource
       - LongDescription
       - Manufacturer
-      - ModificationDate
       - Name
       - Number
       - PurchasePrice
@@ -3473,12 +4269,16 @@ components:
             $ref: "#/components/schemas/ProductV4"
           type: array
         TotalCount:
+          description: Total number of items.
           type: integer
         CurrentPage:
+          description: Current page number.
           type: integer
         PagesCount:
+          description: Total number of pages.
           type: integer
         PageSize:
+          description: Number of items per page.
           type: integer
       required:
       - CurrentPage
@@ -3523,6 +4323,383 @@ components:
       required:
       - Projects
       type: object
+    ReceiptStatusV4:
+      enum:
+      - Open
+      - InProgress
+      - Completed
+      - Cancelled
+      type: string
+    PaymentStatusV4:
+      enum:
+      - New
+      - Paid
+      - Cancelled
+      - PaidPartially
+      - Reminded
+      - InProgress
+      - Authorized
+      - Refunded
+      - RefundedPartially
+      - Failed
+      - Chargeback
+      - Unconfirmed
+      type: string
+    DeliveryStatusV4:
+      enum:
+      - Open
+      - PartiallyShipped
+      - Shipped
+      - Returned
+      - PartiallyReturned
+      - Cancelled
+      type: string
+    ReceiptItemV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Quantity: 1
+        ProductID: ProductID
+        PurchasePrice:
+          Currency: Currency
+          Value: 0.8008282
+        TaxClass: NormalTax
+        ProductNumber: ProductNumber
+        SellingPrice:
+          Currency: Currency
+          Value: 0.8008282
+      properties:
+        ProductID:
+          description: ID of the product.
+          type: string
+        ProductNumber:
+          description: Product number of the product.
+          type: string
+        Quantity:
+          description: Quantity of the product.
+          type: integer
+        SellingPrice:
+          $ref: "#/components/schemas/Price"
+        PurchasePrice:
+          $ref: "#/components/schemas/Price"
+        TaxClass:
+          $ref: "#/components/schemas/TaxClass"
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - ProductID
+      - ProductNumber
+      - Quantity
+      - SellingPrice
+      - TaxClass
+      title: Receipt Item
+      type: object
+    ReceiptV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        RevenueGross:
+          Currency: Currency
+          Value: 0.8008282
+        AdditionalFields:
+          key: AdditionalFields
+        ExternalOrderExternalID: ExternalOrderExternalID
+        CustomerID: CustomerID
+        ReferrerChannel: ReferrerChannel
+        Type: Type
+        Marketplace: Marketplace
+        Number: Number
+        ExternalOrderID: 0
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        PurchaseDate: 2000-01-23T04:56:07.000+00:00
+        Referrer: Referrer
+        DeliveryStatus: Open
+        PaymentMethod: PaymentMethod
+        ReceiptStatus: Open
+        ExternalOrderAccountID: 6
+        RevenueNet:
+          Currency: Currency
+          Value: 0.8008282
+        Items:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Quantity: 1
+          ProductID: ProductID
+          PurchasePrice:
+            Currency: Currency
+            Value: 0.8008282
+          TaxClass: NormalTax
+          ProductNumber: ProductNumber
+          SellingPrice:
+            Currency: Currency
+            Value: 0.8008282
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Quantity: 1
+          ProductID: ProductID
+          PurchasePrice:
+            Currency: Currency
+            Value: 0.8008282
+          TaxClass: NormalTax
+          ProductNumber: ProductNumber
+          SellingPrice:
+            Currency: Currency
+            Value: 0.8008282
+        ID: ID
+        ReceiptDate: 2000-01-23T04:56:07.000+00:00
+        PaymentStatus: New
+        ExternalOrderType: ExternalOrderType
+        ExternalOrderSubAccountID: ExternalOrderSubAccountID
+      properties:
+        ID:
+          description: "ID of the receipt. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Type:
+          description: Type of the receipt.
+          maxLength: 2
+          minLength: 2
+          type: string
+        Number:
+          description: Receipt number
+          type: string
+        CustomerID:
+          description: ID of the customer.
+          type: string
+        ExternalOrderType:
+          type: string
+        ExternalOrderID:
+          nullable: true
+          type: integer
+        ExternalOrderExternalID:
+          nullable: true
+          type: string
+        ExternalOrderAccountID:
+          type: integer
+        ExternalOrderSubAccountID:
+          type: string
+        Marketplace:
+          description: Marketplace of the receipt.
+          type: string
+        PurchaseDate:
+          description: Purchase date of the receipt.
+          format: date-time
+          type: string
+        ReceiptDate:
+          description: Date of the receipt.
+          format: date-time
+          nullable: true
+          type: string
+        Referrer:
+          description: Referrer (last cookie) of the customer when creating this receipt.
+          nullable: true
+          type: string
+        ReferrerChannel:
+          description: Referrer Channel of the customer when creating this receipt.
+          nullable: true
+          type: string
+        PaymentMethod:
+          description: Payment method of the receipt.
+          type: string
+        RevenueNet:
+          $ref: "#/components/schemas/Price"
+        RevenueGross:
+          $ref: "#/components/schemas/Price"
+        ReceiptStatus:
+          $ref: "#/components/schemas/ReceiptStatusV4"
+        PaymentStatus:
+          $ref: "#/components/schemas/PaymentStatusV4"
+        DeliveryStatus:
+          $ref: "#/components/schemas/DeliveryStatusV4"
+        Items:
+          default: []
+          description: List of items in the receipt.
+          items:
+            $ref: "#/components/schemas/ReceiptItemV4"
+          type: array
+        AdditionalFields:
+          additionalProperties:
+            type: string
+          description: Additional field data for the receipt.
+          type: object
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - AdditionalFields
+      - CustomerID
+      - DeliveryStatus
+      - ExternalOrderAccountID
+      - ExternalOrderSubAccountID
+      - ExternalOrderType
+      - Marketplace
+      - Number
+      - PaymentMethod
+      - PaymentStatus
+      - PurchaseDate
+      - ReceiptStatus
+      - RevenueGross
+      - RevenueNet
+      - Type
+      title: Receipt
+      type: object
+    ReceiptSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        CurrentPage: 6
+        PagesCount: 1
+        Receipts:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          RevenueGross:
+            Currency: Currency
+            Value: 0.8008282
+          AdditionalFields:
+            key: AdditionalFields
+          ExternalOrderExternalID: ExternalOrderExternalID
+          CustomerID: CustomerID
+          ReferrerChannel: ReferrerChannel
+          Type: Type
+          Marketplace: Marketplace
+          Number: Number
+          ExternalOrderID: 0
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          PurchaseDate: 2000-01-23T04:56:07.000+00:00
+          Referrer: Referrer
+          DeliveryStatus: Open
+          PaymentMethod: PaymentMethod
+          ReceiptStatus: Open
+          ExternalOrderAccountID: 6
+          RevenueNet:
+            Currency: Currency
+            Value: 0.8008282
+          Items:
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: ProductID
+            PurchasePrice:
+              Currency: Currency
+              Value: 0.8008282
+            TaxClass: NormalTax
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: Currency
+              Value: 0.8008282
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: ProductID
+            PurchasePrice:
+              Currency: Currency
+              Value: 0.8008282
+            TaxClass: NormalTax
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: Currency
+              Value: 0.8008282
+          ID: ID
+          ReceiptDate: 2000-01-23T04:56:07.000+00:00
+          PaymentStatus: New
+          ExternalOrderType: ExternalOrderType
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          RevenueGross:
+            Currency: Currency
+            Value: 0.8008282
+          AdditionalFields:
+            key: AdditionalFields
+          ExternalOrderExternalID: ExternalOrderExternalID
+          CustomerID: CustomerID
+          ReferrerChannel: ReferrerChannel
+          Type: Type
+          Marketplace: Marketplace
+          Number: Number
+          ExternalOrderID: 0
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          PurchaseDate: 2000-01-23T04:56:07.000+00:00
+          Referrer: Referrer
+          DeliveryStatus: Open
+          PaymentMethod: PaymentMethod
+          ReceiptStatus: Open
+          ExternalOrderAccountID: 6
+          RevenueNet:
+            Currency: Currency
+            Value: 0.8008282
+          Items:
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: ProductID
+            PurchasePrice:
+              Currency: Currency
+              Value: 0.8008282
+            TaxClass: NormalTax
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: Currency
+              Value: 0.8008282
+          - CreationDate: 2000-01-23T04:56:07.000+00:00
+            ModificationDate: 2000-01-23T04:56:07.000+00:00
+            Quantity: 1
+            ProductID: ProductID
+            PurchasePrice:
+              Currency: Currency
+              Value: 0.8008282
+            TaxClass: NormalTax
+            ProductNumber: ProductNumber
+            SellingPrice:
+              Currency: Currency
+              Value: 0.8008282
+          ID: ID
+          ReceiptDate: 2000-01-23T04:56:07.000+00:00
+          PaymentStatus: New
+          ExternalOrderType: ExternalOrderType
+          ExternalOrderSubAccountID: ExternalOrderSubAccountID
+      properties:
+        Receipts:
+          default: []
+          items:
+            $ref: "#/components/schemas/ReceiptV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Receipt Search Response
+      type: object
     StatsGroupings:
       example:
         Groupings:
@@ -3564,7 +4741,7 @@ components:
       required:
       - Fields
       type: object
-    Global_Value_of_the_Setting_:
+    Global_Setting_Value_:
       description: "The global value of the setting, which applies when no marketplace-specific\
         \ value is set and a project fallback is used. This value can be of type string,\
         \ integer, float, or boolean, depending on the specific setting being represented."
@@ -3575,8 +4752,8 @@ components:
       - format: float
         type: number
       - type: boolean
-      title: Global Value of the Setting.
-    Marketplace_specific_values_of_the_Setting__value:
+      title: Global Setting Value.
+    Marketplace_Setting_Value__value:
       oneOf:
       - type: string
       - type: integer

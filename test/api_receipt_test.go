@@ -35,6 +35,20 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ReceiptAPIService ReceiptDeleteV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		httpRes, err := apiClient.ReceiptAPI.ReceiptDeleteV4(context.Background(), project, id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ReceiptAPIService ReceiptGetV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -42,6 +56,21 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 		var id string
 
 		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptGetV3(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ReceiptAPIService ReceiptGetV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptGetV4(context.Background(), project, id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -74,6 +103,20 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ReceiptAPIService ReceiptPostV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptPostV4(context.Background(), project).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ReceiptAPIService ReceiptPutV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -87,11 +130,39 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ReceiptAPIService ReceiptPutV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		httpRes, err := apiClient.ReceiptAPI.ReceiptPutV4(context.Background(), project, id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ReceiptAPIService ReceiptSearchV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptSearchV3(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ReceiptAPIService ReceiptSearchV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptSearchV4(context.Background(), project).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

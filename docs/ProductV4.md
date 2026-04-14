@@ -4,31 +4,31 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ID** | Pointer to **NullableString** |  | [optional] 
-**Number** | **string** |  | 
-**Parent** | Pointer to **NullableString** |  | [optional] 
-**EAN** | **string** |  | 
-**Name** | **string** |  | 
-**Manufacturer** | **string** |  | 
-**Vendor** | **string** |  | 
-**ShortDescription** | **string** |  | 
-**LongDescription** | **string** |  | 
-**ImageSource** | **string** |  | 
-**Active** | **bool** |  | 
+**ID** | Pointer to **NullableString** | ID of the product. Set internally by Customa, any given value is ignored. | [optional] 
+**Number** | **string** | Product number, MUST be unique. | 
+**Parent** | Pointer to **NullableString** | ID of the parent product. The parent must be standalone and not have a parent itself. | [optional] 
+**EAN** | **string** | EAN of the product. | 
+**Name** | **string** | Name of the product. | 
+**Manufacturer** | **string** | Manufacturer of the product. | 
+**Vendor** | **string** | Vendor of the product. | 
+**ShortDescription** | **string** | Short description of the product. | 
+**LongDescription** | **string** | Long description of the product. | 
+**ImageSource** | **string** | Source URI of the product image. | 
+**Active** | **bool** | Whether the product is active or inactive. | 
 **TaxClass** | [**TaxClass**](TaxClass.md) |  | 
-**Stock** | **int32** |  | 
-**AdditionalFields** | **map[string]string** |  | 
+**Stock** | **int32** | Stock of the product. | 
+**AdditionalFields** | **map[string]string** | Additional field data for the product. | 
 **PurchasePrice** | [**Price**](Price.md) |  | 
 **SalesPrice** | [**Price**](Price.md) |  | 
 **RecommendedRetailPrice** | [**Price**](Price.md) |  | 
-**CreationDate** | **time.Time** |  | 
-**ModificationDate** | **time.Time** |  | 
+**CreationDate** | Pointer to **NullableTime** | Creation Timestamp of the item. Set internally by Customa, any given value is ignored. | [optional] 
+**ModificationDate** | Pointer to **NullableTime** | Timestamp of the last change of the item in the database. Set internally by Customa, any given value is ignored. | [optional] 
 
 ## Methods
 
 ### NewProductV4
 
-`func NewProductV4(number string, eAN string, name string, manufacturer string, vendor string, shortDescription string, longDescription string, imageSource string, active bool, taxClass TaxClass, stock int32, additionalFields map[string]string, purchasePrice Price, salesPrice Price, recommendedRetailPrice Price, creationDate time.Time, modificationDate time.Time, ) *ProductV4`
+`func NewProductV4(number string, eAN string, name string, manufacturer string, vendor string, shortDescription string, longDescription string, imageSource string, active bool, taxClass TaxClass, stock int32, additionalFields map[string]string, purchasePrice Price, salesPrice Price, recommendedRetailPrice Price, ) *ProductV4`
 
 NewProductV4 instantiates a new ProductV4 object
 This constructor will assign default values to properties that have it defined,
@@ -432,7 +432,22 @@ and a boolean to check if the value has been set.
 
 SetCreationDate sets CreationDate field to given value.
 
+### HasCreationDate
 
+`func (o *ProductV4) HasCreationDate() bool`
+
+HasCreationDate returns a boolean if a field has been set.
+
+### SetCreationDateNil
+
+`func (o *ProductV4) SetCreationDateNil(b bool)`
+
+ SetCreationDateNil sets the value for CreationDate to be an explicit nil
+
+### UnsetCreationDate
+`func (o *ProductV4) UnsetCreationDate()`
+
+UnsetCreationDate ensures that no value is present for CreationDate, not even an explicit nil
 ### GetModificationDate
 
 `func (o *ProductV4) GetModificationDate() time.Time`
@@ -452,7 +467,22 @@ and a boolean to check if the value has been set.
 
 SetModificationDate sets ModificationDate field to given value.
 
+### HasModificationDate
 
+`func (o *ProductV4) HasModificationDate() bool`
+
+HasModificationDate returns a boolean if a field has been set.
+
+### SetModificationDateNil
+
+`func (o *ProductV4) SetModificationDateNil(b bool)`
+
+ SetModificationDateNil sets the value for ModificationDate to be an explicit nil
+
+### UnsetModificationDate
+`func (o *ProductV4) UnsetModificationDate()`
+
+UnsetModificationDate ensures that no value is present for ModificationDate, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

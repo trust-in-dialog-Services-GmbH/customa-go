@@ -5,11 +5,14 @@ All URIs are relative to *https://www.customa.biz*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ProductDeleteV3**](ProductAPI.md#ProductDeleteV3) | **Delete** /api/v3/product/{id} | Deletes a product by its ID.
+[**ProductDeleteV4**](ProductAPI.md#ProductDeleteV4) | **Delete** /api/v4/product/{project}/{id} | Deletes a product by its ID.
 [**ProductGetV3**](ProductAPI.md#ProductGetV3) | **Get** /api/v3/product/{id} | Retrieves a product by its ID.
 [**ProductGetV4**](ProductAPI.md#ProductGetV4) | **Get** /api/v4/product/{project}/{id} | Retrieves a product by its ID.
 [**ProductPatchV3**](ProductAPI.md#ProductPatchV3) | **Patch** /api/v3/product/{id} | Updates a product partially by its ID.
 [**ProductPostV3**](ProductAPI.md#ProductPostV3) | **Post** /api/v3/product | Creates a new Product.
+[**ProductPostV4**](ProductAPI.md#ProductPostV4) | **Post** /api/v4/product/{project} | Creates a new product.
 [**ProductPutV3**](ProductAPI.md#ProductPutV3) | **Put** /api/v3/product/{id} | Overwrites an existing product with the given ID.
+[**ProductPutV4**](ProductAPI.md#ProductPutV4) | **Put** /api/v4/product/{project}/{id} | Overwrites an existing product with the given ID.
 [**ProductSearchV3**](ProductAPI.md#ProductSearchV3) | **Post** /api/v3/product/search | Searches for products by the given filters.
 [**ProductSearchV4**](ProductAPI.md#ProductSearchV4) | **Post** /api/v4/product/{project}/search | Searches for products by the given filters.
 
@@ -70,6 +73,75 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [apiV3Token](../README.md#apiV3Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ProductDeleteV4
+
+> ProductDeleteV4(ctx, project, id).Execute()
+
+Deletes a product by its ID.
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	id := "id_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	r, err := apiClient.ProductAPI.ProductDeleteV4(context.Background(), project, id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductDeleteV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiProductDeleteV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
 
 ### HTTP request headers
 
@@ -356,6 +428,78 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ProductPostV4
+
+> ItemCreatedResponse2 ProductPostV4(ctx, project).ProductV4(productV4).Execute()
+
+Creates a new product.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	productV4 := *customa.NewProductV4("Number_example", "EAN_example", "Name_example", "Manufacturer_example", "Vendor_example", "ShortDescription_example", "LongDescription_example", "ImageSource_example", false, customa.TaxClass("NormalTax"), int32(123), map[string]string{"key": "Inner_example"}, *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example")) // ProductV4 | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProductAPI.ProductPostV4(context.Background(), project).ProductV4(productV4).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductPostV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ProductPostV4`: ItemCreatedResponse2
+	fmt.Fprintf(os.Stdout, "Response from `ProductAPI.ProductPostV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiProductPostV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **productV4** | [**ProductV4**](ProductV4.md) |  | 
+
+### Return type
+
+[**ItemCreatedResponse2**](ItemCreatedResponse2.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ProductPutV3
 
 > ProductPutV3(ctx, id).StrictProduct(strictProduct).Execute()
@@ -415,6 +559,79 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [apiV3Token](../README.md#apiV3Token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ProductPutV4
+
+> ProductPutV4(ctx, project, id).ProductV4(productV4).Execute()
+
+Overwrites an existing product with the given ID.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	id := "id_example" // string | 
+	productV4 := *customa.NewProductV4("Number_example", "EAN_example", "Name_example", "Manufacturer_example", "Vendor_example", "ShortDescription_example", "LongDescription_example", "ImageSource_example", false, customa.TaxClass("NormalTax"), int32(123), map[string]string{"key": "Inner_example"}, *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example")) // ProductV4 | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	r, err := apiClient.ProductAPI.ProductPutV4(context.Background(), project, id).ProductV4(productV4).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductPutV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiProductPutV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **productV4** | [**ProductV4**](ProductV4.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
 
 ### HTTP request headers
 
