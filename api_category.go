@@ -20,159 +20,53 @@ import (
 )
 
 
-// SettingsAPIService SettingsAPI service
-type SettingsAPIService service
+// CategoryAPIService CategoryAPI service
+type CategoryAPIService service
 
-type ApiSettingsGetV3Request struct {
+type ApiCategoryDeleteV4Request struct {
 	ctx context.Context
-	ApiService *SettingsAPIService
-	name string
-}
-
-func (r ApiSettingsGetV3Request) Execute() (*Setting, *http.Response, error) {
-	return r.ApiService.SettingsGetV3Execute(r)
-}
-
-/*
-SettingsGetV3 Returns the values of a given setting.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param name
- @return ApiSettingsGetV3Request
-
-Deprecated
-*/
-func (a *SettingsAPIService) SettingsGetV3(ctx context.Context, name string) ApiSettingsGetV3Request {
-	return ApiSettingsGetV3Request{
-		ApiService: a,
-		ctx: ctx,
-		name: name,
-	}
-}
-
-// Execute executes the request
-//  @return Setting
-// Deprecated
-func (a *SettingsAPIService) SettingsGetV3Execute(r ApiSettingsGetV3Request) (*Setting, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Setting
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SettingsAPIService.SettingsGetV3")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v3/settings/{name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSettingsGetV4Request struct {
-	ctx context.Context
-	ApiService *SettingsAPIService
+	ApiService *CategoryAPIService
 	project string
-	name string
+	id string
 }
 
-func (r ApiSettingsGetV4Request) Execute() (*Setting, *http.Response, error) {
-	return r.ApiService.SettingsGetV4Execute(r)
+func (r ApiCategoryDeleteV4Request) Execute() (*http.Response, error) {
+	return r.ApiService.CategoryDeleteV4Execute(r)
 }
 
 /*
-SettingsGetV4 Returns the values of a given setting.
+CategoryDeleteV4 Deletes a category by its ID.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param project
- @param name
- @return ApiSettingsGetV4Request
+ @param id
+ @return ApiCategoryDeleteV4Request
 */
-func (a *SettingsAPIService) SettingsGetV4(ctx context.Context, project string, name string) ApiSettingsGetV4Request {
-	return ApiSettingsGetV4Request{
+func (a *CategoryAPIService) CategoryDeleteV4(ctx context.Context, project string, id string) ApiCategoryDeleteV4Request {
+	return ApiCategoryDeleteV4Request{
 		ApiService: a,
 		ctx: ctx,
 		project: project,
-		name: name,
+		id: id,
 	}
 }
 
 // Execute executes the request
-//  @return Setting
-func (a *SettingsAPIService) SettingsGetV4Execute(r ApiSettingsGetV4Request) (*Setting, *http.Response, error) {
+func (a *CategoryAPIService) CategoryDeleteV4Execute(r ApiCategoryDeleteV4Request) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
+		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *Setting
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SettingsAPIService.SettingsGetV4")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CategoryAPIService.CategoryDeleteV4")
 	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v4/settings/{project}/{name}"
+	localVarPath := localBasePath + "/api/v4/category/{project}/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project"+"}", url.PathEscape(parameterValueToString(r.project, "project")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -188,7 +82,7 @@ func (a *SettingsAPIService) SettingsGetV4Execute(r ApiSettingsGetV4Request) (*S
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -197,19 +91,19 @@ func (a *SettingsAPIService) SettingsGetV4Execute(r ApiSettingsGetV4Request) (*S
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -217,62 +111,58 @@ func (a *SettingsAPIService) SettingsGetV4Execute(r ApiSettingsGetV4Request) (*S
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
+		return localVarHTTPResponse, newErr
 	}
 
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
+	return localVarHTTPResponse, nil
 }
 
-type ApiSettingsListV3Request struct {
+type ApiCategoryGetV4Request struct {
 	ctx context.Context
-	ApiService *SettingsAPIService
+	ApiService *CategoryAPIService
+	project string
+	id string
 }
 
-func (r ApiSettingsListV3Request) Execute() (*SettingsDefinition, *http.Response, error) {
-	return r.ApiService.SettingsListV3Execute(r)
+func (r ApiCategoryGetV4Request) Execute() (*CategoryV4, *http.Response, error) {
+	return r.ApiService.CategoryGetV4Execute(r)
 }
 
 /*
-SettingsListV3 Returns a definition of the available settings.
+CategoryGetV4 Retrieves a category by its ID.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSettingsListV3Request
-
-Deprecated
+ @param project
+ @param id
+ @return ApiCategoryGetV4Request
 */
-func (a *SettingsAPIService) SettingsListV3(ctx context.Context) ApiSettingsListV3Request {
-	return ApiSettingsListV3Request{
+func (a *CategoryAPIService) CategoryGetV4(ctx context.Context, project string, id string) ApiCategoryGetV4Request {
+	return ApiCategoryGetV4Request{
 		ApiService: a,
 		ctx: ctx,
+		project: project,
+		id: id,
 	}
 }
 
 // Execute executes the request
-//  @return SettingsDefinition
-// Deprecated
-func (a *SettingsAPIService) SettingsListV3Execute(r ApiSettingsListV3Request) (*SettingsDefinition, *http.Response, error) {
+//  @return CategoryV4
+func (a *CategoryAPIService) CategoryGetV4Execute(r ApiCategoryGetV4Request) (*CategoryV4, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *SettingsDefinition
+		localVarReturnValue  *CategoryV4
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SettingsAPIService.SettingsListV3")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CategoryAPIService.CategoryGetV4")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v3/settings"
+	localVarPath := localBasePath + "/api/v4/category/{project}/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project"+"}", url.PathEscape(parameterValueToString(r.project, "project")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -332,160 +222,60 @@ func (a *SettingsAPIService) SettingsListV3Execute(r ApiSettingsListV3Request) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSettingsListV4Request struct {
+type ApiCategoryPostV4Request struct {
 	ctx context.Context
-	ApiService *SettingsAPIService
+	ApiService *CategoryAPIService
+	project string
+	categoryV4 *CategoryV4
 }
 
-func (r ApiSettingsListV4Request) Execute() (*SettingsDefinition, *http.Response, error) {
-	return r.ApiService.SettingsListV4Execute(r)
-}
-
-/*
-SettingsListV4 Returns a definition of the available settings.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSettingsListV4Request
-*/
-func (a *SettingsAPIService) SettingsListV4(ctx context.Context) ApiSettingsListV4Request {
-	return ApiSettingsListV4Request{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return SettingsDefinition
-func (a *SettingsAPIService) SettingsListV4Execute(r ApiSettingsListV4Request) (*SettingsDefinition, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SettingsDefinition
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SettingsAPIService.SettingsListV4")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v4/settings"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSettingsValidateV3Request struct {
-	ctx context.Context
-	ApiService *SettingsAPIService
-	name string
-	setting *Setting
-}
-
-func (r ApiSettingsValidateV3Request) Setting(setting Setting) ApiSettingsValidateV3Request {
-	r.setting = &setting
+func (r ApiCategoryPostV4Request) CategoryV4(categoryV4 CategoryV4) ApiCategoryPostV4Request {
+	r.categoryV4 = &categoryV4
 	return r
 }
 
-func (r ApiSettingsValidateV3Request) Execute() (*SettingValidationResponse, *http.Response, error) {
-	return r.ApiService.SettingsValidateV3Execute(r)
+func (r ApiCategoryPostV4Request) Execute() (*ItemCreatedResponse2, *http.Response, error) {
+	return r.ApiService.CategoryPostV4Execute(r)
 }
 
 /*
-SettingsValidateV3 Validates the given setting.
+CategoryPostV4 Creates a new category.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param name
- @return ApiSettingsValidateV3Request
-
-Deprecated
+ @param project
+ @return ApiCategoryPostV4Request
 */
-func (a *SettingsAPIService) SettingsValidateV3(ctx context.Context, name string) ApiSettingsValidateV3Request {
-	return ApiSettingsValidateV3Request{
+func (a *CategoryAPIService) CategoryPostV4(ctx context.Context, project string) ApiCategoryPostV4Request {
+	return ApiCategoryPostV4Request{
 		ApiService: a,
 		ctx: ctx,
-		name: name,
+		project: project,
 	}
 }
 
 // Execute executes the request
-//  @return SettingValidationResponse
-// Deprecated
-func (a *SettingsAPIService) SettingsValidateV3Execute(r ApiSettingsValidateV3Request) (*SettingValidationResponse, *http.Response, error) {
+//  @return ItemCreatedResponse2
+func (a *CategoryAPIService) CategoryPostV4Execute(r ApiCategoryPostV4Request) (*ItemCreatedResponse2, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *SettingValidationResponse
+		localVarReturnValue  *ItemCreatedResponse2
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SettingsAPIService.SettingsValidateV3")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CategoryAPIService.CategoryPostV4")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v3/settings/{name}/validate"
-	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
+	localVarPath := localBasePath + "/api/v4/category/{project}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project"+"}", url.PathEscape(parameterValueToString(r.project, "project")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.setting == nil {
-		return localVarReturnValue, nil, reportError("setting is required and must be specified")
+	if r.categoryV4 == nil {
+		return localVarReturnValue, nil, reportError("categoryV4 is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -506,7 +296,7 @@ func (a *SettingsAPIService) SettingsValidateV3Execute(r ApiSettingsValidateV3Re
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.setting
+	localVarPostBody = r.categoryV4
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -544,64 +334,165 @@ func (a *SettingsAPIService) SettingsValidateV3Execute(r ApiSettingsValidateV3Re
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSettingsValidateV4Request struct {
+type ApiCategoryPutV4Request struct {
 	ctx context.Context
-	ApiService *SettingsAPIService
+	ApiService *CategoryAPIService
 	project string
-	name string
-	setting *Setting
+	id string
+	categoryV4 *CategoryV4
 }
 
-func (r ApiSettingsValidateV4Request) Setting(setting Setting) ApiSettingsValidateV4Request {
-	r.setting = &setting
+func (r ApiCategoryPutV4Request) CategoryV4(categoryV4 CategoryV4) ApiCategoryPutV4Request {
+	r.categoryV4 = &categoryV4
 	return r
 }
 
-func (r ApiSettingsValidateV4Request) Execute() (*SettingValidationResponse, *http.Response, error) {
-	return r.ApiService.SettingsValidateV4Execute(r)
+func (r ApiCategoryPutV4Request) Execute() (*http.Response, error) {
+	return r.ApiService.CategoryPutV4Execute(r)
 }
 
 /*
-SettingsValidateV4 Validates the given setting.
+CategoryPutV4 Overwrites an existing category with the given ID.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param project
- @param name
- @return ApiSettingsValidateV4Request
+ @param id
+ @return ApiCategoryPutV4Request
 */
-func (a *SettingsAPIService) SettingsValidateV4(ctx context.Context, project string, name string) ApiSettingsValidateV4Request {
-	return ApiSettingsValidateV4Request{
+func (a *CategoryAPIService) CategoryPutV4(ctx context.Context, project string, id string) ApiCategoryPutV4Request {
+	return ApiCategoryPutV4Request{
 		ApiService: a,
 		ctx: ctx,
 		project: project,
-		name: name,
+		id: id,
 	}
 }
 
 // Execute executes the request
-//  @return SettingValidationResponse
-func (a *SettingsAPIService) SettingsValidateV4Execute(r ApiSettingsValidateV4Request) (*SettingValidationResponse, *http.Response, error) {
+func (a *CategoryAPIService) CategoryPutV4Execute(r ApiCategoryPutV4Request) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
+		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *SettingValidationResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SettingsAPIService.SettingsValidateV4")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CategoryAPIService.CategoryPutV4")
 	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v4/settings/{project}/{name}/validate"
+	localVarPath := localBasePath + "/api/v4/category/{project}/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project"+"}", url.PathEscape(parameterValueToString(r.project, "project")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.setting == nil {
-		return localVarReturnValue, nil, reportError("setting is required and must be specified")
+	if r.categoryV4 == nil {
+		return nil, reportError("categoryV4 is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.categoryV4
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCategorySearchV4Request struct {
+	ctx context.Context
+	ApiService *CategoryAPIService
+	project string
+	searchRequest *SearchRequest
+}
+
+func (r ApiCategorySearchV4Request) SearchRequest(searchRequest SearchRequest) ApiCategorySearchV4Request {
+	r.searchRequest = &searchRequest
+	return r
+}
+
+func (r ApiCategorySearchV4Request) Execute() (*CategorySearchResponseV4, *http.Response, error) {
+	return r.ApiService.CategorySearchV4Execute(r)
+}
+
+/*
+CategorySearchV4 Searches for categories by the given filters.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param project
+ @return ApiCategorySearchV4Request
+*/
+func (a *CategoryAPIService) CategorySearchV4(ctx context.Context, project string) ApiCategorySearchV4Request {
+	return ApiCategorySearchV4Request{
+		ApiService: a,
+		ctx: ctx,
+		project: project,
+	}
+}
+
+// Execute executes the request
+//  @return CategorySearchResponseV4
+func (a *CategoryAPIService) CategorySearchV4Execute(r ApiCategorySearchV4Request) (*CategorySearchResponseV4, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CategorySearchResponseV4
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CategoryAPIService.CategorySearchV4")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v4/category/{project}/search"
+	localVarPath = strings.Replace(localVarPath, "{"+"project"+"}", url.PathEscape(parameterValueToString(r.project, "project")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.searchRequest == nil {
+		return localVarReturnValue, nil, reportError("searchRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -622,7 +513,7 @@ func (a *SettingsAPIService) SettingsValidateV4Execute(r ApiSettingsValidateV4Re
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.setting
+	localVarPostBody = r.searchRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.10.0
+  version: 3.11.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -21,6 +21,8 @@ tags:
   name: settings
 - description: stats
   name: stats
+- description: category
+  name: category
 - description: project
   name: project
 paths:
@@ -823,6 +825,168 @@ paths:
       summary: API Endpoint for JSON authentication.
       tags:
       - auth
+  /api/v4/category/{project}:
+    post:
+      operationId: category_post_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryV4"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse2"
+          description: The category was successfully created.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Creates a new category.
+      tags:
+      - category
+  /api/v4/category/{project}/{id}:
+    delete:
+      operationId: category_delete_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The category was successfully deleted.
+        "404":
+          description: The category was not found.
+        "409":
+          description: The category cannot be deleted because it is referenced by
+            child categories or products.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Deletes a category by its ID.
+      tags:
+      - category
+    get:
+      operationId: category_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryV4"
+          description: The category was successfully retrieved.
+        "404":
+          description: The category was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a category by its ID.
+      tags:
+      - category
+    put:
+      operationId: category_put_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryV4"
+        required: true
+      responses:
+        "200":
+          description: The category was successfully updated.
+        "404":
+          description: The category was not found.
+        "422":
+          description: The provided data is invalid or would create a circular reference.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Overwrites an existing category with the given ID.
+      tags:
+      - category
+  /api/v4/category/{project}/search:
+    post:
+      operationId: category_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategorySearchResponseV4"
+          description: A search response with categories matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for categories by the given filters.
+      tags:
+      - category
   /api/v4/customer/{project}:
     post:
       description: A new customer is created using the provided data. The customer
@@ -3779,6 +3943,117 @@ components:
           type: string
       title: Error Response
       type: object
+    CategoryV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Parent: Parent
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        AdditionalFields:
+          key: AdditionalFields
+        Level: 0
+        ID: ID
+        Name: Name
+      properties:
+        ID:
+          description: "ID of the category. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Name:
+          description: Name of the category.
+          type: string
+        Parent:
+          description: ID of the parent category. Must not create a circular reference.
+          nullable: true
+          type: string
+        Level:
+          description: "Hierarchy level of the category. 0 for root categories. Set\
+            \ internally by Customa, any given value is ignored."
+          nullable: true
+          type: integer
+        AdditionalFields:
+          additionalProperties:
+            type: string
+          description: Additional field data for the category.
+          type: object
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - AdditionalFields
+      - Name
+      title: Category
+      type: object
+    ItemCreatedResponse2:
+      description: Response body after successfully creating a new item.
+      example:
+        ID: "42"
+      properties:
+        ID:
+          example: "42"
+          title: ID of the created item.
+          type: string
+      required:
+      - ID
+      title: Item Created Response
+      type: object
+    CategorySearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        Categories:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Parent: Parent
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          AdditionalFields:
+            key: AdditionalFields
+          Level: 0
+          ID: ID
+          Name: Name
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Parent: Parent
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          AdditionalFields:
+            key: AdditionalFields
+          Level: 0
+          ID: ID
+          Name: Name
+        CurrentPage: 6
+        PagesCount: 1
+      properties:
+        Categories:
+          default: []
+          items:
+            $ref: "#/components/schemas/CategoryV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Category Search Response
+      type: object
     Salutation:
       enum:
       - m
@@ -3969,19 +4244,6 @@ components:
       - Title
       title: Customer
       type: object
-    ItemCreatedResponse2:
-      description: Response body after successfully creating a new item.
-      example:
-        ID: "42"
-      properties:
-        ID:
-          example: "42"
-          title: ID of the created item.
-          type: string
-      required:
-      - ID
-      title: Item Created Response
-      type: object
     CustomerSearchResponseV4:
       example:
         TotalCount: 0
@@ -4094,6 +4356,7 @@ components:
     ProductV4:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
+        Category: Category
         RecommendedRetailPrice:
           Currency: Currency
           Value: 0.8008282
@@ -4144,6 +4407,10 @@ components:
           type: string
         Vendor:
           description: Vendor of the product.
+          type: string
+        Category:
+          description: Category of the product.
+          nullable: true
           type: string
         ShortDescription:
           description: Short description of the product.
@@ -4207,6 +4474,7 @@ components:
       example:
         Products:
         - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Category: Category
           RecommendedRetailPrice:
             Currency: Currency
             Value: 0.8008282
@@ -4233,6 +4501,7 @@ components:
           ImageSource: ImageSource
           Stock: 0
         - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Category: Category
           RecommendedRetailPrice:
             Currency: Currency
             Value: 0.8008282

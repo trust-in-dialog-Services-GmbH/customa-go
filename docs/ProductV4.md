@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Name** | **string** | Name of the product. | 
 **Manufacturer** | **string** | Manufacturer of the product. | 
 **Vendor** | **string** | Vendor of the product. | 
+**Category** | Pointer to **NullableString** | Category of the product. | [optional] 
 **ShortDescription** | **string** | Short description of the product. | 
 **LongDescription** | **string** | Long description of the product. | 
 **ImageSource** | **string** | Source URI of the product image. | 
@@ -213,6 +214,41 @@ and a boolean to check if the value has been set.
 SetVendor sets Vendor field to given value.
 
 
+### GetCategory
+
+`func (o *ProductV4) GetCategory() string`
+
+GetCategory returns the Category field if non-nil, zero value otherwise.
+
+### GetCategoryOk
+
+`func (o *ProductV4) GetCategoryOk() (*string, bool)`
+
+GetCategoryOk returns a tuple with the Category field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCategory
+
+`func (o *ProductV4) SetCategory(v string)`
+
+SetCategory sets Category field to given value.
+
+### HasCategory
+
+`func (o *ProductV4) HasCategory() bool`
+
+HasCategory returns a boolean if a field has been set.
+
+### SetCategoryNil
+
+`func (o *ProductV4) SetCategoryNil(b bool)`
+
+ SetCategoryNil sets the value for Category to be an explicit nil
+
+### UnsetCategory
+`func (o *ProductV4) UnsetCategory()`
+
+UnsetCategory ensures that no value is present for Category, not even an explicit nil
 ### GetShortDescription
 
 `func (o *ProductV4) GetShortDescription() string`

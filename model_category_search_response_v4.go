@@ -15,11 +15,12 @@ import (
 	"fmt"
 )
 
-// checks if the BasicSearchResponse type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &BasicSearchResponse{}
+// checks if the CategorySearchResponseV4 type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CategorySearchResponseV4{}
 
-// BasicSearchResponse struct for BasicSearchResponse
-type BasicSearchResponse struct {
+// CategorySearchResponseV4 struct for CategorySearchResponseV4
+type CategorySearchResponseV4 struct {
+	Categories []CategoryV4 `json:"Categories,omitempty"`
 	// Total number of items.
 	TotalCount int32 `json:"TotalCount"`
 	// Current page number.
@@ -31,14 +32,14 @@ type BasicSearchResponse struct {
 	AdditionalProperties map[string]interface{}
 }
 
-type _BasicSearchResponse BasicSearchResponse
+type _CategorySearchResponseV4 CategorySearchResponseV4
 
-// NewBasicSearchResponse instantiates a new BasicSearchResponse object
+// NewCategorySearchResponseV4 instantiates a new CategorySearchResponseV4 object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBasicSearchResponse(totalCount int32, currentPage int32, pagesCount int32, pageSize int32) *BasicSearchResponse {
-	this := BasicSearchResponse{}
+func NewCategorySearchResponseV4(totalCount int32, currentPage int32, pagesCount int32, pageSize int32) *CategorySearchResponseV4 {
+	this := CategorySearchResponseV4{}
 	this.TotalCount = totalCount
 	this.CurrentPage = currentPage
 	this.PagesCount = pagesCount
@@ -46,16 +47,48 @@ func NewBasicSearchResponse(totalCount int32, currentPage int32, pagesCount int3
 	return &this
 }
 
-// NewBasicSearchResponseWithDefaults instantiates a new BasicSearchResponse object
+// NewCategorySearchResponseV4WithDefaults instantiates a new CategorySearchResponseV4 object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewBasicSearchResponseWithDefaults() *BasicSearchResponse {
-	this := BasicSearchResponse{}
+func NewCategorySearchResponseV4WithDefaults() *CategorySearchResponseV4 {
+	this := CategorySearchResponseV4{}
 	return &this
 }
 
+// GetCategories returns the Categories field value if set, zero value otherwise.
+func (o *CategorySearchResponseV4) GetCategories() []CategoryV4 {
+	if o == nil || IsNil(o.Categories) {
+		var ret []CategoryV4
+		return ret
+	}
+	return o.Categories
+}
+
+// GetCategoriesOk returns a tuple with the Categories field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CategorySearchResponseV4) GetCategoriesOk() ([]CategoryV4, bool) {
+	if o == nil || IsNil(o.Categories) {
+		return nil, false
+	}
+	return o.Categories, true
+}
+
+// HasCategories returns a boolean if a field has been set.
+func (o *CategorySearchResponseV4) HasCategories() bool {
+	if o != nil && !IsNil(o.Categories) {
+		return true
+	}
+
+	return false
+}
+
+// SetCategories gets a reference to the given []CategoryV4 and assigns it to the Categories field.
+func (o *CategorySearchResponseV4) SetCategories(v []CategoryV4) {
+	o.Categories = v
+}
+
 // GetTotalCount returns the TotalCount field value
-func (o *BasicSearchResponse) GetTotalCount() int32 {
+func (o *CategorySearchResponseV4) GetTotalCount() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -66,7 +99,7 @@ func (o *BasicSearchResponse) GetTotalCount() int32 {
 
 // GetTotalCountOk returns a tuple with the TotalCount field value
 // and a boolean to check if the value has been set.
-func (o *BasicSearchResponse) GetTotalCountOk() (*int32, bool) {
+func (o *CategorySearchResponseV4) GetTotalCountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -74,12 +107,12 @@ func (o *BasicSearchResponse) GetTotalCountOk() (*int32, bool) {
 }
 
 // SetTotalCount sets field value
-func (o *BasicSearchResponse) SetTotalCount(v int32) {
+func (o *CategorySearchResponseV4) SetTotalCount(v int32) {
 	o.TotalCount = v
 }
 
 // GetCurrentPage returns the CurrentPage field value
-func (o *BasicSearchResponse) GetCurrentPage() int32 {
+func (o *CategorySearchResponseV4) GetCurrentPage() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -90,7 +123,7 @@ func (o *BasicSearchResponse) GetCurrentPage() int32 {
 
 // GetCurrentPageOk returns a tuple with the CurrentPage field value
 // and a boolean to check if the value has been set.
-func (o *BasicSearchResponse) GetCurrentPageOk() (*int32, bool) {
+func (o *CategorySearchResponseV4) GetCurrentPageOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -98,12 +131,12 @@ func (o *BasicSearchResponse) GetCurrentPageOk() (*int32, bool) {
 }
 
 // SetCurrentPage sets field value
-func (o *BasicSearchResponse) SetCurrentPage(v int32) {
+func (o *CategorySearchResponseV4) SetCurrentPage(v int32) {
 	o.CurrentPage = v
 }
 
 // GetPagesCount returns the PagesCount field value
-func (o *BasicSearchResponse) GetPagesCount() int32 {
+func (o *CategorySearchResponseV4) GetPagesCount() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -114,7 +147,7 @@ func (o *BasicSearchResponse) GetPagesCount() int32 {
 
 // GetPagesCountOk returns a tuple with the PagesCount field value
 // and a boolean to check if the value has been set.
-func (o *BasicSearchResponse) GetPagesCountOk() (*int32, bool) {
+func (o *CategorySearchResponseV4) GetPagesCountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -122,12 +155,12 @@ func (o *BasicSearchResponse) GetPagesCountOk() (*int32, bool) {
 }
 
 // SetPagesCount sets field value
-func (o *BasicSearchResponse) SetPagesCount(v int32) {
+func (o *CategorySearchResponseV4) SetPagesCount(v int32) {
 	o.PagesCount = v
 }
 
 // GetPageSize returns the PageSize field value
-func (o *BasicSearchResponse) GetPageSize() int32 {
+func (o *CategorySearchResponseV4) GetPageSize() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -138,7 +171,7 @@ func (o *BasicSearchResponse) GetPageSize() int32 {
 
 // GetPageSizeOk returns a tuple with the PageSize field value
 // and a boolean to check if the value has been set.
-func (o *BasicSearchResponse) GetPageSizeOk() (*int32, bool) {
+func (o *CategorySearchResponseV4) GetPageSizeOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -146,11 +179,11 @@ func (o *BasicSearchResponse) GetPageSizeOk() (*int32, bool) {
 }
 
 // SetPageSize sets field value
-func (o *BasicSearchResponse) SetPageSize(v int32) {
+func (o *CategorySearchResponseV4) SetPageSize(v int32) {
 	o.PageSize = v
 }
 
-func (o BasicSearchResponse) MarshalJSON() ([]byte, error) {
+func (o CategorySearchResponseV4) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -158,8 +191,11 @@ func (o BasicSearchResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o BasicSearchResponse) ToMap() (map[string]interface{}, error) {
+func (o CategorySearchResponseV4) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Categories) {
+		toSerialize["Categories"] = o.Categories
+	}
 	toSerialize["TotalCount"] = o.TotalCount
 	toSerialize["CurrentPage"] = o.CurrentPage
 	toSerialize["PagesCount"] = o.PagesCount
@@ -172,7 +208,7 @@ func (o BasicSearchResponse) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *BasicSearchResponse) UnmarshalJSON(data []byte) (err error) {
+func (o *CategorySearchResponseV4) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -197,19 +233,20 @@ func (o *BasicSearchResponse) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varBasicSearchResponse := _BasicSearchResponse{}
+	varCategorySearchResponseV4 := _CategorySearchResponseV4{}
 
-	err = json.Unmarshal(data, &varBasicSearchResponse)
+	err = json.Unmarshal(data, &varCategorySearchResponseV4)
 
 	if err != nil {
 		return err
 	}
 
-	*o = BasicSearchResponse(varBasicSearchResponse)
+	*o = CategorySearchResponseV4(varCategorySearchResponseV4)
 
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "Categories")
 		delete(additionalProperties, "TotalCount")
 		delete(additionalProperties, "CurrentPage")
 		delete(additionalProperties, "PagesCount")
@@ -220,38 +257,38 @@ func (o *BasicSearchResponse) UnmarshalJSON(data []byte) (err error) {
 	return err
 }
 
-type NullableBasicSearchResponse struct {
-	value *BasicSearchResponse
+type NullableCategorySearchResponseV4 struct {
+	value *CategorySearchResponseV4
 	isSet bool
 }
 
-func (v NullableBasicSearchResponse) Get() *BasicSearchResponse {
+func (v NullableCategorySearchResponseV4) Get() *CategorySearchResponseV4 {
 	return v.value
 }
 
-func (v *NullableBasicSearchResponse) Set(val *BasicSearchResponse) {
+func (v *NullableCategorySearchResponseV4) Set(val *CategorySearchResponseV4) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableBasicSearchResponse) IsSet() bool {
+func (v NullableCategorySearchResponseV4) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableBasicSearchResponse) Unset() {
+func (v *NullableCategorySearchResponseV4) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableBasicSearchResponse(val *BasicSearchResponse) *NullableBasicSearchResponse {
-	return &NullableBasicSearchResponse{value: val, isSet: true}
+func NewNullableCategorySearchResponseV4(val *CategorySearchResponseV4) *NullableCategorySearchResponseV4 {
+	return &NullableCategorySearchResponseV4{value: val, isSet: true}
 }
 
-func (v NullableBasicSearchResponse) MarshalJSON() ([]byte, error) {
+func (v NullableCategorySearchResponseV4) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableBasicSearchResponse) UnmarshalJSON(src []byte) error {
+func (v *NullableCategorySearchResponseV4) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
