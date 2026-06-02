@@ -22,6 +22,22 @@ func Test_customa_SettingsAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
+	t.Run("Test SettingsAPIService SettingsGetMarketplaceV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var mappingShopId string
+		var name string
+
+		resp, httpRes, err := apiClient.SettingsAPI.SettingsGetMarketplaceV4(context.Background(), project, mappingShopId, name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test SettingsAPIService SettingsGetV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -68,6 +84,22 @@ func Test_customa_SettingsAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.SettingsAPI.SettingsListV4(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test SettingsAPIService SettingsSetMarketplaceV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var mappingShopId string
+		var name string
+
+		resp, httpRes, err := apiClient.SettingsAPI.SettingsSetMarketplaceV4(context.Background(), project, mappingShopId, name).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

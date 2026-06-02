@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ReceiptDeleteV3**](ReceiptAPI.md#ReceiptDeleteV3) | **Delete** /api/v3/receipt/{id} | Deletes a receipt by its ID.
 [**ReceiptDeleteV4**](ReceiptAPI.md#ReceiptDeleteV4) | **Delete** /api/v4/receipt/{project}/{id} | Deletes a receipt by its ID.
+[**ReceiptFieldsV4**](ReceiptAPI.md#ReceiptFieldsV4) | **Get** /api/v4/receipt/{project}/fields | Returns a list of fields and allowed filters for receipt search.
 [**ReceiptGetV3**](ReceiptAPI.md#ReceiptGetV3) | **Get** /api/v3/receipt/{id} | Retrieves a receipt by its ID.
 [**ReceiptGetV4**](ReceiptAPI.md#ReceiptGetV4) | **Get** /api/v4/receipt/{project}/{id} | Retrieves a receipt by its ID.
 [**ReceiptPatchV3**](ReceiptAPI.md#ReceiptPatchV3) | **Patch** /api/v3/receipt/{id} | Partially updates an existing receipt with the given ID.
@@ -147,6 +148,74 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ReceiptFieldsV4
+
+> FieldDefinitions ReceiptFieldsV4(ctx, project).Execute()
+
+Returns a list of fields and allowed filters for receipt search.
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.ReceiptAPI.ReceiptFieldsV4(context.Background(), project).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptFieldsV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ReceiptFieldsV4`: FieldDefinitions
+	fmt.Fprintf(os.Stdout, "Response from `ReceiptAPI.ReceiptFieldsV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReceiptFieldsV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**FieldDefinitions**](FieldDefinitions.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

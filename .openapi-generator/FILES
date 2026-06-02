@@ -9,6 +9,7 @@ api_receipt.go
 api_segment.go
 api_settings.go
 api_stats.go
+api_traffic.go
 client.go
 configuration.go
 docs/AdditionalField.md
@@ -32,6 +33,8 @@ docs/DateField.md
 docs/DeliveryStatusV4.md
 docs/ErrorResponseV3.md
 docs/ErrorResponseV4.md
+docs/FieldDefinition.md
+docs/FieldDefinitions.md
 docs/Filter.md
 docs/FilterType.md
 docs/GlobalSettingValue.md
@@ -71,13 +74,13 @@ docs/SegmentRecency.md
 docs/SegmentValue.md
 docs/Setting.md
 docs/SettingDefinition.md
+docs/SettingMarketplaceValue.md
 docs/SettingType.md
 docs/SettingValidationResponse.md
+docs/SettingValueRequest.md
 docs/SettingsAPI.md
 docs/SettingsDefinition.md
 docs/StatsAPI.md
-docs/StatsField.md
-docs/StatsFields.md
 docs/StatsGroupings.md
 docs/StatsReceiptGroup.md
 docs/StatsReceiptGroups.md
@@ -92,6 +95,11 @@ docs/StrictReceipt.md
 docs/StrictReceiptItem.md
 docs/TaxClass.md
 docs/Timestamped.md
+docs/TrafficAPI.md
+docs/TrafficFiltersResponse.md
+docs/TrafficRequest.md
+docs/TrafficResponse.md
+docs/TrafficRow.md
 go.mod
 go.sum
 model_additional_field.go
@@ -112,6 +120,8 @@ model_date_field.go
 model_delivery_status_v4.go
 model_error_response_v3.go
 model_error_response_v4.go
+model_field_definition.go
+model_field_definitions.go
 model_filter.go
 model_filter_type.go
 model_global_setting_value_.go
@@ -147,11 +157,11 @@ model_segment_recency.go
 model_segment_value.go
 model_setting.go
 model_setting_definition.go
+model_setting_marketplace_value.go
 model_setting_type.go
 model_setting_validation_response.go
+model_setting_value_request.go
 model_settings_definition.go
-model_stats_field.go
-model_stats_fields.go
 model_stats_groupings.go
 model_stats_receipt_group.go
 model_stats_receipt_groups.go
@@ -166,6 +176,10 @@ model_strict_receipt.go
 model_strict_receipt_item.go
 model_tax_class.go
 model_timestamped.go
+model_traffic_filters_response.go
+model_traffic_request.go
+model_traffic_response.go
+model_traffic_row.go
 response.go
 test/api_auth_test.go
 test/api_category_test.go
@@ -176,4 +190,5 @@ test/api_receipt_test.go
 test/api_segment_test.go
 test/api_settings_test.go
 test/api_stats_test.go
+test/api_traffic_test.go
 utils.go

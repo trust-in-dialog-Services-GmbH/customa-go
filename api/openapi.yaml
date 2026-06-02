@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.11.0
+  version: 3.12.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -25,6 +25,8 @@ tags:
   name: category
 - description: project
   name: project
+- description: traffic
+  name: traffic
 paths:
   /api/v3/auth/login:
     post:
@@ -1037,6 +1039,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       responses:
@@ -1068,6 +1071,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       responses:
@@ -1102,6 +1106,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       requestBody:
@@ -1158,6 +1163,30 @@ paths:
       summary: Searches for customers by the given filters.
       tags:
       - customer
+  /api/v4/customer/{project}/fields:
+    get:
+      operationId: customer_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for customer search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for customer search.
+      tags:
+      - customer
   /api/v4/product/{project}:
     post:
       description: A new product is created using the provided data. The product ID
@@ -1208,6 +1237,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       responses:
@@ -1239,6 +1269,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       responses:
@@ -1273,6 +1304,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       requestBody:
@@ -1327,6 +1359,30 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Searches for products by the given filters.
+      tags:
+      - product
+  /api/v4/product/{project}/fields:
+    get:
+      operationId: product_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for product search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for product search.
       tags:
       - product
   /api/v4/project:
@@ -1396,6 +1452,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       responses:
@@ -1424,6 +1481,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       responses:
@@ -1459,6 +1517,7 @@ paths:
         name: id
         required: true
         schema:
+          pattern: \d+
           type: string
         style: simple
       requestBody:
@@ -1513,6 +1572,30 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Searches for receipts by the given filters.
+      tags:
+      - receipt
+  /api/v4/receipt/{project}/fields:
+    get:
+      operationId: receipt_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for receipt search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for receipt search.
       tags:
       - receipt
   /api/v4/segment/{project}:
@@ -1615,6 +1698,95 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Returns the values of a given setting.
+      tags:
+      - settings
+  /api/v4/settings/{project}/{mappingShopId}/{name}:
+    get:
+      operationId: settings_get_marketplace_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: mappingShopId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingMarketplaceValue"
+          description: The setting value for the marketplace.
+        "403":
+          description: The setting is confidential and is not readable via the API.
+        "404":
+          description: The setting or marketplace was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns the value of a setting for a specific marketplace.
+      tags:
+      - settings
+    put:
+      operationId: settings_set_marketplace_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: mappingShopId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SettingValueRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingMarketplaceValue"
+          description: The updated setting value.
+        "400":
+          description: Invalid request body.
+        "404":
+          description: The setting or marketplace was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Saves the value of a setting for a specific marketplace.
       tags:
       - settings
   /api/v4/settings/{project}/{name}/validate:
@@ -1726,7 +1898,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StatsFields"
+                $ref: "#/components/schemas/FieldDefinitions"
           description: Fields and filters for receipt statistics.
       security:
       - apiV4Token: []
@@ -1804,7 +1976,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StatsFields"
+                $ref: "#/components/schemas/FieldDefinitions"
           description: Fields and filters for receipt item statistics.
       security:
       - apiV4Token: []
@@ -1812,6 +1984,62 @@ paths:
       summary: Returns a list of fields and allowed filters for receipt item statistics.
       tags:
       - stats
+  /api/v4/traffic/{project}/filters:
+    get:
+      operationId: traffic_filters_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrafficFiltersResponse"
+          description: Available filter options.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns available filter options for the traffic analyzer.
+      tags:
+      - traffic
+  /api/v4/traffic/{project}:
+    post:
+      operationId: traffic_data_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrafficRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrafficResponse"
+          description: Traffic data groups.
+        "400":
+          description: The request body is invalid or malformed.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns traffic data for the given project and filters.
+      tags:
+      - traffic
 components:
   schemas:
     BasicSearchResponse:
@@ -4346,6 +4574,66 @@ components:
       - TotalCount
       title: Customer Search Response
       type: object
+    FieldDefinition:
+      example:
+        Description:
+          key: Description
+        AllowedValues:
+          key:
+          - ""
+          - ""
+        AllowedFilters:
+        - AllowedFilters
+        - AllowedFilters
+        Name:
+          key: Name
+      properties:
+        Name:
+          additionalProperties:
+            type: string
+          type: object
+        Description:
+          additionalProperties:
+            type: string
+          type: object
+        AllowedFilters:
+          items:
+            type: string
+          type: array
+        AllowedValues:
+          additionalProperties:
+            items: {}
+            type: array
+          nullable: true
+          type: object
+      required:
+      - AllowedFilters
+      - Description
+      - Name
+      type: object
+    FieldDefinitions:
+      example:
+        Fields:
+          key:
+            Description:
+              key: Description
+            AllowedValues:
+              key:
+              - ""
+              - ""
+            AllowedFilters:
+            - AllowedFilters
+            - AllowedFilters
+            Name:
+              key: Name
+      properties:
+        Fields:
+          additionalProperties:
+            $ref: "#/components/schemas/FieldDefinition"
+          type: object
+      required:
+      - Fields
+      type: object
     TaxClass:
       enum:
       - NormalTax
@@ -4969,6 +5257,32 @@ components:
       - TotalCount
       title: Receipt Search Response
       type: object
+    SettingMarketplaceValue:
+      example:
+        Value: Value
+        HasValue: false
+      properties:
+        Value:
+          description: The current value as string. Null for confidential settings.
+          nullable: true
+          type: string
+        HasValue:
+          default: false
+          description: Whether a non-null value exists. True even for confidential
+            settings.
+          type: boolean
+      title: Setting Marketplace Value
+      type: object
+    SettingValueRequest:
+      example:
+        Value: Value
+      properties:
+        Value:
+          description: The new value as string. Pass null or empty string to clear.
+          nullable: true
+          type: string
+      title: Setting Value Request
+      type: object
     StatsGroupings:
       example:
         Groupings:
@@ -4982,33 +5296,206 @@ components:
       required:
       - Groupings
       type: object
-    StatsField:
+    TrafficFiltersResponse:
       example:
-        AllowedFilters:
-        - AllowedFilters
-        - AllowedFilters
+        Marketplaces:
+          key: Marketplaces
+        Groupings:
+          key: Groupings
+        Campaigns:
+          key: Campaigns
+        Sources:
+          key: Sources
       properties:
-        AllowedFilters:
-          items:
-            type: string
-          type: array
-      required:
-      - AllowedFilters
-      type: object
-    StatsFields:
-      example:
-        Fields:
-          key:
-            AllowedFilters:
-            - AllowedFilters
-            - AllowedFilters
-      properties:
-        Fields:
+        Groupings:
           additionalProperties:
-            $ref: "#/components/schemas/StatsField"
+            type: string
+          description: "Available grouping options. Key is display label, value is\
+            \ the grouping identifier."
+          type: object
+        Sources:
+          additionalProperties:
+            type: string
+          description: "Available data sources. Key is display label, value is the\
+            \ source identifier."
+          type: object
+        Marketplaces:
+          additionalProperties:
+            type: string
+          description: "Available marketplaces. Key is display label, value is the\
+            \ marketplace ID as string."
+          type: object
+        Campaigns:
+          additionalProperties:
+            type: string
+          description: "Available campaigns. Key is campaign name, value is the campaign\
+            \ ID as string."
           type: object
       required:
-      - Fields
+      - Campaigns
+      - Groupings
+      - Marketplaces
+      - Sources
+      title: Traffic Filters Response
+      type: object
+    TrafficRequest:
+      example:
+        StartDate: 2024-01-01
+        MarketplaceId: 0
+        CampaignId: 6
+        Grouping: day
+        EndDate: 2024-01-31
+        Source: Source
+      properties:
+        StartDate:
+          description: Start date in YYYY-MM-DD format.
+          example: 2024-01-01
+          type: string
+        EndDate:
+          description: End date in YYYY-MM-DD format.
+          example: 2024-01-31
+          type: string
+        Grouping:
+          default: day
+          description: Grouping dimension.
+          enum:
+          - day
+          - month
+          - year
+          - source
+          - campaign
+          - campaigngroup
+          - marketplace
+          example: day
+          type: string
+        Source:
+          description: "Data source filter (e.g. gads, bads, gsc, mads). Null means\
+            \ no filter."
+          nullable: true
+          type: string
+        MarketplaceId:
+          description: Marketplace ID filter. Null means no filter.
+          nullable: true
+          type: integer
+        CampaignId:
+          description: Campaign ID filter. Null means no filter.
+          nullable: true
+          type: integer
+      required:
+      - EndDate
+      - StartDate
+      title: Traffic Request
+      type: object
+    TrafficRow:
+      example:
+        GroupName: GroupName
+        Ctr: 1.4658129
+        Impressions: 0.8008282
+        Costs: 2.302136
+        Conversions: 5.962134
+        ConversionRate: 5.637377
+        Cpc: 7.0614014
+        GroupKey: GroupKey
+        Kur: 3.6160767
+        Revenue: 9.301444
+        Clicks: 6.0274563
+      properties:
+        GroupKey:
+          description: "Group key (date, campaign name, source, etc.)"
+          type: string
+        GroupName:
+          description: Display name for the group.
+          type: string
+        Impressions:
+          description: Total impressions.
+          format: float
+          type: number
+        Clicks:
+          description: Total clicks.
+          format: float
+          type: number
+        Ctr:
+          description: Click-through rate (clicks / impressions).
+          format: float
+          type: number
+        Conversions:
+          description: Total conversions.
+          format: float
+          type: number
+        ConversionRate:
+          description: Conversion rate (conversions / clicks).
+          format: float
+          type: number
+        Costs:
+          description: Total costs.
+          format: float
+          type: number
+        Cpc:
+          description: Cost per click (costs / clicks).
+          format: float
+          type: number
+        Revenue:
+          description: Total revenue.
+          format: float
+          type: number
+        Kur:
+          description: Cost-revenue ratio (costs / revenue).
+          format: float
+          type: number
+      required:
+      - Clicks
+      - ConversionRate
+      - Conversions
+      - Costs
+      - Cpc
+      - Ctr
+      - GroupKey
+      - GroupName
+      - Impressions
+      - Kur
+      - Revenue
+      title: Traffic Group
+      type: object
+    TrafficResponse:
+      example:
+        Groups:
+        - GroupName: GroupName
+          Ctr: 1.4658129
+          Impressions: 0.8008282
+          Costs: 2.302136
+          Conversions: 5.962134
+          ConversionRate: 5.637377
+          Cpc: 7.0614014
+          GroupKey: GroupKey
+          Kur: 3.6160767
+          Revenue: 9.301444
+          Clicks: 6.0274563
+        - GroupName: GroupName
+          Ctr: 1.4658129
+          Impressions: 0.8008282
+          Costs: 2.302136
+          Conversions: 5.962134
+          ConversionRate: 5.637377
+          Cpc: 7.0614014
+          GroupKey: GroupKey
+          Kur: 3.6160767
+          Revenue: 9.301444
+          Clicks: 6.0274563
+        Currency: €
+      properties:
+        Groups:
+          default: []
+          description: List of traffic data groups.
+          items:
+            $ref: "#/components/schemas/TrafficRow"
+          type: array
+        Currency:
+          description: Currency display symbol for cost/revenue values.
+          example: €
+          type: string
+      required:
+      - Currency
+      title: Traffic Response
       type: object
     Global_Setting_Value_:
       description: "The global value of the setting, which applies when no marketplace-specific\

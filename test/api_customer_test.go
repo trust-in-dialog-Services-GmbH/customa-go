@@ -49,6 +49,20 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test CustomerAPIService CustomerFieldsV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.CustomerAPI.CustomerFieldsV4(context.Background(), project).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CustomerAPIService CustomerGetV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

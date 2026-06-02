@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## StatsReceiptFieldsV4
 
-> StatsFields StatsReceiptFieldsV4(ctx, project).Execute()
+> FieldDefinitions StatsReceiptFieldsV4(ctx, project).Execute()
 
 Returns a list of fields and allowed filters for receipt statistics.
 
@@ -45,7 +45,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `StatsAPI.StatsReceiptFieldsV4``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `StatsReceiptFieldsV4`: StatsFields
+	// response from `StatsReceiptFieldsV4`: FieldDefinitions
 	fmt.Fprintf(os.Stdout, "Response from `StatsAPI.StatsReceiptFieldsV4`: %v\n", resp)
 }
 ```
@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**StatsFields**](StatsFields.md)
+[**FieldDefinitions**](FieldDefinitions.md)
 
 ### Authorization
 
@@ -214,7 +214,7 @@ Name | Type | Description  | Notes
 
 ## StatsReceiptItemFieldsV4
 
-> StatsFields StatsReceiptItemFieldsV4(ctx, project).Execute()
+> FieldDefinitions StatsReceiptItemFieldsV4(ctx, project).Execute()
 
 Returns a list of fields and allowed filters for receipt item statistics.
 
@@ -240,7 +240,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `StatsAPI.StatsReceiptItemFieldsV4``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `StatsReceiptItemFieldsV4`: StatsFields
+	// response from `StatsReceiptItemFieldsV4`: FieldDefinitions
 	fmt.Fprintf(os.Stdout, "Response from `StatsAPI.StatsReceiptItemFieldsV4`: %v\n", resp)
 }
 ```
@@ -264,7 +264,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**StatsFields**](StatsFields.md)
+[**FieldDefinitions**](FieldDefinitions.md)
 
 ### Authorization
 

@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CustomerDeleteV3**](CustomerAPI.md#CustomerDeleteV3) | **Delete** /api/v3/customer/{id} | Deletes a customer with the given ID.
 [**CustomerDeleteV4**](CustomerAPI.md#CustomerDeleteV4) | **Delete** /api/v4/customer/{project}/{id} | Deletes a customer by their ID.
+[**CustomerFieldsV4**](CustomerAPI.md#CustomerFieldsV4) | **Get** /api/v4/customer/{project}/fields | Returns a list of fields and allowed filters for customer search.
 [**CustomerGetV3**](CustomerAPI.md#CustomerGetV3) | **Get** /api/v3/customer/{id} | Retrieves a customer by their ID.
 [**CustomerGetV4**](CustomerAPI.md#CustomerGetV4) | **Get** /api/v4/customer/{project}/{id} | Retrieves a customer by their ID.
 [**CustomerPatchV3**](CustomerAPI.md#CustomerPatchV3) | **Patch** /api/v3/customer/{id} | Updates a customer with the given ID partially.
@@ -147,6 +148,74 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CustomerFieldsV4
+
+> FieldDefinitions CustomerFieldsV4(ctx, project).Execute()
+
+Returns a list of fields and allowed filters for customer search.
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.CustomerAPI.CustomerFieldsV4(context.Background(), project).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CustomerAPI.CustomerFieldsV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CustomerFieldsV4`: FieldDefinitions
+	fmt.Fprintf(os.Stdout, "Response from `CustomerAPI.CustomerFieldsV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCustomerFieldsV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**FieldDefinitions**](FieldDefinitions.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
