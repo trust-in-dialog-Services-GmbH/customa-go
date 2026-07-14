@@ -8,11 +8,16 @@ Name | Type | Description | Notes
 **Type** | **string** | Type of the receipt. | 
 **Number** | **string** | Receipt number | 
 **CustomerID** | **string** | ID of the customer. | 
-**ExternalOrderType** | **string** |  | 
-**ExternalOrderID** | Pointer to **NullableInt32** |  | [optional] 
-**ExternalOrderExternalID** | Pointer to **NullableString** |  | [optional] 
-**ExternalOrderAccountID** | **int32** |  | 
-**ExternalOrderSubAccountID** | **string** |  | 
+**ExternalOrderType** | Pointer to **NullableString** | Deprecated, use ExternalType instead. | [optional] 
+**ExternalOrderID** | Pointer to **NullableInt32** | Deprecated, use ExternalID instead. | [optional] 
+**ExternalOrderExternalID** | Pointer to **NullableString** | Deprecated, use ExternalSourceReceiptID instead. | [optional] 
+**ExternalOrderAccountID** | Pointer to **NullableInt32** | Deprecated, use ExternalAccountID instead. | [optional] 
+**ExternalOrderSubAccountID** | Pointer to **NullableString** | Deprecated, use ExternalSourceID instead. | [optional] 
+**ExternalType** | Pointer to **NullableString** | Type of the external source system this receipt originates from. | [optional] 
+**ExternalID** | Pointer to **NullableString** | ID of the receipt in the external source system. | [optional] 
+**ExternalSourceReceiptID** | Pointer to **NullableString** | Receipt ID as provided by the external source system. | [optional] 
+**ExternalAccountID** | Pointer to **NullableString** | Account ID in the external source system. | [optional] 
+**ExternalSourceID** | Pointer to **NullableString** | Source ID in the external source system. | [optional] 
 **Marketplace** | **string** | Marketplace of the receipt. | 
 **PurchaseDate** | **time.Time** | Purchase date of the receipt. | 
 **ReceiptDate** | Pointer to **NullableTime** | Date of the receipt. | [optional] 
@@ -33,7 +38,7 @@ Name | Type | Description | Notes
 
 ### NewReceiptV4
 
-`func NewReceiptV4(type_ string, number string, customerID string, externalOrderType string, externalOrderAccountID int32, externalOrderSubAccountID string, marketplace string, purchaseDate time.Time, paymentMethod string, revenueNet Price, revenueGross Price, receiptStatus ReceiptStatusV4, paymentStatus PaymentStatusV4, deliveryStatus DeliveryStatusV4, additionalFields map[string]string, ) *ReceiptV4`
+`func NewReceiptV4(type_ string, number string, customerID string, marketplace string, purchaseDate time.Time, paymentMethod string, revenueNet Price, revenueGross Price, receiptStatus ReceiptStatusV4, paymentStatus PaymentStatusV4, deliveryStatus DeliveryStatusV4, additionalFields map[string]string, ) *ReceiptV4`
 
 NewReceiptV4 instantiates a new ReceiptV4 object
 This constructor will assign default values to properties that have it defined,
@@ -162,7 +167,22 @@ and a boolean to check if the value has been set.
 
 SetExternalOrderType sets ExternalOrderType field to given value.
 
+### HasExternalOrderType
 
+`func (o *ReceiptV4) HasExternalOrderType() bool`
+
+HasExternalOrderType returns a boolean if a field has been set.
+
+### SetExternalOrderTypeNil
+
+`func (o *ReceiptV4) SetExternalOrderTypeNil(b bool)`
+
+ SetExternalOrderTypeNil sets the value for ExternalOrderType to be an explicit nil
+
+### UnsetExternalOrderType
+`func (o *ReceiptV4) UnsetExternalOrderType()`
+
+UnsetExternalOrderType ensures that no value is present for ExternalOrderType, not even an explicit nil
 ### GetExternalOrderID
 
 `func (o *ReceiptV4) GetExternalOrderID() int32`
@@ -252,7 +272,22 @@ and a boolean to check if the value has been set.
 
 SetExternalOrderAccountID sets ExternalOrderAccountID field to given value.
 
+### HasExternalOrderAccountID
 
+`func (o *ReceiptV4) HasExternalOrderAccountID() bool`
+
+HasExternalOrderAccountID returns a boolean if a field has been set.
+
+### SetExternalOrderAccountIDNil
+
+`func (o *ReceiptV4) SetExternalOrderAccountIDNil(b bool)`
+
+ SetExternalOrderAccountIDNil sets the value for ExternalOrderAccountID to be an explicit nil
+
+### UnsetExternalOrderAccountID
+`func (o *ReceiptV4) UnsetExternalOrderAccountID()`
+
+UnsetExternalOrderAccountID ensures that no value is present for ExternalOrderAccountID, not even an explicit nil
 ### GetExternalOrderSubAccountID
 
 `func (o *ReceiptV4) GetExternalOrderSubAccountID() string`
@@ -272,7 +307,197 @@ and a boolean to check if the value has been set.
 
 SetExternalOrderSubAccountID sets ExternalOrderSubAccountID field to given value.
 
+### HasExternalOrderSubAccountID
 
+`func (o *ReceiptV4) HasExternalOrderSubAccountID() bool`
+
+HasExternalOrderSubAccountID returns a boolean if a field has been set.
+
+### SetExternalOrderSubAccountIDNil
+
+`func (o *ReceiptV4) SetExternalOrderSubAccountIDNil(b bool)`
+
+ SetExternalOrderSubAccountIDNil sets the value for ExternalOrderSubAccountID to be an explicit nil
+
+### UnsetExternalOrderSubAccountID
+`func (o *ReceiptV4) UnsetExternalOrderSubAccountID()`
+
+UnsetExternalOrderSubAccountID ensures that no value is present for ExternalOrderSubAccountID, not even an explicit nil
+### GetExternalType
+
+`func (o *ReceiptV4) GetExternalType() string`
+
+GetExternalType returns the ExternalType field if non-nil, zero value otherwise.
+
+### GetExternalTypeOk
+
+`func (o *ReceiptV4) GetExternalTypeOk() (*string, bool)`
+
+GetExternalTypeOk returns a tuple with the ExternalType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalType
+
+`func (o *ReceiptV4) SetExternalType(v string)`
+
+SetExternalType sets ExternalType field to given value.
+
+### HasExternalType
+
+`func (o *ReceiptV4) HasExternalType() bool`
+
+HasExternalType returns a boolean if a field has been set.
+
+### SetExternalTypeNil
+
+`func (o *ReceiptV4) SetExternalTypeNil(b bool)`
+
+ SetExternalTypeNil sets the value for ExternalType to be an explicit nil
+
+### UnsetExternalType
+`func (o *ReceiptV4) UnsetExternalType()`
+
+UnsetExternalType ensures that no value is present for ExternalType, not even an explicit nil
+### GetExternalID
+
+`func (o *ReceiptV4) GetExternalID() string`
+
+GetExternalID returns the ExternalID field if non-nil, zero value otherwise.
+
+### GetExternalIDOk
+
+`func (o *ReceiptV4) GetExternalIDOk() (*string, bool)`
+
+GetExternalIDOk returns a tuple with the ExternalID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalID
+
+`func (o *ReceiptV4) SetExternalID(v string)`
+
+SetExternalID sets ExternalID field to given value.
+
+### HasExternalID
+
+`func (o *ReceiptV4) HasExternalID() bool`
+
+HasExternalID returns a boolean if a field has been set.
+
+### SetExternalIDNil
+
+`func (o *ReceiptV4) SetExternalIDNil(b bool)`
+
+ SetExternalIDNil sets the value for ExternalID to be an explicit nil
+
+### UnsetExternalID
+`func (o *ReceiptV4) UnsetExternalID()`
+
+UnsetExternalID ensures that no value is present for ExternalID, not even an explicit nil
+### GetExternalSourceReceiptID
+
+`func (o *ReceiptV4) GetExternalSourceReceiptID() string`
+
+GetExternalSourceReceiptID returns the ExternalSourceReceiptID field if non-nil, zero value otherwise.
+
+### GetExternalSourceReceiptIDOk
+
+`func (o *ReceiptV4) GetExternalSourceReceiptIDOk() (*string, bool)`
+
+GetExternalSourceReceiptIDOk returns a tuple with the ExternalSourceReceiptID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalSourceReceiptID
+
+`func (o *ReceiptV4) SetExternalSourceReceiptID(v string)`
+
+SetExternalSourceReceiptID sets ExternalSourceReceiptID field to given value.
+
+### HasExternalSourceReceiptID
+
+`func (o *ReceiptV4) HasExternalSourceReceiptID() bool`
+
+HasExternalSourceReceiptID returns a boolean if a field has been set.
+
+### SetExternalSourceReceiptIDNil
+
+`func (o *ReceiptV4) SetExternalSourceReceiptIDNil(b bool)`
+
+ SetExternalSourceReceiptIDNil sets the value for ExternalSourceReceiptID to be an explicit nil
+
+### UnsetExternalSourceReceiptID
+`func (o *ReceiptV4) UnsetExternalSourceReceiptID()`
+
+UnsetExternalSourceReceiptID ensures that no value is present for ExternalSourceReceiptID, not even an explicit nil
+### GetExternalAccountID
+
+`func (o *ReceiptV4) GetExternalAccountID() string`
+
+GetExternalAccountID returns the ExternalAccountID field if non-nil, zero value otherwise.
+
+### GetExternalAccountIDOk
+
+`func (o *ReceiptV4) GetExternalAccountIDOk() (*string, bool)`
+
+GetExternalAccountIDOk returns a tuple with the ExternalAccountID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalAccountID
+
+`func (o *ReceiptV4) SetExternalAccountID(v string)`
+
+SetExternalAccountID sets ExternalAccountID field to given value.
+
+### HasExternalAccountID
+
+`func (o *ReceiptV4) HasExternalAccountID() bool`
+
+HasExternalAccountID returns a boolean if a field has been set.
+
+### SetExternalAccountIDNil
+
+`func (o *ReceiptV4) SetExternalAccountIDNil(b bool)`
+
+ SetExternalAccountIDNil sets the value for ExternalAccountID to be an explicit nil
+
+### UnsetExternalAccountID
+`func (o *ReceiptV4) UnsetExternalAccountID()`
+
+UnsetExternalAccountID ensures that no value is present for ExternalAccountID, not even an explicit nil
+### GetExternalSourceID
+
+`func (o *ReceiptV4) GetExternalSourceID() string`
+
+GetExternalSourceID returns the ExternalSourceID field if non-nil, zero value otherwise.
+
+### GetExternalSourceIDOk
+
+`func (o *ReceiptV4) GetExternalSourceIDOk() (*string, bool)`
+
+GetExternalSourceIDOk returns a tuple with the ExternalSourceID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalSourceID
+
+`func (o *ReceiptV4) SetExternalSourceID(v string)`
+
+SetExternalSourceID sets ExternalSourceID field to given value.
+
+### HasExternalSourceID
+
+`func (o *ReceiptV4) HasExternalSourceID() bool`
+
+HasExternalSourceID returns a boolean if a field has been set.
+
+### SetExternalSourceIDNil
+
+`func (o *ReceiptV4) SetExternalSourceIDNil(b bool)`
+
+ SetExternalSourceIDNil sets the value for ExternalSourceID to be an explicit nil
+
+### UnsetExternalSourceID
+`func (o *ReceiptV4) UnsetExternalSourceID()`
+
+UnsetExternalSourceID ensures that no value is present for ExternalSourceID, not even an explicit nil
 ### GetMarketplace
 
 `func (o *ReceiptV4) GetMarketplace() string`

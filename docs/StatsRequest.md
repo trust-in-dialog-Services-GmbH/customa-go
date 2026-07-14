@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **From** | **time.Time** | The start timestamp of the period for which the statistics should be calculated. | 
 **To** | **time.Time** | The end timestamp of the period for which the statistics should be calculated. The end timestamp must be greater than the start timestamp. | 
 **DateField** | [**DateField**](DateField.md) |  | 
+**ProductSetMode** | Pointer to [**NullableProductSetMode**](ProductSetMode.md) |  | [optional] 
 **GroupBy** | **string** | The grouping type determines how the data is grouped in the response. | 
 **Filter** | [**[]Filter**](Filter.md) | Filters to be applied to the data before grouping. The filters are combined using boolean AND. If a filter contains multiple values, these are combined using boolean OR. | 
 
@@ -89,6 +90,41 @@ and a boolean to check if the value has been set.
 SetDateField sets DateField field to given value.
 
 
+### GetProductSetMode
+
+`func (o *StatsRequest) GetProductSetMode() ProductSetMode`
+
+GetProductSetMode returns the ProductSetMode field if non-nil, zero value otherwise.
+
+### GetProductSetModeOk
+
+`func (o *StatsRequest) GetProductSetModeOk() (*ProductSetMode, bool)`
+
+GetProductSetModeOk returns a tuple with the ProductSetMode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProductSetMode
+
+`func (o *StatsRequest) SetProductSetMode(v ProductSetMode)`
+
+SetProductSetMode sets ProductSetMode field to given value.
+
+### HasProductSetMode
+
+`func (o *StatsRequest) HasProductSetMode() bool`
+
+HasProductSetMode returns a boolean if a field has been set.
+
+### SetProductSetModeNil
+
+`func (o *StatsRequest) SetProductSetModeNil(b bool)`
+
+ SetProductSetModeNil sets the value for ProductSetMode to be an explicit nil
+
+### UnsetProductSetMode
+`func (o *StatsRequest) UnsetProductSetMode()`
+
+UnsetProductSetMode ensures that no value is present for ProductSetMode, not even an explicit nil
 ### GetGroupBy
 
 `func (o *StatsRequest) GetGroupBy() string`

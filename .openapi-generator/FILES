@@ -50,6 +50,8 @@ docs/Product.md
 docs/ProductAPI.md
 docs/ProductSearchResponse.md
 docs/ProductSearchResponseV4.md
+docs/ProductSetMode.md
+docs/ProductSetPartV4.md
 docs/ProductV4.md
 docs/Project.md
 docs/ProjectAPI.md
@@ -136,6 +138,8 @@ model_price.go
 model_product.go
 model_product_search_response.go
 model_product_search_response_v4.go
+model_product_set_mode.go
+model_product_set_part_v4.go
 model_product_v4.go
 model_project.go
 model_project_list.go

@@ -172,7 +172,7 @@ import (
 
 func main() {
 	project := "project_example" // string | 
-	categoryV4 := *customa.NewCategoryV4("Name_example", map[string]string{"key": "Inner_example"}) // CategoryV4 | 
+	categoryV4 := *customa.NewCategoryV4("Name_example", []string{"AdditionalFields_example"}) // CategoryV4 | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -243,7 +243,7 @@ import (
 func main() {
 	project := "project_example" // string | 
 	id := "id_example" // string | 
-	categoryV4 := *customa.NewCategoryV4("Name_example", map[string]string{"key": "Inner_example"}) // CategoryV4 | 
+	categoryV4 := *customa.NewCategoryV4("Name_example", []string{"AdditionalFields_example"}) // CategoryV4 | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)

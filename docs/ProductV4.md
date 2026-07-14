@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **TaxClass** | [**TaxClass**](TaxClass.md) |  | 
 **Stock** | **int32** | Stock of the product. | 
 **AdditionalFields** | **map[string]string** | Additional field data for the product. | 
+**SetParts** | Pointer to [**[]ProductSetPartV4**](ProductSetPartV4.md) | Parts of the product, if this product is a product set. | [optional] 
 **PurchasePrice** | [**Price**](Price.md) |  | 
 **SalesPrice** | [**Price**](Price.md) |  | 
 **RecommendedRetailPrice** | [**Price**](Price.md) |  | 
@@ -389,6 +390,41 @@ and a boolean to check if the value has been set.
 SetAdditionalFields sets AdditionalFields field to given value.
 
 
+### GetSetParts
+
+`func (o *ProductV4) GetSetParts() []ProductSetPartV4`
+
+GetSetParts returns the SetParts field if non-nil, zero value otherwise.
+
+### GetSetPartsOk
+
+`func (o *ProductV4) GetSetPartsOk() (*[]ProductSetPartV4, bool)`
+
+GetSetPartsOk returns a tuple with the SetParts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSetParts
+
+`func (o *ProductV4) SetSetParts(v []ProductSetPartV4)`
+
+SetSetParts sets SetParts field to given value.
+
+### HasSetParts
+
+`func (o *ProductV4) HasSetParts() bool`
+
+HasSetParts returns a boolean if a field has been set.
+
+### SetSetPartsNil
+
+`func (o *ProductV4) SetSetPartsNil(b bool)`
+
+ SetSetPartsNil sets the value for SetParts to be an explicit nil
+
+### UnsetSetParts
+`func (o *ProductV4) UnsetSetParts()`
+
+UnsetSetParts ensures that no value is present for SetParts, not even an explicit nil
 ### GetPurchasePrice
 
 `func (o *ProductV4) GetPurchasePrice() Price`

@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Name** | **string** | Name of the category. | 
 **Parent** | Pointer to **NullableString** | ID of the parent category. Must not create a circular reference. | [optional] 
 **Level** | Pointer to **NullableInt32** | Hierarchy level of the category. 0 for root categories. Set internally by Customa, any given value is ignored. | [optional] 
-**AdditionalFields** | **map[string]string** | Additional field data for the category. | 
+**AdditionalFields** | **[]string** | Additional field data for the category. | 
 **CreationDate** | Pointer to **NullableTime** | Creation Timestamp of the item. Set internally by Customa, any given value is ignored. | [optional] 
 **ModificationDate** | Pointer to **NullableTime** | Timestamp of the last change of the item in the database. Set internally by Customa, any given value is ignored. | [optional] 
 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewCategoryV4
 
-`func NewCategoryV4(name string, additionalFields map[string]string, ) *CategoryV4`
+`func NewCategoryV4(name string, additionalFields []string, ) *CategoryV4`
 
 NewCategoryV4 instantiates a new CategoryV4 object
 This constructor will assign default values to properties that have it defined,
@@ -158,20 +158,20 @@ HasLevel returns a boolean if a field has been set.
 UnsetLevel ensures that no value is present for Level, not even an explicit nil
 ### GetAdditionalFields
 
-`func (o *CategoryV4) GetAdditionalFields() map[string]string`
+`func (o *CategoryV4) GetAdditionalFields() []string`
 
 GetAdditionalFields returns the AdditionalFields field if non-nil, zero value otherwise.
 
 ### GetAdditionalFieldsOk
 
-`func (o *CategoryV4) GetAdditionalFieldsOk() (*map[string]string, bool)`
+`func (o *CategoryV4) GetAdditionalFieldsOk() (*[]string, bool)`
 
 GetAdditionalFieldsOk returns a tuple with the AdditionalFields field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAdditionalFields
 
-`func (o *CategoryV4) SetAdditionalFields(v map[string]string)`
+`func (o *CategoryV4) SetAdditionalFields(v []string)`
 
 SetAdditionalFields sets AdditionalFields field to given value.
 

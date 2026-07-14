@@ -453,7 +453,7 @@ import (
 )
 
 func main() {
-	strictReceipt := *customa.NewStrictReceipt("RE", "RECEIPT0001", "12345", "shop", NullableInt32(1234), "1234567890", int32(42), "ExternalOrderSubAccountID_example", time.Now(), time.Now(), "example", "direct", "Credit Card", *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), "ReceiptStatus_example", "PaymentStatus_example", "DeliveryStatus_example", "1234567890", []customa.StrictReceiptItem{*customa.NewStrictReceiptItem("12345", "ProductNumber_example", int32(1), *customa.NewPrice(float32(123), "Currency_example"), "TaxClass_example")}, []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}) // StrictReceipt | 
+	strictReceipt := *customa.NewStrictReceipt("RE", "RECEIPT0001", "12345", "shop", NullableInt32(1234), "1234567890", int32(42), "ExternalOrderSubAccountID_example", time.Now(), time.Now(), "example", "direct", "Credit Card", *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), "ReceiptStatus_example", "PaymentStatus_example", "DeliveryStatus_example", "1234567890", []customa.StrictReceiptItem{*customa.NewStrictReceiptItem("12345", "ProductNumber_example", int32(1), *customa.NewPrice(float32(123), "EUR"), "TaxClass_example")}, []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}) // StrictReceipt | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -521,7 +521,7 @@ import (
 
 func main() {
 	project := "project_example" // string | 
-	receiptV4 := *customa.NewReceiptV4("Type_example", "Number_example", "CustomerID_example", "ExternalOrderType_example", int32(123), "ExternalOrderSubAccountID_example", "Marketplace_example", time.Now(), "PaymentMethod_example", *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), customa.ReceiptStatusV4("Open"), customa.PaymentStatusV4("New"), customa.DeliveryStatusV4("Open"), map[string]string{"key": "Inner_example"}) // ReceiptV4 | 
+	receiptV4 := *customa.NewReceiptV4("Type_example", "Number_example", "CustomerID_example", "Marketplace_example", time.Now(), "PaymentMethod_example", *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), customa.ReceiptStatusV4("Open"), customa.PaymentStatusV4("New"), customa.DeliveryStatusV4("Open"), map[string]string{"key": "Inner_example"}) // ReceiptV4 | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -594,7 +594,7 @@ import (
 
 func main() {
 	id := "id_example" // string | 
-	strictReceipt := *customa.NewStrictReceipt("RE", "RECEIPT0001", "12345", "shop", NullableInt32(1234), "1234567890", int32(42), "ExternalOrderSubAccountID_example", time.Now(), time.Now(), "example", "direct", "Credit Card", *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), "ReceiptStatus_example", "PaymentStatus_example", "DeliveryStatus_example", "1234567890", []customa.StrictReceiptItem{*customa.NewStrictReceiptItem("12345", "ProductNumber_example", int32(1), *customa.NewPrice(float32(123), "Currency_example"), "TaxClass_example")}, []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}) // StrictReceipt | 
+	strictReceipt := *customa.NewStrictReceipt("RE", "RECEIPT0001", "12345", "shop", NullableInt32(1234), "1234567890", int32(42), "ExternalOrderSubAccountID_example", time.Now(), time.Now(), "example", "direct", "Credit Card", *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), "ReceiptStatus_example", "PaymentStatus_example", "DeliveryStatus_example", "1234567890", []customa.StrictReceiptItem{*customa.NewStrictReceiptItem("12345", "ProductNumber_example", int32(1), *customa.NewPrice(float32(123), "EUR"), "TaxClass_example")}, []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}) // StrictReceipt | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -666,7 +666,7 @@ import (
 func main() {
 	project := "project_example" // string | 
 	id := "id_example" // string | 
-	receiptV4 := *customa.NewReceiptV4("Type_example", "Number_example", "CustomerID_example", "ExternalOrderType_example", int32(123), "ExternalOrderSubAccountID_example", "Marketplace_example", time.Now(), "PaymentMethod_example", *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), customa.ReceiptStatusV4("Open"), customa.PaymentStatusV4("New"), customa.DeliveryStatusV4("Open"), map[string]string{"key": "Inner_example"}) // ReceiptV4 | 
+	receiptV4 := *customa.NewReceiptV4("Type_example", "Number_example", "CustomerID_example", "Marketplace_example", time.Now(), "PaymentMethod_example", *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), customa.ReceiptStatusV4("Open"), customa.PaymentStatusV4("New"), customa.DeliveryStatusV4("Open"), map[string]string{"key": "Inner_example"}) // ReceiptV4 | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)

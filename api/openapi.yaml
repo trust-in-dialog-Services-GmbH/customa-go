@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.12.0
+  version: 3.13.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -2177,7 +2177,7 @@ components:
         - Status: true
           CreationDate: 2000-01-23T04:56:07.000+00:00
           RecommendedRetailPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Parent: "12344"
           AdditionalFields:
@@ -2187,13 +2187,13 @@ components:
             Key: Example
           TaxClass: Normal
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Vendor: ACME Inc.
           Name: Toaster
           ShortDescription: A toaster made of stainless steel.
           SalesPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           EAN: "1234567890123"
           LongDescription: A toaster made of stainless steel with a 2-slice capacity
@@ -2207,7 +2207,7 @@ components:
         - Status: true
           CreationDate: 2000-01-23T04:56:07.000+00:00
           RecommendedRetailPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Parent: "12344"
           AdditionalFields:
@@ -2217,13 +2217,13 @@ components:
             Key: Example
           TaxClass: Normal
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Vendor: ACME Inc.
           Name: Toaster
           ShortDescription: A toaster made of stainless steel.
           SalesPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           EAN: "1234567890123"
           LongDescription: A toaster made of stainless steel with a 2-slice capacity
@@ -2258,7 +2258,7 @@ components:
         Receipts:
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           RevenueGross:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           GoogleClickID: "1234567890"
           CustomerID: "12345"
@@ -2274,24 +2274,24 @@ components:
             Quantity: 1
             ProductID: "12345"
             PurchasePrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             TaxClass: Normal
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           - CreationDate: 2000-01-23T04:56:07.000+00:00
             ModificationDate: 2000-01-23T04:56:07.000+00:00
             Quantity: 1
             ProductID: "12345"
             PurchasePrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             TaxClass: Normal
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           ID: "12345"
           PaymentStatus: New
@@ -2310,13 +2310,13 @@ components:
           PaymentMethod: Credit Card
           ReceiptStatus: Open
           RevenueNet:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           ReceiptDate: 2025-04-04T09:39:19.931Z
           ExternalOrderType: shop
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           RevenueGross:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           GoogleClickID: "1234567890"
           CustomerID: "12345"
@@ -2332,24 +2332,24 @@ components:
             Quantity: 1
             ProductID: "12345"
             PurchasePrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             TaxClass: Normal
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           - CreationDate: 2000-01-23T04:56:07.000+00:00
             ModificationDate: 2000-01-23T04:56:07.000+00:00
             Quantity: 1
             ProductID: "12345"
             PurchasePrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             TaxClass: Normal
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           ID: "12345"
           PaymentStatus: New
@@ -2368,7 +2368,7 @@ components:
           PaymentMethod: Credit Card
           ReceiptStatus: Open
           RevenueNet:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           ReceiptDate: 2025-04-04T09:39:19.931Z
           ExternalOrderType: shop
@@ -2767,7 +2767,7 @@ components:
         Status: true
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RecommendedRetailPrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         Parent: "12344"
         AdditionalFields:
@@ -2777,13 +2777,13 @@ components:
           Key: Example
         TaxClass: Normal
         PurchasePrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         Vendor: ACME Inc.
         Name: Toaster
         ShortDescription: A toaster made of stainless steel.
         SalesPrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         EAN: "1234567890123"
         LongDescription: A toaster made of stainless steel with a 2-slice capacity
@@ -2802,7 +2802,7 @@ components:
         Status: true
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RecommendedRetailPrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         Parent: "12344"
         AdditionalFields:
@@ -2812,13 +2812,13 @@ components:
           Key: Example
         TaxClass: Normal
         PurchasePrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         Vendor: ACME Inc.
         Name: Toaster
         ShortDescription: A toaster made of stainless steel.
         SalesPrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         EAN: "1234567890123"
         LongDescription: A toaster made of stainless steel with a 2-slice capacity
@@ -2987,7 +2987,7 @@ components:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RevenueGross:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         GoogleClickID: "1234567890"
         CustomerID: "12345"
@@ -3003,24 +3003,24 @@ components:
           Quantity: 1
           ProductID: "12345"
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           TaxClass: Normal
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           Quantity: 1
           ProductID: "12345"
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           TaxClass: Normal
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         ID: "12345"
         PaymentStatus: New
@@ -3039,7 +3039,7 @@ components:
         PaymentMethod: Credit Card
         ReceiptStatus: Open
         RevenueNet:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         ReceiptDate: 2025-04-04T09:39:19.931Z
         ExternalOrderType: shop
@@ -3050,7 +3050,7 @@ components:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RevenueGross:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         GoogleClickID: "1234567890"
         CustomerID: "12345"
@@ -3066,24 +3066,24 @@ components:
           Quantity: 1
           ProductID: "12345"
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           TaxClass: Normal
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           Quantity: 1
           ProductID: "12345"
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           TaxClass: Normal
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         ID: "12345"
         PaymentStatus: New
@@ -3102,7 +3102,7 @@ components:
         PaymentMethod: Credit Card
         ReceiptStatus: Open
         RevenueNet:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         ReceiptDate: 2025-04-04T09:39:19.931Z
         ExternalOrderType: shop
@@ -3167,12 +3167,12 @@ components:
         Quantity: 1
         ProductID: "12345"
         PurchasePrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         TaxClass: Normal
         ProductNumber: ProductNumber
         SellingPrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
       required:
       - ProductID
@@ -3669,6 +3669,11 @@ components:
       - PurchaseDate
       - ReceiptDate
       type: string
+    ProductSetMode:
+      enum:
+      - Sets
+      - Parts
+      type: string
     StatsRequest:
       description: Request for statistics data.
       example:
@@ -3687,6 +3692,7 @@ components:
         From: 2000-01-23T04:56:07.000+00:00
         To: 2000-01-23T04:56:07.000+00:00
         DateField: PurchaseDate
+        ProductSetMode: Sets
       properties:
         From:
           description: The start timestamp of the period for which the statistics
@@ -3702,6 +3708,8 @@ components:
           type: string
         DateField:
           $ref: "#/components/schemas/DateField"
+        ProductSetMode:
+          $ref: "#/components/schemas/ProductSetMode"
         GroupBy:
           description: The grouping type determines how the data is grouped in the
             response.
@@ -3726,7 +3734,7 @@ components:
     Price:
       description: A price value with its currency.
       example:
-        Currency: Currency
+        Currency: EUR
         Value: 0.8008282
       properties:
         Value:
@@ -3738,6 +3746,7 @@ components:
           description: "The currency of the price value specified in the `Value` property.\
             \ The value is a three-letter ISO 4217 currency code, e.g. `EUR` for Euro\
             \ or `USD` for US Dollar."
+          example: EUR
           title: Currency.
           type: string
       required:
@@ -3751,11 +3760,11 @@ components:
         ReceiptType: ReceiptType
         ReceiptCount: 0
         Revenue:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         CustomerCount: 6
         CostOfGoodsSold:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
       properties:
         ReceiptType:
@@ -3792,20 +3801,20 @@ components:
         - ReceiptType: ReceiptType
           ReceiptCount: 0
           Revenue:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           CustomerCount: 6
           CostOfGoodsSold:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         - ReceiptType: ReceiptType
           ReceiptCount: 0
           Revenue:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           CustomerCount: 6
           CostOfGoodsSold:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         GroupKey: GroupKey
       properties:
@@ -3846,20 +3855,20 @@ components:
           - ReceiptType: ReceiptType
             ReceiptCount: 0
             Revenue:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             CustomerCount: 6
             CostOfGoodsSold:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           - ReceiptType: ReceiptType
             ReceiptCount: 0
             Revenue:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             CustomerCount: 6
             CostOfGoodsSold:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           GroupKey: GroupKey
         - GroupName: GroupName
@@ -3867,20 +3876,20 @@ components:
           - ReceiptType: ReceiptType
             ReceiptCount: 0
             Revenue:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             CustomerCount: 6
             CostOfGoodsSold:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           - ReceiptType: ReceiptType
             ReceiptCount: 0
             Revenue:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             CustomerCount: 6
             CostOfGoodsSold:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           GroupKey: GroupKey
       properties:
@@ -3942,11 +3951,11 @@ components:
         ReceiptCount: 0
         Amount: 1
         Revenue:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         CustomerCount: 6
         CostOfGoodsSold:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
       properties:
         ReceiptType:
@@ -3991,21 +4000,21 @@ components:
           ReceiptCount: 0
           Amount: 1
           Revenue:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           CustomerCount: 6
           CostOfGoodsSold:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         - ReceiptType: ReceiptType
           ReceiptCount: 0
           Amount: 1
           Revenue:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           CustomerCount: 6
           CostOfGoodsSold:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         GroupKey: GroupKey
       properties:
@@ -4047,21 +4056,21 @@ components:
             ReceiptCount: 0
             Amount: 1
             Revenue:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             CustomerCount: 6
             CostOfGoodsSold:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           - ReceiptType: ReceiptType
             ReceiptCount: 0
             Amount: 1
             Revenue:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             CustomerCount: 6
             CostOfGoodsSold:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           GroupKey: GroupKey
         - GroupName: GroupName
@@ -4070,21 +4079,21 @@ components:
             ReceiptCount: 0
             Amount: 1
             Revenue:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             CustomerCount: 6
             CostOfGoodsSold:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           - ReceiptType: ReceiptType
             ReceiptCount: 0
             Amount: 1
             Revenue:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             CustomerCount: 6
             CostOfGoodsSold:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           GroupKey: GroupKey
       properties:
@@ -4177,7 +4186,8 @@ components:
         Parent: Parent
         ModificationDate: 2000-01-23T04:56:07.000+00:00
         AdditionalFields:
-          key: AdditionalFields
+        - AdditionalFields
+        - AdditionalFields
         Level: 0
         ID: ID
         Name: Name
@@ -4200,10 +4210,10 @@ components:
           nullable: true
           type: integer
         AdditionalFields:
-          additionalProperties:
-            type: string
           description: Additional field data for the category.
-          type: object
+          items:
+            type: string
+          type: array
         CreationDate:
           description: "Creation Timestamp of the item. Set internally by Customa,\
             \ any given value is ignored."
@@ -4243,7 +4253,8 @@ components:
           Parent: Parent
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           AdditionalFields:
-            key: AdditionalFields
+          - AdditionalFields
+          - AdditionalFields
           Level: 0
           ID: ID
           Name: Name
@@ -4251,7 +4262,8 @@ components:
           Parent: Parent
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           AdditionalFields:
-            key: AdditionalFields
+          - AdditionalFields
+          - AdditionalFields
           Level: 0
           ID: ID
           Name: Name
@@ -4295,6 +4307,8 @@ components:
         Company: Company
         Address: Address
         Suburb: Suburb
+        ExternalID: ExternalID
+        ExternalSourceCustomerID: ExternalSourceCustomerID
         ContactBan: true
         PostalCode: PostalCode
         Birthday: 2000-01-23T04:56:07.000+00:00
@@ -4309,15 +4323,18 @@ components:
         ExternalOrderAccountID: 6
         ID: ID
         TestUser: true
+        ExternalSourceID: ExternalSourceID
         ExternalOrderSubAccountID: ExternalOrderSubAccountID
         FirstName: FirstName
         RegisterDate: 2000-01-23T04:56:07.000+00:00
         AdditionalFields:
           key: AdditionalFields
         Title: Title
+        ExternalType: ExternalType
         City: City
         EMail: EMail
         ReferrerChannel: ReferrerChannel
+        ExternalAccountID: ExternalAccountID
         ExternalCustomerExternalID: ExternalCustomerExternalID
         Marketplace: Marketplace
         Referrer: Referrer
@@ -4405,19 +4422,51 @@ components:
           description: Determines if the customer has an active contact ban.
           type: boolean
         ExternalCustomerID:
+          deprecated: true
+          description: "Deprecated, use ExternalID instead."
+          nullable: true
+          type: integer
+        ExternalID:
           description: ID/Number of the customer in the source system (e.g. an ERP
             System)
-          type: integer
+          nullable: true
+          type: string
         ExternalCustomerExternalID:
+          deprecated: true
+          description: "Deprecated, use ExternalSourceCustomerID instead."
+          nullable: true
+          type: string
+        ExternalSourceCustomerID:
           description: ID/Number of the customer in a secondary source system (e.g.
             the shop)
           nullable: true
           type: string
         ExternalOrderType:
+          deprecated: true
+          description: "Deprecated, use ExternalType instead."
+          nullable: true
+          type: string
+        ExternalType:
+          description: External type of the customer.
+          nullable: true
           type: string
         ExternalOrderAccountID:
+          deprecated: true
+          description: "Deprecated, use ExternalAccountID instead."
+          nullable: true
           type: integer
+        ExternalAccountID:
+          description: External account ID of the customer.
+          nullable: true
+          type: string
         ExternalOrderSubAccountID:
+          deprecated: true
+          description: "Deprecated, use ExternalSourceID instead."
+          nullable: true
+          type: string
+        ExternalSourceID:
+          description: External source ID of the customer.
+          nullable: true
           type: string
         Marketplace:
           description: Marketplace of the customer.
@@ -4450,10 +4499,6 @@ components:
       - ContactBan
       - Country
       - EMail
-      - ExternalCustomerID
-      - ExternalOrderAccountID
-      - ExternalOrderSubAccountID
-      - ExternalOrderType
       - FirstName
       - LastName
       - Marketplace
@@ -4482,6 +4527,8 @@ components:
           Company: Company
           Address: Address
           Suburb: Suburb
+          ExternalID: ExternalID
+          ExternalSourceCustomerID: ExternalSourceCustomerID
           ContactBan: true
           PostalCode: PostalCode
           Birthday: 2000-01-23T04:56:07.000+00:00
@@ -4496,15 +4543,18 @@ components:
           ExternalOrderAccountID: 6
           ID: ID
           TestUser: true
+          ExternalSourceID: ExternalSourceID
           ExternalOrderSubAccountID: ExternalOrderSubAccountID
           FirstName: FirstName
           RegisterDate: 2000-01-23T04:56:07.000+00:00
           AdditionalFields:
             key: AdditionalFields
           Title: Title
+          ExternalType: ExternalType
           City: City
           EMail: EMail
           ReferrerChannel: ReferrerChannel
+          ExternalAccountID: ExternalAccountID
           ExternalCustomerExternalID: ExternalCustomerExternalID
           Marketplace: Marketplace
           Referrer: Referrer
@@ -4517,6 +4567,8 @@ components:
           Company: Company
           Address: Address
           Suburb: Suburb
+          ExternalID: ExternalID
+          ExternalSourceCustomerID: ExternalSourceCustomerID
           ContactBan: true
           PostalCode: PostalCode
           Birthday: 2000-01-23T04:56:07.000+00:00
@@ -4531,15 +4583,18 @@ components:
           ExternalOrderAccountID: 6
           ID: ID
           TestUser: true
+          ExternalSourceID: ExternalSourceID
           ExternalOrderSubAccountID: ExternalOrderSubAccountID
           FirstName: FirstName
           RegisterDate: 2000-01-23T04:56:07.000+00:00
           AdditionalFields:
             key: AdditionalFields
           Title: Title
+          ExternalType: ExternalType
           City: City
           EMail: EMail
           ReferrerChannel: ReferrerChannel
+          ExternalAccountID: ExternalAccountID
           ExternalCustomerExternalID: ExternalCustomerExternalID
           Marketplace: Marketplace
           Referrer: Referrer
@@ -4641,25 +4696,44 @@ components:
       - HighlyReducedTax
       - NoTax
       type: string
+    ProductSetPartV4:
+      example:
+        Quantity: 6
+        ProductID: ProductID
+      properties:
+        ProductID:
+          type: string
+        Quantity:
+          type: integer
+      required:
+      - ProductID
+      - Quantity
+      title: Product Set Part
+      type: object
     ProductV4:
       example:
+        SetParts:
+        - Quantity: 6
+          ProductID: ProductID
+        - Quantity: 6
+          ProductID: ProductID
         CreationDate: 2000-01-23T04:56:07.000+00:00
         Category: Category
         RecommendedRetailPrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         Parent: Parent
         AdditionalFields:
           key: AdditionalFields
         TaxClass: NormalTax
         PurchasePrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         Vendor: Vendor
         Name: Name
         ShortDescription: ShortDescription
         SalesPrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         Active: true
         EAN: EAN
@@ -4722,6 +4796,12 @@ components:
             type: string
           description: Additional field data for the product.
           type: object
+        SetParts:
+          description: "Parts of the product, if this product is a product set."
+          items:
+            $ref: "#/components/schemas/ProductSetPartV4"
+          nullable: true
+          type: array
         PurchasePrice:
           $ref: "#/components/schemas/Price"
         SalesPrice:
@@ -4761,23 +4841,28 @@ components:
     ProductSearchResponseV4:
       example:
         Products:
-        - CreationDate: 2000-01-23T04:56:07.000+00:00
+        - SetParts:
+          - Quantity: 6
+            ProductID: ProductID
+          - Quantity: 6
+            ProductID: ProductID
+          CreationDate: 2000-01-23T04:56:07.000+00:00
           Category: Category
           RecommendedRetailPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Parent: Parent
           AdditionalFields:
             key: AdditionalFields
           TaxClass: NormalTax
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Vendor: Vendor
           Name: Name
           ShortDescription: ShortDescription
           SalesPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Active: true
           EAN: EAN
@@ -4788,23 +4873,28 @@ components:
           ID: ID
           ImageSource: ImageSource
           Stock: 0
-        - CreationDate: 2000-01-23T04:56:07.000+00:00
+        - SetParts:
+          - Quantity: 6
+            ProductID: ProductID
+          - Quantity: 6
+            ProductID: ProductID
+          CreationDate: 2000-01-23T04:56:07.000+00:00
           Category: Category
           RecommendedRetailPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Parent: Parent
           AdditionalFields:
             key: AdditionalFields
           TaxClass: NormalTax
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Vendor: Vendor
           Name: Name
           ShortDescription: ShortDescription
           SalesPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           Active: true
           EAN: EAN
@@ -4918,12 +5008,12 @@ components:
         Quantity: 1
         ProductID: ProductID
         PurchasePrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
         TaxClass: NormalTax
         ProductNumber: ProductNumber
         SellingPrice:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
       properties:
         ProductID:
@@ -4965,57 +5055,62 @@ components:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
         RevenueGross:
-          Currency: Currency
+          Currency: EUR
           Value: 0.8008282
-        AdditionalFields:
-          key: AdditionalFields
-        ExternalOrderExternalID: ExternalOrderExternalID
+        ExternalID: ExternalID
         CustomerID: CustomerID
-        ReferrerChannel: ReferrerChannel
-        Type: Type
-        Marketplace: Marketplace
+        ExternalSourceReceiptID: ExternalSourceReceiptID
         Number: Number
         ExternalOrderID: 0
         ModificationDate: 2000-01-23T04:56:07.000+00:00
-        PurchaseDate: 2000-01-23T04:56:07.000+00:00
-        Referrer: Referrer
         DeliveryStatus: Open
-        PaymentMethod: PaymentMethod
-        ReceiptStatus: Open
         ExternalOrderAccountID: 6
-        RevenueNet:
-          Currency: Currency
-          Value: 0.8008282
         Items:
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           Quantity: 1
           ProductID: ProductID
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           TaxClass: NormalTax
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           Quantity: 1
           ProductID: ProductID
           PurchasePrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
           TaxClass: NormalTax
           ProductNumber: ProductNumber
           SellingPrice:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
         ID: ID
-        ReceiptDate: 2000-01-23T04:56:07.000+00:00
+        ExternalSourceID: ExternalSourceID
         PaymentStatus: New
-        ExternalOrderType: ExternalOrderType
         ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        AdditionalFields:
+          key: AdditionalFields
+        ExternalOrderExternalID: ExternalOrderExternalID
+        ExternalType: ExternalType
+        ReferrerChannel: ReferrerChannel
+        ExternalAccountID: ExternalAccountID
+        Type: Type
+        Marketplace: Marketplace
+        PurchaseDate: 2000-01-23T04:56:07.000+00:00
+        Referrer: Referrer
+        PaymentMethod: PaymentMethod
+        ReceiptStatus: Open
+        RevenueNet:
+          Currency: EUR
+          Value: 0.8008282
+        ReceiptDate: 2000-01-23T04:56:07.000+00:00
+        ExternalOrderType: ExternalOrderType
       properties:
         ID:
           description: "ID of the receipt. Set internally by Customa, any given value\
@@ -5034,16 +5129,50 @@ components:
           description: ID of the customer.
           type: string
         ExternalOrderType:
+          deprecated: true
+          description: "Deprecated, use ExternalType instead."
+          nullable: true
           type: string
         ExternalOrderID:
+          deprecated: true
+          description: "Deprecated, use ExternalID instead."
           nullable: true
           type: integer
         ExternalOrderExternalID:
+          deprecated: true
+          description: "Deprecated, use ExternalSourceReceiptID instead."
           nullable: true
           type: string
         ExternalOrderAccountID:
+          deprecated: true
+          description: "Deprecated, use ExternalAccountID instead."
+          nullable: true
           type: integer
         ExternalOrderSubAccountID:
+          deprecated: true
+          description: "Deprecated, use ExternalSourceID instead."
+          nullable: true
+          type: string
+        ExternalType:
+          description: Type of the external source system this receipt originates
+            from.
+          nullable: true
+          type: string
+        ExternalID:
+          description: ID of the receipt in the external source system.
+          nullable: true
+          type: string
+        ExternalSourceReceiptID:
+          description: Receipt ID as provided by the external source system.
+          nullable: true
+          type: string
+        ExternalAccountID:
+          description: Account ID in the external source system.
+          nullable: true
+          type: string
+        ExternalSourceID:
+          description: Source ID in the external source system.
+          nullable: true
           type: string
         Marketplace:
           description: Marketplace of the receipt.
@@ -5105,9 +5234,6 @@ components:
       - AdditionalFields
       - CustomerID
       - DeliveryStatus
-      - ExternalOrderAccountID
-      - ExternalOrderSubAccountID
-      - ExternalOrderType
       - Marketplace
       - Number
       - PaymentMethod
@@ -5128,110 +5254,120 @@ components:
         Receipts:
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           RevenueGross:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
-          AdditionalFields:
-            key: AdditionalFields
-          ExternalOrderExternalID: ExternalOrderExternalID
+          ExternalID: ExternalID
           CustomerID: CustomerID
-          ReferrerChannel: ReferrerChannel
-          Type: Type
-          Marketplace: Marketplace
+          ExternalSourceReceiptID: ExternalSourceReceiptID
           Number: Number
           ExternalOrderID: 0
           ModificationDate: 2000-01-23T04:56:07.000+00:00
-          PurchaseDate: 2000-01-23T04:56:07.000+00:00
-          Referrer: Referrer
           DeliveryStatus: Open
-          PaymentMethod: PaymentMethod
-          ReceiptStatus: Open
           ExternalOrderAccountID: 6
-          RevenueNet:
-            Currency: Currency
-            Value: 0.8008282
           Items:
           - CreationDate: 2000-01-23T04:56:07.000+00:00
             ModificationDate: 2000-01-23T04:56:07.000+00:00
             Quantity: 1
             ProductID: ProductID
             PurchasePrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             TaxClass: NormalTax
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           - CreationDate: 2000-01-23T04:56:07.000+00:00
             ModificationDate: 2000-01-23T04:56:07.000+00:00
             Quantity: 1
             ProductID: ProductID
             PurchasePrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             TaxClass: NormalTax
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           ID: ID
-          ReceiptDate: 2000-01-23T04:56:07.000+00:00
+          ExternalSourceID: ExternalSourceID
           PaymentStatus: New
-          ExternalOrderType: ExternalOrderType
           ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          AdditionalFields:
+            key: AdditionalFields
+          ExternalOrderExternalID: ExternalOrderExternalID
+          ExternalType: ExternalType
+          ReferrerChannel: ReferrerChannel
+          ExternalAccountID: ExternalAccountID
+          Type: Type
+          Marketplace: Marketplace
+          PurchaseDate: 2000-01-23T04:56:07.000+00:00
+          Referrer: Referrer
+          PaymentMethod: PaymentMethod
+          ReceiptStatus: Open
+          RevenueNet:
+            Currency: EUR
+            Value: 0.8008282
+          ReceiptDate: 2000-01-23T04:56:07.000+00:00
+          ExternalOrderType: ExternalOrderType
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           RevenueGross:
-            Currency: Currency
+            Currency: EUR
             Value: 0.8008282
-          AdditionalFields:
-            key: AdditionalFields
-          ExternalOrderExternalID: ExternalOrderExternalID
+          ExternalID: ExternalID
           CustomerID: CustomerID
-          ReferrerChannel: ReferrerChannel
-          Type: Type
-          Marketplace: Marketplace
+          ExternalSourceReceiptID: ExternalSourceReceiptID
           Number: Number
           ExternalOrderID: 0
           ModificationDate: 2000-01-23T04:56:07.000+00:00
-          PurchaseDate: 2000-01-23T04:56:07.000+00:00
-          Referrer: Referrer
           DeliveryStatus: Open
-          PaymentMethod: PaymentMethod
-          ReceiptStatus: Open
           ExternalOrderAccountID: 6
-          RevenueNet:
-            Currency: Currency
-            Value: 0.8008282
           Items:
           - CreationDate: 2000-01-23T04:56:07.000+00:00
             ModificationDate: 2000-01-23T04:56:07.000+00:00
             Quantity: 1
             ProductID: ProductID
             PurchasePrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             TaxClass: NormalTax
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           - CreationDate: 2000-01-23T04:56:07.000+00:00
             ModificationDate: 2000-01-23T04:56:07.000+00:00
             Quantity: 1
             ProductID: ProductID
             PurchasePrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
             TaxClass: NormalTax
             ProductNumber: ProductNumber
             SellingPrice:
-              Currency: Currency
+              Currency: EUR
               Value: 0.8008282
           ID: ID
-          ReceiptDate: 2000-01-23T04:56:07.000+00:00
+          ExternalSourceID: ExternalSourceID
           PaymentStatus: New
-          ExternalOrderType: ExternalOrderType
           ExternalOrderSubAccountID: ExternalOrderSubAccountID
+          AdditionalFields:
+            key: AdditionalFields
+          ExternalOrderExternalID: ExternalOrderExternalID
+          ExternalType: ExternalType
+          ReferrerChannel: ReferrerChannel
+          ExternalAccountID: ExternalAccountID
+          Type: Type
+          Marketplace: Marketplace
+          PurchaseDate: 2000-01-23T04:56:07.000+00:00
+          Referrer: Referrer
+          PaymentMethod: PaymentMethod
+          ReceiptStatus: Open
+          RevenueNet:
+            Currency: EUR
+            Value: 0.8008282
+          ReceiptDate: 2000-01-23T04:56:07.000+00:00
+          ExternalOrderType: ExternalOrderType
       properties:
         Receipts:
           default: []

@@ -521,7 +521,7 @@ import (
 
 func main() {
 	project := "project_example" // string | 
-	customerV4 := *customa.NewCustomerV4("Number_example", customa.Salutation("m"), "Title_example", "FirstName_example", "LastName_example", "Company_example", "Address_example", "PostalCode_example", "Suburb_example", "City_example", "Country_example", "EMail_example", "Phone_example", "Referrer_example", "ReferrerChannel_example", time.Now(), map[string]string{"key": "Inner_example"}, false, false, int32(123), "ExternalOrderType_example", int32(123), "ExternalOrderSubAccountID_example", "Marketplace_example", false, false, "Segment_example") // CustomerV4 | 
+	customerV4 := *customa.NewCustomerV4("Number_example", customa.Salutation("m"), "Title_example", "FirstName_example", "LastName_example", "Company_example", "Address_example", "PostalCode_example", "Suburb_example", "City_example", "Country_example", "EMail_example", "Phone_example", "Referrer_example", "ReferrerChannel_example", time.Now(), map[string]string{"key": "Inner_example"}, false, false, "Marketplace_example", false, false, "Segment_example") // CustomerV4 | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -666,7 +666,7 @@ import (
 func main() {
 	project := "project_example" // string | 
 	id := "id_example" // string | 
-	customerV4 := *customa.NewCustomerV4("Number_example", customa.Salutation("m"), "Title_example", "FirstName_example", "LastName_example", "Company_example", "Address_example", "PostalCode_example", "Suburb_example", "City_example", "Country_example", "EMail_example", "Phone_example", "Referrer_example", "ReferrerChannel_example", time.Now(), map[string]string{"key": "Inner_example"}, false, false, int32(123), "ExternalOrderType_example", int32(123), "ExternalOrderSubAccountID_example", "Marketplace_example", false, false, "Segment_example") // CustomerV4 | 
+	customerV4 := *customa.NewCustomerV4("Number_example", customa.Salutation("m"), "Title_example", "FirstName_example", "LastName_example", "Company_example", "Address_example", "PostalCode_example", "Suburb_example", "City_example", "Country_example", "EMail_example", "Phone_example", "Referrer_example", "ReferrerChannel_example", time.Now(), map[string]string{"key": "Inner_example"}, false, false, "Marketplace_example", false, false, "Segment_example") // CustomerV4 | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)

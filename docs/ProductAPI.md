@@ -452,7 +452,7 @@ import (
 )
 
 func main() {
-	strictProduct := *customa.NewStrictProduct("12344", "PROD0001", "1234567890123", "Toaster", "ACME Inc.", "ACME Inc.", "A toaster made of stainless steel.", "A toaster made of stainless steel with a 2-slice capacity and a 7-setting browning control.", "https://example.com/image.jpg", true, "TaxClass_example", int32(100), []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}, *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example")) // StrictProduct | 
+	strictProduct := *customa.NewStrictProduct("12344", "PROD0001", "1234567890123", "Toaster", "ACME Inc.", "ACME Inc.", "A toaster made of stainless steel.", "A toaster made of stainless steel with a 2-slice capacity and a 7-setting browning control.", "https://example.com/image.jpg", true, "TaxClass_example", int32(100), []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}, *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR")) // StrictProduct | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -519,7 +519,7 @@ import (
 
 func main() {
 	project := "project_example" // string | 
-	productV4 := *customa.NewProductV4("Number_example", "EAN_example", "Name_example", "Manufacturer_example", "Vendor_example", "ShortDescription_example", "LongDescription_example", "ImageSource_example", false, customa.TaxClass("NormalTax"), int32(123), map[string]string{"key": "Inner_example"}, *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example")) // ProductV4 | 
+	productV4 := *customa.NewProductV4("Number_example", "EAN_example", "Name_example", "Manufacturer_example", "Vendor_example", "ShortDescription_example", "LongDescription_example", "ImageSource_example", false, customa.TaxClass("NormalTax"), int32(123), map[string]string{"key": "Inner_example"}, *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR")) // ProductV4 | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -591,7 +591,7 @@ import (
 
 func main() {
 	id := "id_example" // string | 
-	strictProduct := *customa.NewStrictProduct("12344", "PROD0001", "1234567890123", "Toaster", "ACME Inc.", "ACME Inc.", "A toaster made of stainless steel.", "A toaster made of stainless steel with a 2-slice capacity and a 7-setting browning control.", "https://example.com/image.jpg", true, "TaxClass_example", int32(100), []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}, *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example")) // StrictProduct | 
+	strictProduct := *customa.NewStrictProduct("12344", "PROD0001", "1234567890123", "Toaster", "ACME Inc.", "ACME Inc.", "A toaster made of stainless steel.", "A toaster made of stainless steel with a 2-slice capacity and a 7-setting browning control.", "https://example.com/image.jpg", true, "TaxClass_example", int32(100), []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}, *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR")) // StrictProduct | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
@@ -662,7 +662,7 @@ import (
 func main() {
 	project := "project_example" // string | 
 	id := "id_example" // string | 
-	productV4 := *customa.NewProductV4("Number_example", "EAN_example", "Name_example", "Manufacturer_example", "Vendor_example", "ShortDescription_example", "LongDescription_example", "ImageSource_example", false, customa.TaxClass("NormalTax"), int32(123), map[string]string{"key": "Inner_example"}, *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example"), *customa.NewPrice(float32(123), "Currency_example")) // ProductV4 | 
+	productV4 := *customa.NewProductV4("Number_example", "EAN_example", "Name_example", "Manufacturer_example", "Vendor_example", "ShortDescription_example", "LongDescription_example", "ImageSource_example", false, customa.TaxClass("NormalTax"), int32(123), map[string]string{"key": "Inner_example"}, *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR")) // ProductV4 | 
 
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)

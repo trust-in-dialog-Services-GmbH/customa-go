@@ -27,11 +27,16 @@ Name | Type | Description | Notes
 **AdditionalFields** | **map[string]string** | Additional data for the customer. | 
 **ReferenceCustomer** | **bool** | Determines if the customer is a reference customer. | 
 **ContactBan** | **bool** | Determines if the customer has an active contact ban. | 
-**ExternalCustomerID** | **int32** | ID/Number of the customer in the source system (e.g. an ERP System) | 
-**ExternalCustomerExternalID** | Pointer to **NullableString** | ID/Number of the customer in a secondary source system (e.g. the shop) | [optional] 
-**ExternalOrderType** | **string** |  | 
-**ExternalOrderAccountID** | **int32** |  | 
-**ExternalOrderSubAccountID** | **string** |  | 
+**ExternalCustomerID** | Pointer to **NullableInt32** | Deprecated, use ExternalID instead. | [optional] 
+**ExternalID** | Pointer to **NullableString** | ID/Number of the customer in the source system (e.g. an ERP System) | [optional] 
+**ExternalCustomerExternalID** | Pointer to **NullableString** | Deprecated, use ExternalSourceCustomerID instead. | [optional] 
+**ExternalSourceCustomerID** | Pointer to **NullableString** | ID/Number of the customer in a secondary source system (e.g. the shop) | [optional] 
+**ExternalOrderType** | Pointer to **NullableString** | Deprecated, use ExternalType instead. | [optional] 
+**ExternalType** | Pointer to **NullableString** | External type of the customer. | [optional] 
+**ExternalOrderAccountID** | Pointer to **NullableInt32** | Deprecated, use ExternalAccountID instead. | [optional] 
+**ExternalAccountID** | Pointer to **NullableString** | External account ID of the customer. | [optional] 
+**ExternalOrderSubAccountID** | Pointer to **NullableString** | Deprecated, use ExternalSourceID instead. | [optional] 
+**ExternalSourceID** | Pointer to **NullableString** | External source ID of the customer. | [optional] 
 **Marketplace** | **string** | Marketplace of the customer. | 
 **TestUser** | **bool** |  | 
 **Newsletter** | **bool** |  | 
@@ -43,7 +48,7 @@ Name | Type | Description | Notes
 
 ### NewCustomerV4
 
-`func NewCustomerV4(number string, salutation Salutation, title string, firstName string, lastName string, company string, address string, postalCode string, suburb string, city string, country string, eMail string, phone string, referrer string, referrerChannel string, registerDate time.Time, additionalFields map[string]string, referenceCustomer bool, contactBan bool, externalCustomerID int32, externalOrderType string, externalOrderAccountID int32, externalOrderSubAccountID string, marketplace string, testUser bool, newsletter bool, segment string, ) *CustomerV4`
+`func NewCustomerV4(number string, salutation Salutation, title string, firstName string, lastName string, company string, address string, postalCode string, suburb string, city string, country string, eMail string, phone string, referrer string, referrerChannel string, registerDate time.Time, additionalFields map[string]string, referenceCustomer bool, contactBan bool, marketplace string, testUser bool, newsletter bool, segment string, ) *CustomerV4`
 
 NewCustomerV4 instantiates a new CustomerV4 object
 This constructor will assign default values to properties that have it defined,
@@ -597,7 +602,57 @@ and a boolean to check if the value has been set.
 
 SetExternalCustomerID sets ExternalCustomerID field to given value.
 
+### HasExternalCustomerID
 
+`func (o *CustomerV4) HasExternalCustomerID() bool`
+
+HasExternalCustomerID returns a boolean if a field has been set.
+
+### SetExternalCustomerIDNil
+
+`func (o *CustomerV4) SetExternalCustomerIDNil(b bool)`
+
+ SetExternalCustomerIDNil sets the value for ExternalCustomerID to be an explicit nil
+
+### UnsetExternalCustomerID
+`func (o *CustomerV4) UnsetExternalCustomerID()`
+
+UnsetExternalCustomerID ensures that no value is present for ExternalCustomerID, not even an explicit nil
+### GetExternalID
+
+`func (o *CustomerV4) GetExternalID() string`
+
+GetExternalID returns the ExternalID field if non-nil, zero value otherwise.
+
+### GetExternalIDOk
+
+`func (o *CustomerV4) GetExternalIDOk() (*string, bool)`
+
+GetExternalIDOk returns a tuple with the ExternalID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalID
+
+`func (o *CustomerV4) SetExternalID(v string)`
+
+SetExternalID sets ExternalID field to given value.
+
+### HasExternalID
+
+`func (o *CustomerV4) HasExternalID() bool`
+
+HasExternalID returns a boolean if a field has been set.
+
+### SetExternalIDNil
+
+`func (o *CustomerV4) SetExternalIDNil(b bool)`
+
+ SetExternalIDNil sets the value for ExternalID to be an explicit nil
+
+### UnsetExternalID
+`func (o *CustomerV4) UnsetExternalID()`
+
+UnsetExternalID ensures that no value is present for ExternalID, not even an explicit nil
 ### GetExternalCustomerExternalID
 
 `func (o *CustomerV4) GetExternalCustomerExternalID() string`
@@ -633,6 +688,41 @@ HasExternalCustomerExternalID returns a boolean if a field has been set.
 `func (o *CustomerV4) UnsetExternalCustomerExternalID()`
 
 UnsetExternalCustomerExternalID ensures that no value is present for ExternalCustomerExternalID, not even an explicit nil
+### GetExternalSourceCustomerID
+
+`func (o *CustomerV4) GetExternalSourceCustomerID() string`
+
+GetExternalSourceCustomerID returns the ExternalSourceCustomerID field if non-nil, zero value otherwise.
+
+### GetExternalSourceCustomerIDOk
+
+`func (o *CustomerV4) GetExternalSourceCustomerIDOk() (*string, bool)`
+
+GetExternalSourceCustomerIDOk returns a tuple with the ExternalSourceCustomerID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalSourceCustomerID
+
+`func (o *CustomerV4) SetExternalSourceCustomerID(v string)`
+
+SetExternalSourceCustomerID sets ExternalSourceCustomerID field to given value.
+
+### HasExternalSourceCustomerID
+
+`func (o *CustomerV4) HasExternalSourceCustomerID() bool`
+
+HasExternalSourceCustomerID returns a boolean if a field has been set.
+
+### SetExternalSourceCustomerIDNil
+
+`func (o *CustomerV4) SetExternalSourceCustomerIDNil(b bool)`
+
+ SetExternalSourceCustomerIDNil sets the value for ExternalSourceCustomerID to be an explicit nil
+
+### UnsetExternalSourceCustomerID
+`func (o *CustomerV4) UnsetExternalSourceCustomerID()`
+
+UnsetExternalSourceCustomerID ensures that no value is present for ExternalSourceCustomerID, not even an explicit nil
 ### GetExternalOrderType
 
 `func (o *CustomerV4) GetExternalOrderType() string`
@@ -652,7 +742,57 @@ and a boolean to check if the value has been set.
 
 SetExternalOrderType sets ExternalOrderType field to given value.
 
+### HasExternalOrderType
 
+`func (o *CustomerV4) HasExternalOrderType() bool`
+
+HasExternalOrderType returns a boolean if a field has been set.
+
+### SetExternalOrderTypeNil
+
+`func (o *CustomerV4) SetExternalOrderTypeNil(b bool)`
+
+ SetExternalOrderTypeNil sets the value for ExternalOrderType to be an explicit nil
+
+### UnsetExternalOrderType
+`func (o *CustomerV4) UnsetExternalOrderType()`
+
+UnsetExternalOrderType ensures that no value is present for ExternalOrderType, not even an explicit nil
+### GetExternalType
+
+`func (o *CustomerV4) GetExternalType() string`
+
+GetExternalType returns the ExternalType field if non-nil, zero value otherwise.
+
+### GetExternalTypeOk
+
+`func (o *CustomerV4) GetExternalTypeOk() (*string, bool)`
+
+GetExternalTypeOk returns a tuple with the ExternalType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalType
+
+`func (o *CustomerV4) SetExternalType(v string)`
+
+SetExternalType sets ExternalType field to given value.
+
+### HasExternalType
+
+`func (o *CustomerV4) HasExternalType() bool`
+
+HasExternalType returns a boolean if a field has been set.
+
+### SetExternalTypeNil
+
+`func (o *CustomerV4) SetExternalTypeNil(b bool)`
+
+ SetExternalTypeNil sets the value for ExternalType to be an explicit nil
+
+### UnsetExternalType
+`func (o *CustomerV4) UnsetExternalType()`
+
+UnsetExternalType ensures that no value is present for ExternalType, not even an explicit nil
 ### GetExternalOrderAccountID
 
 `func (o *CustomerV4) GetExternalOrderAccountID() int32`
@@ -672,7 +812,57 @@ and a boolean to check if the value has been set.
 
 SetExternalOrderAccountID sets ExternalOrderAccountID field to given value.
 
+### HasExternalOrderAccountID
 
+`func (o *CustomerV4) HasExternalOrderAccountID() bool`
+
+HasExternalOrderAccountID returns a boolean if a field has been set.
+
+### SetExternalOrderAccountIDNil
+
+`func (o *CustomerV4) SetExternalOrderAccountIDNil(b bool)`
+
+ SetExternalOrderAccountIDNil sets the value for ExternalOrderAccountID to be an explicit nil
+
+### UnsetExternalOrderAccountID
+`func (o *CustomerV4) UnsetExternalOrderAccountID()`
+
+UnsetExternalOrderAccountID ensures that no value is present for ExternalOrderAccountID, not even an explicit nil
+### GetExternalAccountID
+
+`func (o *CustomerV4) GetExternalAccountID() string`
+
+GetExternalAccountID returns the ExternalAccountID field if non-nil, zero value otherwise.
+
+### GetExternalAccountIDOk
+
+`func (o *CustomerV4) GetExternalAccountIDOk() (*string, bool)`
+
+GetExternalAccountIDOk returns a tuple with the ExternalAccountID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalAccountID
+
+`func (o *CustomerV4) SetExternalAccountID(v string)`
+
+SetExternalAccountID sets ExternalAccountID field to given value.
+
+### HasExternalAccountID
+
+`func (o *CustomerV4) HasExternalAccountID() bool`
+
+HasExternalAccountID returns a boolean if a field has been set.
+
+### SetExternalAccountIDNil
+
+`func (o *CustomerV4) SetExternalAccountIDNil(b bool)`
+
+ SetExternalAccountIDNil sets the value for ExternalAccountID to be an explicit nil
+
+### UnsetExternalAccountID
+`func (o *CustomerV4) UnsetExternalAccountID()`
+
+UnsetExternalAccountID ensures that no value is present for ExternalAccountID, not even an explicit nil
 ### GetExternalOrderSubAccountID
 
 `func (o *CustomerV4) GetExternalOrderSubAccountID() string`
@@ -692,7 +882,57 @@ and a boolean to check if the value has been set.
 
 SetExternalOrderSubAccountID sets ExternalOrderSubAccountID field to given value.
 
+### HasExternalOrderSubAccountID
 
+`func (o *CustomerV4) HasExternalOrderSubAccountID() bool`
+
+HasExternalOrderSubAccountID returns a boolean if a field has been set.
+
+### SetExternalOrderSubAccountIDNil
+
+`func (o *CustomerV4) SetExternalOrderSubAccountIDNil(b bool)`
+
+ SetExternalOrderSubAccountIDNil sets the value for ExternalOrderSubAccountID to be an explicit nil
+
+### UnsetExternalOrderSubAccountID
+`func (o *CustomerV4) UnsetExternalOrderSubAccountID()`
+
+UnsetExternalOrderSubAccountID ensures that no value is present for ExternalOrderSubAccountID, not even an explicit nil
+### GetExternalSourceID
+
+`func (o *CustomerV4) GetExternalSourceID() string`
+
+GetExternalSourceID returns the ExternalSourceID field if non-nil, zero value otherwise.
+
+### GetExternalSourceIDOk
+
+`func (o *CustomerV4) GetExternalSourceIDOk() (*string, bool)`
+
+GetExternalSourceIDOk returns a tuple with the ExternalSourceID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalSourceID
+
+`func (o *CustomerV4) SetExternalSourceID(v string)`
+
+SetExternalSourceID sets ExternalSourceID field to given value.
+
+### HasExternalSourceID
+
+`func (o *CustomerV4) HasExternalSourceID() bool`
+
+HasExternalSourceID returns a boolean if a field has been set.
+
+### SetExternalSourceIDNil
+
+`func (o *CustomerV4) SetExternalSourceIDNil(b bool)`
+
+ SetExternalSourceIDNil sets the value for ExternalSourceID to be an explicit nil
+
+### UnsetExternalSourceID
+`func (o *CustomerV4) UnsetExternalSourceID()`
+
+UnsetExternalSourceID ensures that no value is present for ExternalSourceID, not even an explicit nil
 ### GetMarketplace
 
 `func (o *CustomerV4) GetMarketplace() string`
