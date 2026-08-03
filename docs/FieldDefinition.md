@@ -4,16 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **map[string]string** |  | 
-**Description** | **map[string]string** |  | 
+**Name** | [**TranslatedString**](TranslatedString.md) |  | 
+**Description** | [**TranslatedString**](TranslatedString.md) |  | 
 **AllowedFilters** | **[]string** |  | 
-**AllowedValues** | Pointer to **map[string][]interface{}** |  | [optional] 
+**AllowedValues** | Pointer to [**map[string]TranslatedString**](TranslatedString.md) |  | [optional] 
 
 ## Methods
 
 ### NewFieldDefinition
 
-`func NewFieldDefinition(name map[string]string, description map[string]string, allowedFilters []string, ) *FieldDefinition`
+`func NewFieldDefinition(name TranslatedString, description TranslatedString, allowedFilters []string, ) *FieldDefinition`
 
 NewFieldDefinition instantiates a new FieldDefinition object
 This constructor will assign default values to properties that have it defined,
@@ -30,40 +30,40 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetName
 
-`func (o *FieldDefinition) GetName() map[string]string`
+`func (o *FieldDefinition) GetName() TranslatedString`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *FieldDefinition) GetNameOk() (*map[string]string, bool)`
+`func (o *FieldDefinition) GetNameOk() (*TranslatedString, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *FieldDefinition) SetName(v map[string]string)`
+`func (o *FieldDefinition) SetName(v TranslatedString)`
 
 SetName sets Name field to given value.
 
 
 ### GetDescription
 
-`func (o *FieldDefinition) GetDescription() map[string]string`
+`func (o *FieldDefinition) GetDescription() TranslatedString`
 
 GetDescription returns the Description field if non-nil, zero value otherwise.
 
 ### GetDescriptionOk
 
-`func (o *FieldDefinition) GetDescriptionOk() (*map[string]string, bool)`
+`func (o *FieldDefinition) GetDescriptionOk() (*TranslatedString, bool)`
 
 GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDescription
 
-`func (o *FieldDefinition) SetDescription(v map[string]string)`
+`func (o *FieldDefinition) SetDescription(v TranslatedString)`
 
 SetDescription sets Description field to given value.
 
@@ -90,20 +90,20 @@ SetAllowedFilters sets AllowedFilters field to given value.
 
 ### GetAllowedValues
 
-`func (o *FieldDefinition) GetAllowedValues() map[string][]interface{}`
+`func (o *FieldDefinition) GetAllowedValues() map[string]TranslatedString`
 
 GetAllowedValues returns the AllowedValues field if non-nil, zero value otherwise.
 
 ### GetAllowedValuesOk
 
-`func (o *FieldDefinition) GetAllowedValuesOk() (*map[string][]interface{}, bool)`
+`func (o *FieldDefinition) GetAllowedValuesOk() (*map[string]TranslatedString, bool)`
 
 GetAllowedValuesOk returns a tuple with the AllowedValues field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAllowedValues
 
-`func (o *FieldDefinition) SetAllowedValues(v map[string][]interface{})`
+`func (o *FieldDefinition) SetAllowedValues(v map[string]TranslatedString)`
 
 SetAllowedValues sets AllowedValues field to given value.
 

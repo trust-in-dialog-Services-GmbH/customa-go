@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.13.0
+  version: 3.13.1
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -4629,36 +4629,48 @@ components:
       - TotalCount
       title: Customer Search Response
       type: object
+    TranslatedString:
+      example:
+        de: de
+        en: en
+      properties:
+        de:
+          title: German version of the string.
+          type: string
+        en:
+          title: English version of the string.
+          type: string
+      required:
+      - de
+      - en
+      type: object
     FieldDefinition:
       example:
         Description:
-          key: Description
+          de: de
+          en: en
         AllowedValues:
           key:
-          - ""
-          - ""
+            de: de
+            en: en
         AllowedFilters:
         - AllowedFilters
         - AllowedFilters
         Name:
-          key: Name
+          de: de
+          en: en
       properties:
         Name:
-          additionalProperties:
-            type: string
-          type: object
+          $ref: "#/components/schemas/TranslatedString"
         Description:
-          additionalProperties:
-            type: string
-          type: object
+          $ref: "#/components/schemas/TranslatedString"
         AllowedFilters:
           items:
             type: string
           type: array
         AllowedValues:
           additionalProperties:
-            items: {}
-            type: array
+            $ref: "#/components/schemas/TranslatedString"
           nullable: true
           type: object
       required:
@@ -4671,16 +4683,18 @@ components:
         Fields:
           key:
             Description:
-              key: Description
+              de: de
+              en: en
             AllowedValues:
               key:
-              - ""
-              - ""
+                de: de
+                en: en
             AllowedFilters:
             - AllowedFilters
             - AllowedFilters
             Name:
-              key: Name
+              de: de
+              en: en
       properties:
         Fields:
           additionalProperties:

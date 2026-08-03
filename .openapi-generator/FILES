@@ -102,6 +102,7 @@ docs/TrafficFiltersResponse.md
 docs/TrafficRequest.md
 docs/TrafficResponse.md
 docs/TrafficRow.md
+docs/TranslatedString.md
 go.mod
 go.sum
 model_additional_field.go
@@ -184,6 +185,7 @@ model_traffic_filters_response.go
 model_traffic_request.go
 model_traffic_response.go
 model_traffic_row.go
+model_translated_string.go
 response.go
 test/api_auth_test.go
 test/api_category_test.go
