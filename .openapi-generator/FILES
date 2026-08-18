@@ -1,6 +1,8 @@
 .gitignore
 api/openapi.yaml
 api_auth.go
+api_campaign.go
+api_campaigngroup.go
 api_category.go
 api_customer.go
 api_product.go
@@ -19,6 +21,12 @@ docs/AuthLoginRequestV4.md
 docs/AuthTokenResponseV3.md
 docs/AuthTokenResponseV4.md
 docs/BasicSearchResponse.md
+docs/CampaignAPI.md
+docs/CampaignGroupSearchResponseV4.md
+docs/CampaignGroupV4.md
+docs/CampaignSearchResponseV4.md
+docs/CampaignV4.md
+docs/CampaigngroupAPI.md
 docs/CategoryAPI.md
 docs/CategorySearchResponseV4.md
 docs/CategoryV4.md
@@ -111,6 +119,10 @@ model_auth_login_request_v4.go
 model_auth_token_response_v3.go
 model_auth_token_response_v4.go
 model_basic_search_response.go
+model_campaign_group_search_response_v4.go
+model_campaign_group_v4.go
+model_campaign_search_response_v4.go
+model_campaign_v4.go
 model_category_search_response_v4.go
 model_category_v4.go
 model_choice.go
@@ -188,6 +200,8 @@ model_traffic_row.go
 model_translated_string.go
 response.go
 test/api_auth_test.go
+test/api_campaign_test.go
+test/api_campaigngroup_test.go
 test/api_category_test.go
 test/api_customer_test.go
 test/api_product_test.go

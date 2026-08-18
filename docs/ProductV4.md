@@ -11,7 +11,8 @@ Name | Type | Description | Notes
 **Name** | **string** | Name of the product. | 
 **Manufacturer** | **string** | Manufacturer of the product. | 
 **Vendor** | **string** | Vendor of the product. | 
-**Category** | Pointer to **NullableString** | Category of the product. | [optional] 
+**Category** | Pointer to **NullableString** | Category of the product. Deprecated. Use &#39;Categories&#39; instead. | [optional] 
+**Categories** | Pointer to **[]string** | Categories of the product. | [optional] 
 **ShortDescription** | **string** | Short description of the product. | 
 **LongDescription** | **string** | Long description of the product. | 
 **ImageSource** | **string** | Source URI of the product image. | 
@@ -250,6 +251,41 @@ HasCategory returns a boolean if a field has been set.
 `func (o *ProductV4) UnsetCategory()`
 
 UnsetCategory ensures that no value is present for Category, not even an explicit nil
+### GetCategories
+
+`func (o *ProductV4) GetCategories() []string`
+
+GetCategories returns the Categories field if non-nil, zero value otherwise.
+
+### GetCategoriesOk
+
+`func (o *ProductV4) GetCategoriesOk() (*[]string, bool)`
+
+GetCategoriesOk returns a tuple with the Categories field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCategories
+
+`func (o *ProductV4) SetCategories(v []string)`
+
+SetCategories sets Categories field to given value.
+
+### HasCategories
+
+`func (o *ProductV4) HasCategories() bool`
+
+HasCategories returns a boolean if a field has been set.
+
+### SetCategoriesNil
+
+`func (o *ProductV4) SetCategoriesNil(b bool)`
+
+ SetCategoriesNil sets the value for Categories to be an explicit nil
+
+### UnsetCategories
+`func (o *ProductV4) UnsetCategories()`
+
+UnsetCategories ensures that no value is present for Categories, not even an explicit nil
 ### GetShortDescription
 
 `func (o *ProductV4) GetShortDescription() string`

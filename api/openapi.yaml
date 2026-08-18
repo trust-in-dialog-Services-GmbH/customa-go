@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.13.1
+  version: 3.14.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -21,6 +21,10 @@ tags:
   name: settings
 - description: stats
   name: stats
+- description: campaign
+  name: campaign
+- description: campaigngroup
+  name: campaigngroup
 - description: category
   name: category
 - description: project
@@ -827,6 +831,197 @@ paths:
       summary: API Endpoint for JSON authentication.
       tags:
       - auth
+  /api/v4/campaign/{project}/{id}:
+    get:
+      operationId: campaign_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignV4"
+          description: The campaign was successfully retrieved.
+        "404":
+          description: The campaign was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a campaign by its ID.
+      tags:
+      - campaign
+  /api/v4/campaign/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, campaigns can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: campaign_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignSearchResponseV4"
+          description: A search response with campaigns matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for campaigns by the given filters.
+      tags:
+      - campaign
+  /api/v4/campaign/{project}/fields:
+    get:
+      operationId: campaign_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for campaign search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for campaign search.
+      tags:
+      - campaign
+  /api/v4/campaigngroup/{project}/{id}:
+    get:
+      operationId: campaigngroup_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignGroupV4"
+          description: The campaign group was successfully retrieved.
+        "404":
+          description: The campaign group was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a campaign group by its ID.
+      tags:
+      - campaigngroup
+  /api/v4/campaigngroup/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, campaign groups can be filtered based on various criteria, which are combined using
+        the boolean AND operator. Multiple values can be provided for a filter, these will be combined using the
+        boolean OR operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: campaigngroup_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignGroupSearchResponseV4"
+          description: A search response with campaign groups matching the search
+            criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for campaign groups by the given filters.
+      tags:
+      - campaigngroup
+  /api/v4/campaigngroup/{project}/fields:
+    get:
+      operationId: campaigngroup_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for campaign group search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for campaign group search.
+      tags:
+      - campaigngroup
   /api/v4/category/{project}:
     post:
       operationId: category_post_v4
@@ -4180,14 +4375,274 @@ components:
           type: string
       title: Error Response
       type: object
+    CampaignV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Groups:
+        - Groups
+        - Groups
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Referrer: Referrer
+        ID: ID
+        Name: Name
+      properties:
+        ID:
+          description: "ID of the campaign. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Name:
+          description: Name of the campaign.
+          type: string
+        Referrer:
+          description: Referrer of the campaign.
+          type: string
+        Groups:
+          default: []
+          description: IDs of the campaign groups this campaign belongs to.
+          items:
+            type: string
+          type: array
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - Name
+      - Referrer
+      title: Campaign
+      type: object
+    CampaignSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        CurrentPage: 6
+        Campaigns:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Groups:
+          - Groups
+          - Groups
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Referrer: Referrer
+          ID: ID
+          Name: Name
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Groups:
+          - Groups
+          - Groups
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Referrer: Referrer
+          ID: ID
+          Name: Name
+        PagesCount: 1
+      properties:
+        Campaigns:
+          default: []
+          items:
+            $ref: "#/components/schemas/CampaignV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Campaign Search Response
+      type: object
+    TranslatedString:
+      example:
+        de: de
+        en: en
+      properties:
+        de:
+          title: German version of the string.
+          type: string
+        en:
+          title: English version of the string.
+          type: string
+      required:
+      - de
+      - en
+      type: object
+    FieldDefinition:
+      example:
+        Description:
+          de: de
+          en: en
+        AllowedValues:
+          key:
+            de: de
+            en: en
+        AllowedFilters:
+        - AllowedFilters
+        - AllowedFilters
+        Name:
+          de: de
+          en: en
+      properties:
+        Name:
+          $ref: "#/components/schemas/TranslatedString"
+        Description:
+          $ref: "#/components/schemas/TranslatedString"
+        AllowedFilters:
+          items:
+            type: string
+          type: array
+        AllowedValues:
+          additionalProperties:
+            $ref: "#/components/schemas/TranslatedString"
+          nullable: true
+          type: object
+      required:
+      - AllowedFilters
+      - Description
+      - Name
+      type: object
+    FieldDefinitions:
+      example:
+        Fields:
+          key:
+            Description:
+              de: de
+              en: en
+            AllowedValues:
+              key:
+                de: de
+                en: en
+            AllowedFilters:
+            - AllowedFilters
+            - AllowedFilters
+            Name:
+              de: de
+              en: en
+      properties:
+        Fields:
+          additionalProperties:
+            $ref: "#/components/schemas/FieldDefinition"
+          type: object
+      required:
+      - Fields
+      type: object
+    CampaignGroupV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Referrer: Referrer
+        Campaigns:
+        - Campaigns
+        - Campaigns
+        ID: ID
+        Name: Name
+      properties:
+        ID:
+          description: "ID of the campaign group. Set internally by Customa, any given\
+            \ value is ignored."
+          nullable: true
+          type: string
+        Name:
+          description: Name of the campaign group.
+          type: string
+        Referrer:
+          description: Referrer of the campaign group.
+          type: string
+        Campaigns:
+          default: []
+          description: IDs of the campaigns belonging to this campaign group.
+          items:
+            type: string
+          type: array
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - Name
+      - Referrer
+      title: Campaign Group
+      type: object
+    CampaignGroupSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        CampaignGroups:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Referrer: Referrer
+          Campaigns:
+          - Campaigns
+          - Campaigns
+          ID: ID
+          Name: Name
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Referrer: Referrer
+          Campaigns:
+          - Campaigns
+          - Campaigns
+          ID: ID
+          Name: Name
+        CurrentPage: 6
+        PagesCount: 1
+      properties:
+        CampaignGroups:
+          default: []
+          items:
+            $ref: "#/components/schemas/CampaignGroupV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Campaign Group Search Response
+      type: object
     CategoryV4:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
         Parent: Parent
         ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ExternalID: ExternalID
         AdditionalFields:
-        - AdditionalFields
-        - AdditionalFields
+          key: AdditionalFields
         Level: 0
         ID: ID
         Name: Name
@@ -4209,11 +4664,16 @@ components:
             \ internally by Customa, any given value is ignored."
           nullable: true
           type: integer
+        ExternalID:
+          description: "ID of the category in the source system it was imported from\
+            \ (e.g. Shopware or Shopify), if any."
+          nullable: true
+          type: string
         AdditionalFields:
-          description: Additional field data for the category.
-          items:
+          additionalProperties:
             type: string
-          type: array
+          description: Additional field data for the category.
+          type: object
         CreationDate:
           description: "Creation Timestamp of the item. Set internally by Customa,\
             \ any given value is ignored."
@@ -4252,18 +4712,18 @@ components:
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           Parent: Parent
           ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ExternalID: ExternalID
           AdditionalFields:
-          - AdditionalFields
-          - AdditionalFields
+            key: AdditionalFields
           Level: 0
           ID: ID
           Name: Name
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           Parent: Parent
           ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ExternalID: ExternalID
           AdditionalFields:
-          - AdditionalFields
-          - AdditionalFields
+            key: AdditionalFields
           Level: 0
           ID: ID
           Name: Name
@@ -4629,80 +5089,6 @@ components:
       - TotalCount
       title: Customer Search Response
       type: object
-    TranslatedString:
-      example:
-        de: de
-        en: en
-      properties:
-        de:
-          title: German version of the string.
-          type: string
-        en:
-          title: English version of the string.
-          type: string
-      required:
-      - de
-      - en
-      type: object
-    FieldDefinition:
-      example:
-        Description:
-          de: de
-          en: en
-        AllowedValues:
-          key:
-            de: de
-            en: en
-        AllowedFilters:
-        - AllowedFilters
-        - AllowedFilters
-        Name:
-          de: de
-          en: en
-      properties:
-        Name:
-          $ref: "#/components/schemas/TranslatedString"
-        Description:
-          $ref: "#/components/schemas/TranslatedString"
-        AllowedFilters:
-          items:
-            type: string
-          type: array
-        AllowedValues:
-          additionalProperties:
-            $ref: "#/components/schemas/TranslatedString"
-          nullable: true
-          type: object
-      required:
-      - AllowedFilters
-      - Description
-      - Name
-      type: object
-    FieldDefinitions:
-      example:
-        Fields:
-          key:
-            Description:
-              de: de
-              en: en
-            AllowedValues:
-              key:
-                de: de
-                en: en
-            AllowedFilters:
-            - AllowedFilters
-            - AllowedFilters
-            Name:
-              de: de
-              en: en
-      properties:
-        Fields:
-          additionalProperties:
-            $ref: "#/components/schemas/FieldDefinition"
-          type: object
-      required:
-      - Fields
-      type: object
     TaxClass:
       enum:
       - NormalTax
@@ -4737,6 +5123,9 @@ components:
           Currency: EUR
           Value: 0.8008282
         Parent: Parent
+        Categories:
+        - Categories
+        - Categories
         AdditionalFields:
           key: AdditionalFields
         TaxClass: NormalTax
@@ -4785,9 +5174,16 @@ components:
           description: Vendor of the product.
           type: string
         Category:
-          description: Category of the product.
+          deprecated: true
+          description: Category of the product. Deprecated. Use 'Categories' instead.
           nullable: true
           type: string
+        Categories:
+          description: Categories of the product.
+          items:
+            type: string
+          nullable: true
+          type: array
         ShortDescription:
           description: Short description of the product.
           type: string
@@ -4866,6 +5262,9 @@ components:
             Currency: EUR
             Value: 0.8008282
           Parent: Parent
+          Categories:
+          - Categories
+          - Categories
           AdditionalFields:
             key: AdditionalFields
           TaxClass: NormalTax
@@ -4898,6 +5297,9 @@ components:
             Currency: EUR
             Value: 0.8008282
           Parent: Parent
+          Categories:
+          - Categories
+          - Categories
           AdditionalFields:
             key: AdditionalFields
           TaxClass: NormalTax
