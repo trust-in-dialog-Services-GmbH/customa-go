@@ -105,6 +105,20 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ReceiptAPIService ReceiptPatchV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		httpRes, err := apiClient.ReceiptAPI.ReceiptPatchV4(context.Background(), project, id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ReceiptAPIService ReceiptPostV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

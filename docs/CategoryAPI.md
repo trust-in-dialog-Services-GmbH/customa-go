@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CategoryDeleteV4**](CategoryAPI.md#CategoryDeleteV4) | **Delete** /api/v4/category/{project}/{id} | Deletes a category by its ID.
 [**CategoryGetV4**](CategoryAPI.md#CategoryGetV4) | **Get** /api/v4/category/{project}/{id} | Retrieves a category by its ID.
+[**CategoryPatchV4**](CategoryAPI.md#CategoryPatchV4) | **Patch** /api/v4/category/{project}/{id} | Partially updates an existing category with the given ID.
 [**CategoryPostV4**](CategoryAPI.md#CategoryPostV4) | **Post** /api/v4/category/{project} | Creates a new category.
 [**CategoryPutV4**](CategoryAPI.md#CategoryPutV4) | **Put** /api/v4/category/{project}/{id} | Overwrites an existing category with the given ID.
 [**CategorySearchV4**](CategoryAPI.md#CategorySearchV4) | **Post** /api/v4/category/{project}/search | Searches for categories by the given filters.
@@ -146,6 +147,79 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CategoryPatchV4
+
+> CategoryPatchV4(ctx, project, id).CategoryV4Patch(categoryV4Patch).Execute()
+
+Partially updates an existing category with the given ID.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	id := "id_example" // string | 
+	categoryV4Patch := *customa.NewCategoryV4Patch() // CategoryV4Patch | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	r, err := apiClient.CategoryAPI.CategoryPatchV4(context.Background(), project, id).CategoryV4Patch(categoryV4Patch).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CategoryAPI.CategoryPatchV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCategoryPatchV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **categoryV4Patch** | [**CategoryV4Patch**](CategoryV4Patch.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

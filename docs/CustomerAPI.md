@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**CustomerGetV3**](CustomerAPI.md#CustomerGetV3) | **Get** /api/v3/customer/{id} | Retrieves a customer by their ID.
 [**CustomerGetV4**](CustomerAPI.md#CustomerGetV4) | **Get** /api/v4/customer/{project}/{id} | Retrieves a customer by their ID.
 [**CustomerPatchV3**](CustomerAPI.md#CustomerPatchV3) | **Patch** /api/v3/customer/{id} | Updates a customer with the given ID partially.
+[**CustomerPatchV4**](CustomerAPI.md#CustomerPatchV4) | **Patch** /api/v4/customer/{project}/{id} | Partially updates an existing customer with the given ID.
 [**CustomerPostV3**](CustomerAPI.md#CustomerPostV3) | **Post** /api/v3/customer | Creates a new Customer.
 [**CustomerPostV4**](CustomerAPI.md#CustomerPostV4) | **Post** /api/v4/customer/{project} | Creates a new customer.
 [**CustomerPutV3**](CustomerAPI.md#CustomerPutV3) | **Put** /api/v3/customer/{id} | Overwrites a customer with the given ID.
@@ -420,6 +421,79 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [apiV3Token](../README.md#apiV3Token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CustomerPatchV4
+
+> CustomerPatchV4(ctx, project, id).CustomerV4Patch(customerV4Patch).Execute()
+
+Partially updates an existing customer with the given ID.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	id := "id_example" // string | 
+	customerV4Patch := *customa.NewCustomerV4Patch() // CustomerV4Patch | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	r, err := apiClient.CustomerAPI.CustomerPatchV4(context.Background(), project, id).CustomerV4Patch(customerV4Patch).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CustomerAPI.CustomerPatchV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCustomerPatchV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **customerV4Patch** | [**CustomerV4Patch**](CustomerV4Patch.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
 
 ### HTTP request headers
 

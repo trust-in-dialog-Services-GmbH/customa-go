@@ -5,6 +5,7 @@ api_campaign.go
 api_campaigngroup.go
 api_category.go
 api_customer.go
+api_health.go
 api_product.go
 api_project.go
 api_receipt.go
@@ -30,6 +31,7 @@ docs/CampaigngroupAPI.md
 docs/CategoryAPI.md
 docs/CategorySearchResponseV4.md
 docs/CategoryV4.md
+docs/CategoryV4Patch.md
 docs/Choice.md
 docs/ChoicesList.md
 docs/Customer.md
@@ -37,6 +39,7 @@ docs/CustomerAPI.md
 docs/CustomerSearchResponse.md
 docs/CustomerSearchResponseV4.md
 docs/CustomerV4.md
+docs/CustomerV4Patch.md
 docs/DateField.md
 docs/DeliveryStatusV4.md
 docs/ErrorResponseV3.md
@@ -46,6 +49,16 @@ docs/FieldDefinitions.md
 docs/Filter.md
 docs/FilterType.md
 docs/GlobalSettingValue.md
+docs/HealthAPI.md
+docs/HealthAdminLogEntryV4.md
+docs/HealthAdminLogsResponseV4.md
+docs/HealthCategoryV4.md
+docs/HealthJobSummaryV4.md
+docs/HealthLogEntryV4.md
+docs/HealthLogsResponseV4.md
+docs/HealthOverviewResponseV4.md
+docs/HealthRunsResponseV4.md
+docs/HealthSourceV4.md
 docs/ItemCreatedResponse.md
 docs/ItemCreatedResponse2.md
 docs/LegacySearchResponse.md
@@ -61,6 +74,7 @@ docs/ProductSearchResponseV4.md
 docs/ProductSetMode.md
 docs/ProductSetPartV4.md
 docs/ProductV4.md
+docs/ProductV4Patch.md
 docs/Project.md
 docs/ProjectAPI.md
 docs/ProjectList.md
@@ -72,6 +86,7 @@ docs/ReceiptSearchResponse.md
 docs/ReceiptSearchResponseV4.md
 docs/ReceiptStatusV4.md
 docs/ReceiptV4.md
+docs/ReceiptV4Patch.md
 docs/Salutation.md
 docs/SearchRequest.md
 docs/Segment.md
@@ -125,12 +140,14 @@ model_campaign_search_response_v4.go
 model_campaign_v4.go
 model_category_search_response_v4.go
 model_category_v4.go
+model_category_v4_patch.go
 model_choice.go
 model_choices_list.go
 model_customer.go
 model_customer_search_response.go
 model_customer_search_response_v4.go
 model_customer_v4.go
+model_customer_v4_patch.go
 model_date_field.go
 model_delivery_status_v4.go
 model_error_response_v3.go
@@ -140,6 +157,15 @@ model_field_definitions.go
 model_filter.go
 model_filter_type.go
 model_global_setting_value_.go
+model_health_admin_log_entry_v4.go
+model_health_admin_logs_response_v4.go
+model_health_category_v4.go
+model_health_job_summary_v4.go
+model_health_log_entry_v4.go
+model_health_logs_response_v4.go
+model_health_overview_response_v4.go
+model_health_runs_response_v4.go
+model_health_source_v4.go
 model_item_created_response.go
 model_item_created_response2.go
 model_legacy_search_response.go
@@ -154,6 +180,7 @@ model_product_search_response_v4.go
 model_product_set_mode.go
 model_product_set_part_v4.go
 model_product_v4.go
+model_product_v4_patch.go
 model_project.go
 model_project_list.go
 model_receipt.go
@@ -163,6 +190,7 @@ model_receipt_search_response.go
 model_receipt_search_response_v4.go
 model_receipt_status_v4.go
 model_receipt_v4.go
+model_receipt_v4_patch.go
 model_salutation.go
 model_search_request.go
 model_segment.go
@@ -204,6 +232,7 @@ test/api_campaign_test.go
 test/api_campaigngroup_test.go
 test/api_category_test.go
 test/api_customer_test.go
+test/api_health_test.go
 test/api_product_test.go
 test/api_project_test.go
 test/api_receipt_test.go

@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**ProductGetV3**](ProductAPI.md#ProductGetV3) | **Get** /api/v3/product/{id} | Retrieves a product by its ID.
 [**ProductGetV4**](ProductAPI.md#ProductGetV4) | **Get** /api/v4/product/{project}/{id} | Retrieves a product by its ID.
 [**ProductPatchV3**](ProductAPI.md#ProductPatchV3) | **Patch** /api/v3/product/{id} | Updates a product partially by its ID.
+[**ProductPatchV4**](ProductAPI.md#ProductPatchV4) | **Patch** /api/v4/product/{project}/{id} | Partially updates an existing product with the given ID.
 [**ProductPostV3**](ProductAPI.md#ProductPostV3) | **Post** /api/v3/product | Creates a new Product.
 [**ProductPostV4**](ProductAPI.md#ProductPostV4) | **Post** /api/v4/product/{project} | Creates a new product.
 [**ProductPutV3**](ProductAPI.md#ProductPutV3) | **Put** /api/v3/product/{id} | Overwrites an existing product with the given ID.
@@ -420,6 +421,79 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [apiV3Token](../README.md#apiV3Token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ProductPatchV4
+
+> ProductPatchV4(ctx, project, id).ProductV4Patch(productV4Patch).Execute()
+
+Partially updates an existing product with the given ID.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	id := "id_example" // string | 
+	productV4Patch := *customa.NewProductV4Patch() // ProductV4Patch | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	r, err := apiClient.ProductAPI.ProductPatchV4(context.Background(), project, id).ProductV4Patch(productV4Patch).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductPatchV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiProductPatchV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **productV4Patch** | [**ProductV4Patch**](ProductV4Patch.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
 
 ### HTTP request headers
 

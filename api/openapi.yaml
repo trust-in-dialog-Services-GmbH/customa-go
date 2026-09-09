@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.14.0
+  version: 3.15.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -27,6 +27,8 @@ tags:
   name: campaigngroup
 - description: category
   name: category
+- description: health
+  name: health
 - description: project
   name: project
 - description: traffic
@@ -1118,6 +1120,45 @@ paths:
       summary: Retrieves a category by its ID.
       tags:
       - category
+    patch:
+      description: |-
+        The category must already exist. Only the fields included in the request body are changed; fields that are
+        omitted keep their current value. To clear a nullable field, send it explicitly as `null`.
+      operationId: category_patch_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryV4Patch"
+        required: true
+      responses:
+        "200":
+          description: The category was successfully updated.
+        "404":
+          description: The category was not found.
+        "422":
+          description: The provided data is invalid or would create a circular reference.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Partially updates an existing category with the given ID.
+      tags:
+      - category
     put:
       operationId: category_put_v4
       parameters:
@@ -1284,6 +1325,44 @@ paths:
       summary: Retrieves a customer by their ID.
       tags:
       - customer
+    patch:
+      description: |-
+        The customer must already exist. Only the fields included in the request body are changed; fields that are
+        omitted keep their current value. To clear a nullable field, send it explicitly as `null`.
+      operationId: customer_patch_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerV4Patch"
+        required: true
+      responses:
+        "200":
+          description: The customer was successfully updated.
+        "404":
+          description: The customer was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Partially updates an existing customer with the given ID.
+      tags:
+      - customer
     put:
       description: The customer must already exist. The provided data will replace
         the existing customer data.
@@ -1382,6 +1461,134 @@ paths:
       summary: Returns a list of fields and allowed filters for customer search.
       tags:
       - customer
+  /api/v4/health/{project}:
+    get:
+      description: |-
+        Neuester Job je überwachter Quelle, gruppiert nach Kategorie. Quellen, für deren Modul
+        der Benutzer keinen Zugriff hat, werden herausgefiltert (leere Kategorien mit).
+      operationId: health_overview_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthOverviewResponseV4"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Health-Status-Übersicht.
+      tags:
+      - health
+  /api/v4/health/{project}/runs/{jobKey}:
+    get:
+      description: "Bis zu 50 neueste Job-Zeilen mit gleichem key, absteigend nach\
+        \ Startzeitpunkt."
+      operationId: health_runs_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: jobKey
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthRunsResponseV4"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Frühere Läufe einer Quelle.
+      tags:
+      - health
+  /api/v4/health/{project}/logs/{jobId}:
+    get:
+      description: |-
+        Für alle Benutzer mit Zugriff auf das Modul der Quelle sichtbar (lifecycle-artige
+        Meldungen, keine technischen Details — siehe adminLogs()).
+      operationId: health_logs_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: jobId
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthLogsResponseV4"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Log-Historie eines konkreten Laufs.
+      tags:
+      - health
+  /api/v4/health/{project}/admin-logs/{jobId}:
+    get:
+      operationId: health_admin_logs_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: jobId
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthAdminLogsResponseV4"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Technische Detail-Historie (LogAdmin) eines konkreten Laufs — nur für
+        Admins.
+      tags:
+      - health
   /api/v4/product/{project}:
     post:
       description: A new product is created using the provided data. The product ID
@@ -1480,6 +1687,44 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Retrieves a product by its ID.
+      tags:
+      - product
+    patch:
+      description: |-
+        The product must already exist. Only the fields included in the request body are changed; fields that are
+        omitted keep their current value. To clear a nullable field, send it explicitly as `null`.
+      operationId: product_patch_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductV4Patch"
+        required: true
+      responses:
+        "200":
+          description: The product was successfully updated.
+        "404":
+          description: The product was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Partially updates an existing product with the given ID.
       tags:
       - product
     put:
@@ -1692,6 +1937,45 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Retrieves a receipt by its ID.
+      tags:
+      - receipt
+    patch:
+      description: |-
+        The receipt must already exist. Only the fields included in the request body are changed; fields that are
+        omitted keep their current value. To clear a nullable field, send it explicitly as `null`. Any receipt item
+        that should be kept must be included in the request, as `ReceiptItems` is replaced as a whole when present.
+      operationId: receipt_patch_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReceiptV4Patch"
+        required: true
+      responses:
+        "200":
+          description: The receipt was successfully updated.
+        "404":
+          description: The receipt was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Partially updates an existing receipt with the given ID.
       tags:
       - receipt
     put:
@@ -3161,6 +3445,7 @@ components:
             - Returned
             - PartiallyReturned
             - Cancelled
+            - PartiallyCancelled
             type: string
           GoogleClickID:
             description: Google Click ID of this receipt.
@@ -5089,6 +5374,323 @@ components:
       - TotalCount
       title: Customer Search Response
       type: object
+    HealthJobSummaryV4:
+      description: Ein einzelner Ausführungslauf einer überwachten Quelle.
+      example:
+        Status: Status
+        FinishedAt: 2000-01-23T04:56:07.000+00:00
+        Id: 0
+        StartedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        Id:
+          description: Interne Job-ID.
+          type: integer
+        Status:
+          description: "Status des Laufs: pending, running, success, error oder warning."
+          type: string
+        StartedAt:
+          description: Startzeitpunkt des Laufs.
+          format: date-time
+          type: string
+        FinishedAt:
+          description: "Endzeitpunkt des Laufs, null solange er noch läuft."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - Id
+      - StartedAt
+      - Status
+      title: Health Job Summary
+      type: object
+    HealthSourceV4:
+      description: "Eine überwachte Quelle (Import, Chain, Marketing-Anbindung, ...)."
+      example:
+        LastSuccess:
+          Status: Status
+          FinishedAt: 2000-01-23T04:56:07.000+00:00
+          Id: 0
+          StartedAt: 2000-01-23T04:56:07.000+00:00
+        Latest:
+          Status: Status
+          FinishedAt: 2000-01-23T04:56:07.000+00:00
+          Id: 0
+          StartedAt: 2000-01-23T04:56:07.000+00:00
+        Key: Key
+        Name: Name
+      properties:
+        Key:
+          description: Maschinenlesbarer Schlüssel der Quelle (JobKey).
+          type: string
+        Name:
+          description: Anzeigename der Quelle.
+          type: string
+        Latest:
+          $ref: "#/components/schemas/HealthJobSummaryV4"
+        LastSuccess:
+          $ref: "#/components/schemas/HealthJobSummaryV4"
+      required:
+      - Key
+      - Name
+      title: Health Source
+      type: object
+    HealthCategoryV4:
+      description: Gruppierung von Quellen für die Health-Status-Übersicht.
+      example:
+        Sources:
+        - LastSuccess:
+            Status: Status
+            FinishedAt: 2000-01-23T04:56:07.000+00:00
+            Id: 0
+            StartedAt: 2000-01-23T04:56:07.000+00:00
+          Latest:
+            Status: Status
+            FinishedAt: 2000-01-23T04:56:07.000+00:00
+            Id: 0
+            StartedAt: 2000-01-23T04:56:07.000+00:00
+          Key: Key
+          Name: Name
+        - LastSuccess:
+            Status: Status
+            FinishedAt: 2000-01-23T04:56:07.000+00:00
+            Id: 0
+            StartedAt: 2000-01-23T04:56:07.000+00:00
+          Latest:
+            Status: Status
+            FinishedAt: 2000-01-23T04:56:07.000+00:00
+            Id: 0
+            StartedAt: 2000-01-23T04:56:07.000+00:00
+          Key: Key
+          Name: Name
+        Key: Key
+        Name: Name
+      properties:
+        Key:
+          description: Maschinenlesbarer Schlüssel der Kategorie.
+          type: string
+        Name:
+          description: Anzeigename der Kategorie.
+          type: string
+        Sources:
+          default: []
+          description: "Quellen dieser Kategorie, auf die der Benutzer Zugriff hat."
+          items:
+            $ref: "#/components/schemas/HealthSourceV4"
+          type: array
+      required:
+      - Key
+      - Name
+      title: Health Category
+      type: object
+    HealthOverviewResponseV4:
+      example:
+        Categories:
+        - Sources:
+          - LastSuccess:
+              Status: Status
+              FinishedAt: 2000-01-23T04:56:07.000+00:00
+              Id: 0
+              StartedAt: 2000-01-23T04:56:07.000+00:00
+            Latest:
+              Status: Status
+              FinishedAt: 2000-01-23T04:56:07.000+00:00
+              Id: 0
+              StartedAt: 2000-01-23T04:56:07.000+00:00
+            Key: Key
+            Name: Name
+          - LastSuccess:
+              Status: Status
+              FinishedAt: 2000-01-23T04:56:07.000+00:00
+              Id: 0
+              StartedAt: 2000-01-23T04:56:07.000+00:00
+            Latest:
+              Status: Status
+              FinishedAt: 2000-01-23T04:56:07.000+00:00
+              Id: 0
+              StartedAt: 2000-01-23T04:56:07.000+00:00
+            Key: Key
+            Name: Name
+          Key: Key
+          Name: Name
+        - Sources:
+          - LastSuccess:
+              Status: Status
+              FinishedAt: 2000-01-23T04:56:07.000+00:00
+              Id: 0
+              StartedAt: 2000-01-23T04:56:07.000+00:00
+            Latest:
+              Status: Status
+              FinishedAt: 2000-01-23T04:56:07.000+00:00
+              Id: 0
+              StartedAt: 2000-01-23T04:56:07.000+00:00
+            Key: Key
+            Name: Name
+          - LastSuccess:
+              Status: Status
+              FinishedAt: 2000-01-23T04:56:07.000+00:00
+              Id: 0
+              StartedAt: 2000-01-23T04:56:07.000+00:00
+            Latest:
+              Status: Status
+              FinishedAt: 2000-01-23T04:56:07.000+00:00
+              Id: 0
+              StartedAt: 2000-01-23T04:56:07.000+00:00
+            Key: Key
+            Name: Name
+          Key: Key
+          Name: Name
+      properties:
+        Categories:
+          default: []
+          description: "Kategorien mit ihren Quellen, gefiltert auf die dem Benutzer\
+            \ zugänglichen Module."
+          items:
+            $ref: "#/components/schemas/HealthCategoryV4"
+          type: array
+      title: Health Overview Response
+      type: object
+    HealthRunsResponseV4:
+      description: "Bis zu 50 neueste Läufe einer Quelle, absteigend nach Startzeitpunkt."
+      example:
+        Runs:
+        - Status: Status
+          FinishedAt: 2000-01-23T04:56:07.000+00:00
+          Id: 0
+          StartedAt: 2000-01-23T04:56:07.000+00:00
+        - Status: Status
+          FinishedAt: 2000-01-23T04:56:07.000+00:00
+          Id: 0
+          StartedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        Runs:
+          default: []
+          description: "Läufe, neuester zuerst."
+          items:
+            $ref: "#/components/schemas/HealthJobSummaryV4"
+          type: array
+      title: Health Runs Response
+      type: object
+    HealthLogEntryV4:
+      description: Ein für alle Benutzer mit Modulzugriff sichtbarer Lifecycle-Log-Eintrag
+        eines Laufs.
+      example:
+        Type: Type
+        DateCreated: 2000-01-23T04:56:07.000+00:00
+        Text: Text
+      properties:
+        DateCreated:
+          description: Zeitpunkt des Log-Eintrags.
+          format: date-time
+          type: string
+        Type:
+          description: "Log-Level: info, warning oder error."
+          type: string
+        Text:
+          description: Meldungstext.
+          type: string
+      required:
+      - DateCreated
+      - Text
+      - Type
+      title: Health Log Entry
+      type: object
+    HealthLogsResponseV4:
+      description: Paginierte Lifecycle-Log-Historie eines Laufs.
+      example:
+        TotalCount: 0
+        PageSize: 5
+        CurrentPage: 6
+        PagesCount: 1
+        Logs:
+        - Type: Type
+          DateCreated: 2000-01-23T04:56:07.000+00:00
+          Text: Text
+        - Type: Type
+          DateCreated: 2000-01-23T04:56:07.000+00:00
+          Text: Text
+      properties:
+        Logs:
+          default: []
+          description: Log-Einträge dieser Seite.
+          items:
+            $ref: "#/components/schemas/HealthLogEntryV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Health Logs Response
+      type: object
+    HealthAdminLogEntryV4:
+      description: Technisches Detail (Exception-Text o. ä.) eines Laufs — nur für
+        Admins sichtbar.
+      example:
+        DateCreated: 2000-01-23T04:56:07.000+00:00
+        Text: Text
+      properties:
+        DateCreated:
+          description: Zeitpunkt des Eintrags.
+          format: date-time
+          type: string
+        Text:
+          description: Voller technischer Text ohne Kürzung.
+          type: string
+      required:
+      - DateCreated
+      - Text
+      title: Health Admin Log Entry
+      type: object
+    HealthAdminLogsResponseV4:
+      description: Paginierte technische Detail-Historie eines Laufs — nur für Admins.
+      example:
+        TotalCount: 0
+        Details:
+        - DateCreated: 2000-01-23T04:56:07.000+00:00
+          Text: Text
+        - DateCreated: 2000-01-23T04:56:07.000+00:00
+          Text: Text
+        PageSize: 5
+        CurrentPage: 6
+        PagesCount: 1
+      properties:
+        Details:
+          default: []
+          description: Technische Detail-Einträge dieser Seite.
+          items:
+            $ref: "#/components/schemas/HealthAdminLogEntryV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Health Admin Logs Response
+      type: object
     TaxClass:
       enum:
       - NormalTax
@@ -5416,6 +6018,7 @@ components:
       - Returned
       - PartiallyReturned
       - Cancelled
+      - PartiallyCancelled
       type: string
     ReceiptItemV4:
       example:
@@ -6048,6 +6651,555 @@ components:
       required:
       - Currency
       title: Traffic Response
+      type: object
+    CategoryV4Patch:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Parent: Parent
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ExternalID: ExternalID
+        AdditionalFields:
+          key: AdditionalFields
+        Level: 0
+        ID: ID
+        Name: Name
+      properties:
+        ID:
+          description: "ID of the category. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Name:
+          description: Name of the category.
+          type: string
+        Parent:
+          description: ID of the parent category. Must not create a circular reference.
+          nullable: true
+          type: string
+        Level:
+          description: "Hierarchy level of the category. 0 for root categories. Set\
+            \ internally by Customa, any given value is ignored."
+          nullable: true
+          type: integer
+        ExternalID:
+          description: "ID of the category in the source system it was imported from\
+            \ (e.g. Shopware or Shopify), if any."
+          nullable: true
+          type: string
+        AdditionalFields:
+          additionalProperties:
+            type: string
+          description: Additional field data for the category.
+          type: object
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      title: Category
+      type: object
+    CustomerV4Patch:
+      example:
+        Group: Group
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Company: Company
+        Address: Address
+        Suburb: Suburb
+        ExternalID: ExternalID
+        ExternalSourceCustomerID: ExternalSourceCustomerID
+        ContactBan: true
+        PostalCode: PostalCode
+        Birthday: 2000-01-23T04:56:07.000+00:00
+        Salutation: m
+        ExternalCustomerID: 0
+        Segment: Segment
+        Newsletter: true
+        ReferenceCustomer: true
+        Number: Number
+        Phone: Phone
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ExternalOrderAccountID: 6
+        ID: ID
+        TestUser: true
+        ExternalSourceID: ExternalSourceID
+        ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        FirstName: FirstName
+        RegisterDate: 2000-01-23T04:56:07.000+00:00
+        AdditionalFields:
+          key: AdditionalFields
+        Title: Title
+        ExternalType: ExternalType
+        City: City
+        EMail: EMail
+        ReferrerChannel: ReferrerChannel
+        ExternalAccountID: ExternalAccountID
+        ExternalCustomerExternalID: ExternalCustomerExternalID
+        Marketplace: Marketplace
+        Referrer: Referrer
+        PurchaseDate: 2000-01-23T04:56:07.000+00:00
+        Country: Country
+        LastName: LastName
+        ExternalOrderType: ExternalOrderType
+      properties:
+        ID:
+          description: "ID of the customer. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Number:
+          description: Customer number from e.g. an external Shop or ERP System.
+          type: string
+        Group:
+          description: Group name of the customer
+          nullable: true
+          type: string
+        Salutation:
+          $ref: "#/components/schemas/Salutation"
+        Title:
+          description: (Academical) title of the customer.
+          type: string
+        FirstName:
+          description: First name of the customer.
+          type: string
+        LastName:
+          description: Last name of the customer.
+          type: string
+        Company:
+          description: Company of the customer's address
+          type: string
+        Address:
+          description: (Street) address of the customer
+          type: string
+        PostalCode:
+          description: Postal code of the customer's address
+          type: string
+        Suburb:
+          description: Suburb of the customer's address
+          type: string
+        City:
+          description: City of the customer's address
+          type: string
+        Country:
+          description: ISO3166-1 Alpha-2 Code of the customer's country
+          type: string
+        EMail:
+          description: Email address of the customer.
+          type: string
+        Phone:
+          description: Phone number of the customer.
+          type: string
+        Birthday:
+          description: Date of birth of the customer.
+          format: date-time
+          nullable: true
+          type: string
+        Referrer:
+          description: Referrer (last cookie) of the customer.
+          type: string
+        ReferrerChannel:
+          description: Referrer Channel of the customer.
+          type: string
+        RegisterDate:
+          description: Registration date of the customer.
+          format: date-time
+          type: string
+        PurchaseDate:
+          description: Purchase date of the customer.
+          format: date-time
+          nullable: true
+          type: string
+        AdditionalFields:
+          additionalProperties:
+            type: string
+          description: Additional data for the customer.
+          type: object
+        ReferenceCustomer:
+          description: Determines if the customer is a reference customer.
+          type: boolean
+        ContactBan:
+          description: Determines if the customer has an active contact ban.
+          type: boolean
+        ExternalCustomerID:
+          deprecated: true
+          description: "Deprecated, use ExternalID instead."
+          nullable: true
+          type: integer
+        ExternalID:
+          description: ID/Number of the customer in the source system (e.g. an ERP
+            System)
+          nullable: true
+          type: string
+        ExternalCustomerExternalID:
+          deprecated: true
+          description: "Deprecated, use ExternalSourceCustomerID instead."
+          nullable: true
+          type: string
+        ExternalSourceCustomerID:
+          description: ID/Number of the customer in a secondary source system (e.g.
+            the shop)
+          nullable: true
+          type: string
+        ExternalOrderType:
+          deprecated: true
+          description: "Deprecated, use ExternalType instead."
+          nullable: true
+          type: string
+        ExternalType:
+          description: External type of the customer.
+          nullable: true
+          type: string
+        ExternalOrderAccountID:
+          deprecated: true
+          description: "Deprecated, use ExternalAccountID instead."
+          nullable: true
+          type: integer
+        ExternalAccountID:
+          description: External account ID of the customer.
+          nullable: true
+          type: string
+        ExternalOrderSubAccountID:
+          deprecated: true
+          description: "Deprecated, use ExternalSourceID instead."
+          nullable: true
+          type: string
+        ExternalSourceID:
+          description: External source ID of the customer.
+          nullable: true
+          type: string
+        Marketplace:
+          description: Marketplace of the customer.
+          type: string
+        TestUser:
+          type: boolean
+        Newsletter:
+          type: boolean
+        Segment:
+          description: "Segment of the customer. Read-only, changes via the API will\
+            \ have no effect."
+          type: string
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      title: Customer
+      type: object
+    ProductV4Patch:
+      example:
+        SetParts:
+        - Quantity: 6
+          ProductID: ProductID
+        - Quantity: 6
+          ProductID: ProductID
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Category: Category
+        RecommendedRetailPrice:
+          Currency: EUR
+          Value: 0.8008282
+        Parent: Parent
+        Categories:
+        - Categories
+        - Categories
+        AdditionalFields:
+          key: AdditionalFields
+        TaxClass: NormalTax
+        PurchasePrice:
+          Currency: EUR
+          Value: 0.8008282
+        Vendor: Vendor
+        Name: Name
+        ShortDescription: ShortDescription
+        SalesPrice:
+          Currency: EUR
+          Value: 0.8008282
+        Active: true
+        EAN: EAN
+        LongDescription: LongDescription
+        Number: Number
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Manufacturer: Manufacturer
+        ID: ID
+        ImageSource: ImageSource
+        Stock: 0
+      properties:
+        ID:
+          description: "ID of the product. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Number:
+          description: "Product number, MUST be unique."
+          type: string
+        Parent:
+          description: ID of the parent product. The parent must be standalone and
+            not have a parent itself.
+          nullable: true
+          type: string
+        EAN:
+          description: EAN of the product.
+          type: string
+        Name:
+          description: Name of the product.
+          type: string
+        Manufacturer:
+          description: Manufacturer of the product.
+          type: string
+        Vendor:
+          description: Vendor of the product.
+          type: string
+        Category:
+          deprecated: true
+          description: Category of the product. Deprecated. Use 'Categories' instead.
+          nullable: true
+          type: string
+        Categories:
+          description: Categories of the product.
+          items:
+            type: string
+          nullable: true
+          type: array
+        ShortDescription:
+          description: Short description of the product.
+          type: string
+        LongDescription:
+          description: Long description of the product.
+          type: string
+        ImageSource:
+          description: Source URI of the product image.
+          type: string
+        Active:
+          description: Whether the product is active or inactive.
+          type: boolean
+        TaxClass:
+          $ref: "#/components/schemas/TaxClass"
+        Stock:
+          description: Stock of the product.
+          type: integer
+        AdditionalFields:
+          additionalProperties:
+            type: string
+          description: Additional field data for the product.
+          type: object
+        SetParts:
+          description: "Parts of the product, if this product is a product set."
+          items:
+            $ref: "#/components/schemas/ProductSetPartV4"
+          nullable: true
+          type: array
+        PurchasePrice:
+          $ref: "#/components/schemas/Price"
+        SalesPrice:
+          $ref: "#/components/schemas/Price"
+        RecommendedRetailPrice:
+          $ref: "#/components/schemas/Price"
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      title: Product
+      type: object
+    ReceiptV4Patch:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        RevenueGross:
+          Currency: EUR
+          Value: 0.8008282
+        ExternalID: ExternalID
+        CustomerID: CustomerID
+        ExternalSourceReceiptID: ExternalSourceReceiptID
+        Number: Number
+        ExternalOrderID: 0
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        DeliveryStatus: Open
+        ExternalOrderAccountID: 6
+        Items:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Quantity: 1
+          ProductID: ProductID
+          PurchasePrice:
+            Currency: EUR
+            Value: 0.8008282
+          TaxClass: NormalTax
+          ProductNumber: ProductNumber
+          SellingPrice:
+            Currency: EUR
+            Value: 0.8008282
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Quantity: 1
+          ProductID: ProductID
+          PurchasePrice:
+            Currency: EUR
+            Value: 0.8008282
+          TaxClass: NormalTax
+          ProductNumber: ProductNumber
+          SellingPrice:
+            Currency: EUR
+            Value: 0.8008282
+        ID: ID
+        ExternalSourceID: ExternalSourceID
+        PaymentStatus: New
+        ExternalOrderSubAccountID: ExternalOrderSubAccountID
+        AdditionalFields:
+          key: AdditionalFields
+        ExternalOrderExternalID: ExternalOrderExternalID
+        ExternalType: ExternalType
+        ReferrerChannel: ReferrerChannel
+        ExternalAccountID: ExternalAccountID
+        Type: Type
+        Marketplace: Marketplace
+        PurchaseDate: 2000-01-23T04:56:07.000+00:00
+        Referrer: Referrer
+        PaymentMethod: PaymentMethod
+        ReceiptStatus: Open
+        RevenueNet:
+          Currency: EUR
+          Value: 0.8008282
+        ReceiptDate: 2000-01-23T04:56:07.000+00:00
+        ExternalOrderType: ExternalOrderType
+      properties:
+        ID:
+          description: "ID of the receipt. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Type:
+          description: Type of the receipt.
+          maxLength: 2
+          minLength: 2
+          type: string
+        Number:
+          description: Receipt number
+          type: string
+        CustomerID:
+          description: ID of the customer.
+          type: string
+        ExternalOrderType:
+          deprecated: true
+          description: "Deprecated, use ExternalType instead."
+          nullable: true
+          type: string
+        ExternalOrderID:
+          deprecated: true
+          description: "Deprecated, use ExternalID instead."
+          nullable: true
+          type: integer
+        ExternalOrderExternalID:
+          deprecated: true
+          description: "Deprecated, use ExternalSourceReceiptID instead."
+          nullable: true
+          type: string
+        ExternalOrderAccountID:
+          deprecated: true
+          description: "Deprecated, use ExternalAccountID instead."
+          nullable: true
+          type: integer
+        ExternalOrderSubAccountID:
+          deprecated: true
+          description: "Deprecated, use ExternalSourceID instead."
+          nullable: true
+          type: string
+        ExternalType:
+          description: Type of the external source system this receipt originates
+            from.
+          nullable: true
+          type: string
+        ExternalID:
+          description: ID of the receipt in the external source system.
+          nullable: true
+          type: string
+        ExternalSourceReceiptID:
+          description: Receipt ID as provided by the external source system.
+          nullable: true
+          type: string
+        ExternalAccountID:
+          description: Account ID in the external source system.
+          nullable: true
+          type: string
+        ExternalSourceID:
+          description: Source ID in the external source system.
+          nullable: true
+          type: string
+        Marketplace:
+          description: Marketplace of the receipt.
+          type: string
+        PurchaseDate:
+          description: Purchase date of the receipt.
+          format: date-time
+          type: string
+        ReceiptDate:
+          description: Date of the receipt.
+          format: date-time
+          nullable: true
+          type: string
+        Referrer:
+          description: Referrer (last cookie) of the customer when creating this receipt.
+          nullable: true
+          type: string
+        ReferrerChannel:
+          description: Referrer Channel of the customer when creating this receipt.
+          nullable: true
+          type: string
+        PaymentMethod:
+          description: Payment method of the receipt.
+          type: string
+        RevenueNet:
+          $ref: "#/components/schemas/Price"
+        RevenueGross:
+          $ref: "#/components/schemas/Price"
+        ReceiptStatus:
+          $ref: "#/components/schemas/ReceiptStatusV4"
+        PaymentStatus:
+          $ref: "#/components/schemas/PaymentStatusV4"
+        DeliveryStatus:
+          $ref: "#/components/schemas/DeliveryStatusV4"
+        Items:
+          default: []
+          description: List of items in the receipt.
+          items:
+            $ref: "#/components/schemas/ReceiptItemV4"
+          type: array
+        AdditionalFields:
+          additionalProperties:
+            type: string
+          description: Additional field data for the receipt.
+          type: object
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      title: Receipt
       type: object
     Global_Setting_Value_:
       description: "The global value of the setting, which applies when no marketplace-specific\

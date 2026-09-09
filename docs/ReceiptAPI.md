@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**ReceiptGetV3**](ReceiptAPI.md#ReceiptGetV3) | **Get** /api/v3/receipt/{id} | Retrieves a receipt by its ID.
 [**ReceiptGetV4**](ReceiptAPI.md#ReceiptGetV4) | **Get** /api/v4/receipt/{project}/{id} | Retrieves a receipt by its ID.
 [**ReceiptPatchV3**](ReceiptAPI.md#ReceiptPatchV3) | **Patch** /api/v3/receipt/{id} | Partially updates an existing receipt with the given ID.
+[**ReceiptPatchV4**](ReceiptAPI.md#ReceiptPatchV4) | **Patch** /api/v4/receipt/{project}/{id} | Partially updates an existing receipt with the given ID.
 [**ReceiptPostV3**](ReceiptAPI.md#ReceiptPostV3) | **Post** /api/v3/receipt | Creates a new receipt.
 [**ReceiptPostV4**](ReceiptAPI.md#ReceiptPostV4) | **Post** /api/v4/receipt/{project} | Creates a new receipt.
 [**ReceiptPutV3**](ReceiptAPI.md#ReceiptPutV3) | **Put** /api/v3/receipt/{id} | Overwrites an existing receipt with the given ID.
@@ -420,6 +421,79 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [apiV3Token](../README.md#apiV3Token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ReceiptPatchV4
+
+> ReceiptPatchV4(ctx, project, id).ReceiptV4Patch(receiptV4Patch).Execute()
+
+Partially updates an existing receipt with the given ID.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+	id := "id_example" // string | 
+	receiptV4Patch := *customa.NewReceiptV4Patch() // ReceiptV4Patch | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	r, err := apiClient.ReceiptAPI.ReceiptPatchV4(context.Background(), project, id).ReceiptV4Patch(receiptV4Patch).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptPatchV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReceiptPatchV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **receiptV4Patch** | [**ReceiptV4Patch**](ReceiptV4Patch.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
 
 ### HTTP request headers
 

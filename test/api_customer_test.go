@@ -105,6 +105,20 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test CustomerAPIService CustomerPatchV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		httpRes, err := apiClient.CustomerAPI.CustomerPatchV4(context.Background(), project, id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CustomerAPIService CustomerPostV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
