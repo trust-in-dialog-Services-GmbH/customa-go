@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.15.0
+  version: 3.16.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -27,8 +27,12 @@ tags:
   name: campaigngroup
 - description: category
   name: category
+- description: customergroup
+  name: customergroup
 - description: health
   name: health
+- description: marketplace
+  name: marketplace
 - description: project
   name: project
 - description: traffic
@@ -1461,6 +1465,274 @@ paths:
       summary: Returns a list of fields and allowed filters for customer search.
       tags:
       - customer
+  /api/v4/customer/{project}/additionalfields:
+    get:
+      operationId: customer_additionalfields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdditionalFieldDefinitions"
+          description: Definitions of the additional fields available for customers
+            in this project.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns the definitions of the additional fields available for customers
+        in this project.
+      tags:
+      - customer
+  /api/v4/customergroup/{project}:
+    post:
+      operationId: customergroup_post_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerGroupV4"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse2"
+          description: The customer group was successfully created.
+        "422":
+          description: "The provided data is invalid, or a customer group with this\
+            \ ShopGroup already exists."
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Creates a new customer group.
+      tags:
+      - customergroup
+  /api/v4/customergroup/{project}/{id}:
+    delete:
+      operationId: customergroup_delete_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The customer group was successfully deleted.
+        "404":
+          description: The customer group was not found.
+        "409":
+          description: The customer group cannot be deleted because it is referenced
+            by customers.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Deletes a customer group by its ID.
+      tags:
+      - customergroup
+    get:
+      operationId: customergroup_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerGroupV4"
+          description: The customer group was successfully retrieved.
+        "404":
+          description: The customer group was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a customer group by its ID.
+      tags:
+      - customergroup
+    patch:
+      description: |-
+        The customer group must already exist. Only the fields included in the request body are changed; fields that
+        are omitted keep their current value. The ShopGroup can only be set on creation; a different value included
+        in the request body is ignored.
+      operationId: customergroup_patch_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerGroupV4"
+        required: true
+      responses:
+        "200":
+          description: The customer group was successfully updated.
+        "404":
+          description: The customer group was not found.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Partially updates an existing customer group with the given ID.
+      tags:
+      - customergroup
+    put:
+      description: |-
+        The customer group must already exist. The provided data will replace the existing customer group data.
+        The ShopGroup can only be set on creation; a different value included in the request body is ignored.
+      operationId: customergroup_put_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerGroupV4"
+        required: true
+      responses:
+        "200":
+          description: The customer group was successfully updated.
+        "404":
+          description: The customer group was not found.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Overwrites an existing customer group with the given ID.
+      tags:
+      - customergroup
+  /api/v4/customergroup/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, customer groups can be filtered based on various criteria, which are combined using
+        the boolean AND operator. Multiple values can be provided for a filter, these will be combined using the
+        boolean OR operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: customergroup_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerGroupSearchResponseV4"
+          description: A search response with customer groups matching the search
+            criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for customer groups by the given filters.
+      tags:
+      - customergroup
+  /api/v4/customergroup/{project}/fields:
+    get:
+      operationId: customergroup_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for customer group search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for customer group search.
+      tags:
+      - customergroup
   /api/v4/health/{project}:
     get:
       description: |-
@@ -1589,6 +1861,101 @@ paths:
         Admins.
       tags:
       - health
+  /api/v4/marketplace/{project}/{id}:
+    get:
+      operationId: marketplace_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarketplaceV4"
+          description: The marketplace was successfully retrieved.
+        "404":
+          description: The marketplace was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a marketplace by its ID.
+      tags:
+      - marketplace
+  /api/v4/marketplace/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, marketplaces can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: marketplace_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarketplaceSearchResponseV4"
+          description: A search response with marketplaces matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for marketplaces by the given filters.
+      tags:
+      - marketplace
+  /api/v4/marketplace/{project}/fields:
+    get:
+      operationId: marketplace_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for marketplace search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for marketplace search.
+      tags:
+      - marketplace
   /api/v4/product/{project}:
     post:
       description: A new product is created using the provided data. The product ID
@@ -1823,6 +2190,32 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Returns a list of fields and allowed filters for product search.
+      tags:
+      - product
+  /api/v4/product/{project}/additionalfields:
+    get:
+      operationId: product_additionalfields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdditionalFieldDefinitions"
+          description: Definitions of the additional fields available for products
+            in this project.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns the definitions of the additional fields available for products
+        in this project.
       tags:
       - product
   /api/v4/project:
@@ -2075,6 +2468,32 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Returns a list of fields and allowed filters for receipt search.
+      tags:
+      - receipt
+  /api/v4/receipt/{project}/additionalfields:
+    get:
+      operationId: receipt_additionalfields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdditionalFieldDefinitions"
+          description: Definitions of the additional fields available for receipts
+            in this project.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns the definitions of the additional fields available for receipts
+        in this project.
       tags:
       - receipt
   /api/v4/segment/{project}:
@@ -4830,6 +5249,7 @@ components:
     CampaignGroupV4:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
+        Parent: Parent
         ModificationDate: 2000-01-23T04:56:07.000+00:00
         Referrer: Referrer
         Campaigns:
@@ -4848,6 +5268,11 @@ components:
           type: string
         Referrer:
           description: Referrer of the campaign group.
+          type: string
+        Parent:
+          description: "ID of the parent campaign group, or null if this campaign\
+            \ group has no parent."
+          nullable: true
           type: string
         Campaigns:
           default: []
@@ -4878,6 +5303,7 @@ components:
         PageSize: 5
         CampaignGroups:
         - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Parent: Parent
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           Referrer: Referrer
           Campaigns:
@@ -4886,6 +5312,7 @@ components:
           ID: ID
           Name: Name
         - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Parent: Parent
           ModificationDate: 2000-01-23T04:56:07.000+00:00
           Referrer: Referrer
           Campaigns:
@@ -5374,6 +5801,123 @@ components:
       - TotalCount
       title: Customer Search Response
       type: object
+    AdditionalFieldDefinition:
+      description: Definition of a single additional (custom) field.
+      example:
+        Title: Title
+        Key: Key
+      properties:
+        Key:
+          description: "Key of the additional field, as used in the AdditionalFields\
+            \ map of the entity."
+          type: string
+        Title:
+          description: Human-readable title of the additional field.
+          type: string
+      required:
+      - Key
+      - Title
+      title: Additional Field Definition
+      type: object
+    AdditionalFieldDefinitions:
+      description: List of additional (custom) field definitions.
+      example:
+        AdditionalFields:
+        - Title: Title
+          Key: Key
+        - Title: Title
+          Key: Key
+      properties:
+        AdditionalFields:
+          description: Definitions of the additional fields available for this entity
+            in this project.
+          items:
+            $ref: "#/components/schemas/AdditionalFieldDefinition"
+          type: array
+      required:
+      - AdditionalFields
+      title: Additional Field Definitions
+      type: object
+    CustomerGroupV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        ShopGroup: ShopGroup
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ID: ID
+        Name: Name
+      properties:
+        ID:
+          description: "ID of the customer group. Set internally by Customa, any given\
+            \ value is ignored."
+          nullable: true
+          type: string
+        Name:
+          description: Name of the customer group.
+          type: string
+        ShopGroup:
+          description: Unique identifier of the customer group in the connected shop
+            system. Can only be set on creation; changes on an existing customer group
+            are ignored.
+          type: string
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - Name
+      - ShopGroup
+      title: Customer Group
+      type: object
+    CustomerGroupSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        CustomerGroups:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ShopGroup: ShopGroup
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          Name: Name
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ShopGroup: ShopGroup
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          Name: Name
+        CurrentPage: 6
+        PagesCount: 1
+      properties:
+        CustomerGroups:
+          default: []
+          items:
+            $ref: "#/components/schemas/CustomerGroupV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Customer Group Search Response
+      type: object
     HealthJobSummaryV4:
       description: Ein einzelner Ausführungslauf einer überwachten Quelle.
       example:
@@ -5690,6 +6234,84 @@ components:
       - PagesCount
       - TotalCount
       title: Health Admin Logs Response
+      type: object
+    MarketplaceV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Marketplace: Marketplace
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ID: ID
+        Name: Name
+      properties:
+        ID:
+          description: "ID of the marketplace. Set internally by Customa, any given\
+            \ value is ignored."
+          nullable: true
+          type: string
+        Marketplace:
+          description: Marketplace key.
+          type: string
+        Name:
+          description: Display name of the marketplace.
+          type: string
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - Marketplace
+      - Name
+      title: Marketplace
+      type: object
+    MarketplaceSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        Marketplaces:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Marketplace: Marketplace
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          Name: Name
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          Marketplace: Marketplace
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          Name: Name
+        CurrentPage: 6
+        PagesCount: 1
+      properties:
+        Marketplaces:
+          default: []
+          items:
+            $ref: "#/components/schemas/MarketplaceV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Marketplace Search Response
       type: object
     TaxClass:
       enum:

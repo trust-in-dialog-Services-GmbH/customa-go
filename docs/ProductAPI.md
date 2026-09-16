@@ -4,6 +4,7 @@ All URIs are relative to *https://www.customa.biz*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ProductAdditionalfieldsV4**](ProductAPI.md#ProductAdditionalfieldsV4) | **Get** /api/v4/product/{project}/additionalfields | Returns the definitions of the additional fields available for products in this project.
 [**ProductDeleteV3**](ProductAPI.md#ProductDeleteV3) | **Delete** /api/v3/product/{id} | Deletes a product by its ID.
 [**ProductDeleteV4**](ProductAPI.md#ProductDeleteV4) | **Delete** /api/v4/product/{project}/{id} | Deletes a product by its ID.
 [**ProductFieldsV4**](ProductAPI.md#ProductFieldsV4) | **Get** /api/v4/product/{project}/fields | Returns a list of fields and allowed filters for product search.
@@ -18,6 +19,74 @@ Method | HTTP request | Description
 [**ProductSearchV3**](ProductAPI.md#ProductSearchV3) | **Post** /api/v3/product/search | Searches for products by the given filters.
 [**ProductSearchV4**](ProductAPI.md#ProductSearchV4) | **Post** /api/v4/product/{project}/search | Searches for products by the given filters.
 
+
+
+## ProductAdditionalfieldsV4
+
+> AdditionalFieldDefinitions ProductAdditionalfieldsV4(ctx, project).Execute()
+
+Returns the definitions of the additional fields available for products in this project.
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProductAPI.ProductAdditionalfieldsV4(context.Background(), project).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductAdditionalfieldsV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ProductAdditionalfieldsV4`: AdditionalFieldDefinitions
+	fmt.Fprintf(os.Stdout, "Response from `ProductAPI.ProductAdditionalfieldsV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiProductAdditionalfieldsV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AdditionalFieldDefinitions**](AdditionalFieldDefinitions.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## ProductDeleteV3

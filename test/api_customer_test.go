@@ -22,6 +22,20 @@ func Test_customa_CustomerAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
+	t.Run("Test CustomerAPIService CustomerAdditionalfieldsV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.CustomerAPI.CustomerAdditionalfieldsV4(context.Background(), project).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CustomerAPIService CustomerDeleteV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

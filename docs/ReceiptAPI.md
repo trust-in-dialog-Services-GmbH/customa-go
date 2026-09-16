@@ -4,6 +4,7 @@ All URIs are relative to *https://www.customa.biz*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ReceiptAdditionalfieldsV4**](ReceiptAPI.md#ReceiptAdditionalfieldsV4) | **Get** /api/v4/receipt/{project}/additionalfields | Returns the definitions of the additional fields available for receipts in this project.
 [**ReceiptDeleteV3**](ReceiptAPI.md#ReceiptDeleteV3) | **Delete** /api/v3/receipt/{id} | Deletes a receipt by its ID.
 [**ReceiptDeleteV4**](ReceiptAPI.md#ReceiptDeleteV4) | **Delete** /api/v4/receipt/{project}/{id} | Deletes a receipt by its ID.
 [**ReceiptFieldsV4**](ReceiptAPI.md#ReceiptFieldsV4) | **Get** /api/v4/receipt/{project}/fields | Returns a list of fields and allowed filters for receipt search.
@@ -18,6 +19,74 @@ Method | HTTP request | Description
 [**ReceiptSearchV3**](ReceiptAPI.md#ReceiptSearchV3) | **Post** /api/v3/receipt/search | Searches for receipts by the given filters.
 [**ReceiptSearchV4**](ReceiptAPI.md#ReceiptSearchV4) | **Post** /api/v4/receipt/{project}/search | Searches for receipts by the given filters.
 
+
+
+## ReceiptAdditionalfieldsV4
+
+> AdditionalFieldDefinitions ReceiptAdditionalfieldsV4(ctx, project).Execute()
+
+Returns the definitions of the additional fields available for receipts in this project.
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.ReceiptAPI.ReceiptAdditionalfieldsV4(context.Background(), project).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ReceiptAPI.ReceiptAdditionalfieldsV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ReceiptAdditionalfieldsV4`: AdditionalFieldDefinitions
+	fmt.Fprintf(os.Stdout, "Response from `ReceiptAPI.ReceiptAdditionalfieldsV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReceiptAdditionalfieldsV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AdditionalFieldDefinitions**](AdditionalFieldDefinitions.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## ReceiptDeleteV3

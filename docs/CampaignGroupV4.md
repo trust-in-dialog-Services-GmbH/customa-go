@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **ID** | Pointer to **NullableString** | ID of the campaign group. Set internally by Customa, any given value is ignored. | [optional] 
 **Name** | **string** | Name of the campaign group. | 
 **Referrer** | **string** | Referrer of the campaign group. | 
+**Parent** | Pointer to **NullableString** | ID of the parent campaign group, or null if this campaign group has no parent. | [optional] 
 **Campaigns** | Pointer to **[]string** | IDs of the campaigns belonging to this campaign group. | [optional] [default to []]
 **CreationDate** | Pointer to **NullableTime** | Creation Timestamp of the item. Set internally by Customa, any given value is ignored. | [optional] 
 **ModificationDate** | Pointer to **NullableTime** | Timestamp of the last change of the item in the database. Set internally by Customa, any given value is ignored. | [optional] 
@@ -105,6 +106,41 @@ and a boolean to check if the value has been set.
 SetReferrer sets Referrer field to given value.
 
 
+### GetParent
+
+`func (o *CampaignGroupV4) GetParent() string`
+
+GetParent returns the Parent field if non-nil, zero value otherwise.
+
+### GetParentOk
+
+`func (o *CampaignGroupV4) GetParentOk() (*string, bool)`
+
+GetParentOk returns a tuple with the Parent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParent
+
+`func (o *CampaignGroupV4) SetParent(v string)`
+
+SetParent sets Parent field to given value.
+
+### HasParent
+
+`func (o *CampaignGroupV4) HasParent() bool`
+
+HasParent returns a boolean if a field has been set.
+
+### SetParentNil
+
+`func (o *CampaignGroupV4) SetParentNil(b bool)`
+
+ SetParentNil sets the value for Parent to be an explicit nil
+
+### UnsetParent
+`func (o *CampaignGroupV4) UnsetParent()`
+
+UnsetParent ensures that no value is present for Parent, not even an explicit nil
 ### GetCampaigns
 
 `func (o *CampaignGroupV4) GetCampaigns() []string`

@@ -4,6 +4,7 @@ All URIs are relative to *https://www.customa.biz*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CustomerAdditionalfieldsV4**](CustomerAPI.md#CustomerAdditionalfieldsV4) | **Get** /api/v4/customer/{project}/additionalfields | Returns the definitions of the additional fields available for customers in this project.
 [**CustomerDeleteV3**](CustomerAPI.md#CustomerDeleteV3) | **Delete** /api/v3/customer/{id} | Deletes a customer with the given ID.
 [**CustomerDeleteV4**](CustomerAPI.md#CustomerDeleteV4) | **Delete** /api/v4/customer/{project}/{id} | Deletes a customer by their ID.
 [**CustomerFieldsV4**](CustomerAPI.md#CustomerFieldsV4) | **Get** /api/v4/customer/{project}/fields | Returns a list of fields and allowed filters for customer search.
@@ -18,6 +19,74 @@ Method | HTTP request | Description
 [**CustomerSearchV3**](CustomerAPI.md#CustomerSearchV3) | **Post** /api/v3/customer/search | Searches for customers by the given filters.
 [**CustomerSearchV4**](CustomerAPI.md#CustomerSearchV4) | **Post** /api/v4/customer/{project}/search | Searches for customers by the given filters.
 
+
+
+## CustomerAdditionalfieldsV4
+
+> AdditionalFieldDefinitions CustomerAdditionalfieldsV4(ctx, project).Execute()
+
+Returns the definitions of the additional fields available for customers in this project.
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.CustomerAPI.CustomerAdditionalfieldsV4(context.Background(), project).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CustomerAPI.CustomerAdditionalfieldsV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CustomerAdditionalfieldsV4`: AdditionalFieldDefinitions
+	fmt.Fprintf(os.Stdout, "Response from `CustomerAPI.CustomerAdditionalfieldsV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCustomerAdditionalfieldsV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AdditionalFieldDefinitions**](AdditionalFieldDefinitions.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CustomerDeleteV3

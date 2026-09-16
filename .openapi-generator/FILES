@@ -5,7 +5,9 @@ api_campaign.go
 api_campaigngroup.go
 api_category.go
 api_customer.go
+api_customergroup.go
 api_health.go
+api_marketplace.go
 api_product.go
 api_project.go
 api_receipt.go
@@ -16,6 +18,8 @@ api_traffic.go
 client.go
 configuration.go
 docs/AdditionalField.md
+docs/AdditionalFieldDefinition.md
+docs/AdditionalFieldDefinitions.md
 docs/AuthAPI.md
 docs/AuthLoginRequestV3.md
 docs/AuthLoginRequestV4.md
@@ -36,10 +40,13 @@ docs/Choice.md
 docs/ChoicesList.md
 docs/Customer.md
 docs/CustomerAPI.md
+docs/CustomerGroupSearchResponseV4.md
+docs/CustomerGroupV4.md
 docs/CustomerSearchResponse.md
 docs/CustomerSearchResponseV4.md
 docs/CustomerV4.md
 docs/CustomerV4Patch.md
+docs/CustomergroupAPI.md
 docs/DateField.md
 docs/DeliveryStatusV4.md
 docs/ErrorResponseV3.md
@@ -62,7 +69,10 @@ docs/HealthSourceV4.md
 docs/ItemCreatedResponse.md
 docs/ItemCreatedResponse2.md
 docs/LegacySearchResponse.md
+docs/MarketplaceAPI.md
+docs/MarketplaceSearchResponseV4.md
 docs/MarketplaceSettingValueValue.md
+docs/MarketplaceV4.md
 docs/OAuthValidationRequest.md
 docs/OAuthValidationResponse.md
 docs/PaymentStatusV4.md
@@ -129,6 +139,8 @@ docs/TranslatedString.md
 go.mod
 go.sum
 model_additional_field.go
+model_additional_field_definition.go
+model_additional_field_definitions.go
 model_auth_login_request_v3.go
 model_auth_login_request_v4.go
 model_auth_token_response_v3.go
@@ -144,6 +156,8 @@ model_category_v4_patch.go
 model_choice.go
 model_choices_list.go
 model_customer.go
+model_customer_group_search_response_v4.go
+model_customer_group_v4.go
 model_customer_search_response.go
 model_customer_search_response_v4.go
 model_customer_v4.go
@@ -169,7 +183,9 @@ model_health_source_v4.go
 model_item_created_response.go
 model_item_created_response2.go
 model_legacy_search_response.go
+model_marketplace_search_response_v4.go
 model_marketplace_setting_value__value.go
+model_marketplace_v4.go
 model_o_auth_validation_request.go
 model_o_auth_validation_response.go
 model_payment_status_v4.go
@@ -232,7 +248,9 @@ test/api_campaign_test.go
 test/api_campaigngroup_test.go
 test/api_category_test.go
 test/api_customer_test.go
+test/api_customergroup_test.go
 test/api_health_test.go
+test/api_marketplace_test.go
 test/api_product_test.go
 test/api_project_test.go
 test/api_receipt_test.go

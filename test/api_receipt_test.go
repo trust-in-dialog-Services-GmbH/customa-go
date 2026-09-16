@@ -22,6 +22,20 @@ func Test_customa_ReceiptAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
+	t.Run("Test ReceiptAPIService ReceiptAdditionalfieldsV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+
+		resp, httpRes, err := apiClient.ReceiptAPI.ReceiptAdditionalfieldsV4(context.Background(), project).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ReceiptAPIService ReceiptDeleteV3", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
