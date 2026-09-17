@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.16.0
+  version: 3.17.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -25,6 +25,8 @@ tags:
   name: campaign
 - description: campaigngroup
   name: campaigngroup
+- description: campaignstats
+  name: campaignstats
 - description: category
   name: category
 - description: customergroup
@@ -1028,6 +1030,102 @@ paths:
       summary: Returns a list of fields and allowed filters for campaign group search.
       tags:
       - campaigngroup
+  /api/v4/campaignstats/{project}/{id}:
+    get:
+      operationId: campaignstats_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignStatsV4"
+          description: The campaign stats row was successfully retrieved.
+        "404":
+          description: The campaign stats row was not found.
+      security:
+      - apiV4Token: []
+      - apiV4BasicAuth: []
+      summary: Retrieves a campaign stats row by its ID.
+      tags:
+      - campaignstats
+  /api/v4/campaignstats/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, campaign stats rows can be filtered based on various criteria, which are combined
+        using the boolean AND operator. Multiple values can be provided for a filter, these will be combined using
+        the boolean OR operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: campaignstats_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignStatsSearchResponseV4"
+          description: A search response with campaign stats rows matching the search
+            criteria.
+      security:
+      - apiV4Token: []
+      - apiV4BasicAuth: []
+      summary: Searches for campaign stats rows by the given filters.
+      tags:
+      - campaignstats
+  /api/v4/campaignstats/{project}/fields:
+    get:
+      operationId: campaignstats_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for campaign stats search.
+      security:
+      - apiV4Token: []
+      - apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for campaign stats search.
+      tags:
+      - campaignstats
   /api/v4/category/{project}:
     post:
       operationId: category_post_v4
@@ -5346,6 +5444,161 @@ components:
       - PagesCount
       - TotalCount
       title: Campaign Group Search Response
+      type: object
+    CampaignStatsV4:
+      example:
+        Impressions: 0
+        AdData: "{}"
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        Costs: 1.4658129
+        Sessions: 5
+        Date: 2026-08-19
+        Source: gads
+        MarketplaceID: MarketplaceID
+        Conversions: 2
+        CampaignID: CampaignID
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        Cpc: 5.962134
+        Revenue: 7.0614014
+        ID: ID
+        Clicks: 6
+      properties:
+        ID:
+          description: "ID of the campaign stats row. Set internally by Customa, any\
+            \ given value is ignored."
+          nullable: true
+          type: string
+        CampaignID:
+          description: ID of the campaign this row belongs to.
+          type: string
+        MarketplaceID:
+          description: ID of the marketplace this row belongs to.
+          type: string
+        Date:
+          description: The day this row reports on.
+          example: 2026-08-19
+          type: string
+        Source:
+          description: "Source of this row. One of gads (Google Ads), bads (Bing Ads),\
+            \ gsc (Google Search Console) or mads (Meta Ads)."
+          example: gads
+          type: string
+        Impressions:
+          description: Impressions reported by the advertising platform.
+          type: integer
+        Clicks:
+          description: Clicks reported by the advertising platform.
+          type: integer
+        Costs:
+          description: Costs reported by the advertising platform.
+          format: float
+          type: number
+        Cpc:
+          description: Cost per click reported by the advertising platform.
+          format: float
+          type: number
+        Sessions:
+          description: Sessions reported by the shop.
+          type: integer
+        Conversions:
+          description: Conversions reported by the shop.
+          type: integer
+        Revenue:
+          description: Revenue reported by the shop.
+          format: float
+          type: number
+        AdData:
+          description: "Raw per-platform-campaign advertising data, keyed by the ID\
+            \ of the campaign as assigned by the advertising platform."
+          type: object
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - AdData
+      - CampaignID
+      - Clicks
+      - Conversions
+      - Costs
+      - Cpc
+      - Date
+      - Impressions
+      - MarketplaceID
+      - Revenue
+      - Sessions
+      - Source
+      title: Campaign Stats
+      type: object
+    CampaignStatsSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        CurrentPage: 6
+        PagesCount: 1
+        CampaignStats:
+        - Impressions: 0
+          AdData: "{}"
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          Costs: 1.4658129
+          Sessions: 5
+          Date: 2026-08-19
+          Source: gads
+          MarketplaceID: MarketplaceID
+          Conversions: 2
+          CampaignID: CampaignID
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Cpc: 5.962134
+          Revenue: 7.0614014
+          ID: ID
+          Clicks: 6
+        - Impressions: 0
+          AdData: "{}"
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          Costs: 1.4658129
+          Sessions: 5
+          Date: 2026-08-19
+          Source: gads
+          MarketplaceID: MarketplaceID
+          Conversions: 2
+          CampaignID: CampaignID
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          Cpc: 5.962134
+          Revenue: 7.0614014
+          ID: ID
+          Clicks: 6
+      properties:
+        CampaignStats:
+          default: []
+          items:
+            $ref: "#/components/schemas/CampaignStatsV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Campaign Stats Search Response
       type: object
     CategoryV4:
       example:

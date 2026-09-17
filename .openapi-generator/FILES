@@ -3,6 +3,7 @@ api/openapi.yaml
 api_auth.go
 api_campaign.go
 api_campaigngroup.go
+api_campaignstats.go
 api_category.go
 api_customer.go
 api_customergroup.go
@@ -30,8 +31,11 @@ docs/CampaignAPI.md
 docs/CampaignGroupSearchResponseV4.md
 docs/CampaignGroupV4.md
 docs/CampaignSearchResponseV4.md
+docs/CampaignStatsSearchResponseV4.md
+docs/CampaignStatsV4.md
 docs/CampaignV4.md
 docs/CampaigngroupAPI.md
+docs/CampaignstatsAPI.md
 docs/CategoryAPI.md
 docs/CategorySearchResponseV4.md
 docs/CategoryV4.md
@@ -149,6 +153,8 @@ model_basic_search_response.go
 model_campaign_group_search_response_v4.go
 model_campaign_group_v4.go
 model_campaign_search_response_v4.go
+model_campaign_stats_search_response_v4.go
+model_campaign_stats_v4.go
 model_campaign_v4.go
 model_category_search_response_v4.go
 model_category_v4.go
@@ -246,6 +252,7 @@ response.go
 test/api_auth_test.go
 test/api_campaign_test.go
 test/api_campaigngroup_test.go
+test/api_campaignstats_test.go
 test/api_category_test.go
 test/api_customer_test.go
 test/api_customergroup_test.go
