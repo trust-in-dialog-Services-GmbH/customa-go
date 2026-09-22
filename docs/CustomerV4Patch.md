@@ -40,7 +40,7 @@ Name | Type | Description | Notes
 **Marketplace** | Pointer to **string** | Marketplace of the customer. | [optional] 
 **TestUser** | Pointer to **bool** |  | [optional] 
 **Newsletter** | Pointer to **bool** |  | [optional] 
-**Segment** | Pointer to **string** | Segment of the customer. Read-only, changes via the API will have no effect. | [optional] 
+**Segment** | Pointer to **string** | Segment of the customer. Set internally by Customa, any given value is ignored. | [optional] [default to ""]
 **CreationDate** | Pointer to **NullableTime** | Creation Timestamp of the item. Set internally by Customa, any given value is ignored. | [optional] 
 **ModificationDate** | Pointer to **NullableTime** | Timestamp of the last change of the item in the database. Set internally by Customa, any given value is ignored. | [optional] 
 

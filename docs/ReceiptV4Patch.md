@@ -29,6 +29,7 @@ Name | Type | Description | Notes
 **ReceiptStatus** | Pointer to [**ReceiptStatusV4**](ReceiptStatusV4.md) |  | [optional] 
 **PaymentStatus** | Pointer to [**PaymentStatusV4**](PaymentStatusV4.md) |  | [optional] 
 **DeliveryStatus** | Pointer to [**DeliveryStatusV4**](DeliveryStatusV4.md) |  | [optional] 
+**Segment** | Pointer to **string** | Segment of the customer at the time of purchase. Set internally by Customa, any given value is ignored. | [optional] [default to ""]
 **Items** | Pointer to [**[]ReceiptItemV4**](ReceiptItemV4.md) | List of items in the receipt. | [optional] [default to []]
 **AdditionalFields** | Pointer to **map[string]string** | Additional field data for the receipt. | [optional] 
 **CreationDate** | Pointer to **NullableTime** | Creation Timestamp of the item. Set internally by Customa, any given value is ignored. | [optional] 
@@ -817,6 +818,31 @@ SetDeliveryStatus sets DeliveryStatus field to given value.
 `func (o *ReceiptV4Patch) HasDeliveryStatus() bool`
 
 HasDeliveryStatus returns a boolean if a field has been set.
+
+### GetSegment
+
+`func (o *ReceiptV4Patch) GetSegment() string`
+
+GetSegment returns the Segment field if non-nil, zero value otherwise.
+
+### GetSegmentOk
+
+`func (o *ReceiptV4Patch) GetSegmentOk() (*string, bool)`
+
+GetSegmentOk returns a tuple with the Segment field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSegment
+
+`func (o *ReceiptV4Patch) SetSegment(v string)`
+
+SetSegment sets Segment field to given value.
+
+### HasSegment
+
+`func (o *ReceiptV4Patch) HasSegment() bool`
+
+HasSegment returns a boolean if a field has been set.
 
 ### GetItems
 

@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.17.0
+  version: 3.18.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -5739,7 +5739,7 @@ components:
         Birthday: 2000-01-23T04:56:07.000+00:00
         Salutation: m
         ExternalCustomerID: 0
-        Segment: Segment
+        Segment: ""
         Newsletter: true
         ReferenceCustomer: true
         Number: Number
@@ -5901,8 +5901,9 @@ components:
         Newsletter:
           type: boolean
         Segment:
-          description: "Segment of the customer. Read-only, changes via the API will\
-            \ have no effect."
+          default: ""
+          description: "Segment of the customer. Set internally by Customa, any given\
+            \ value is ignored."
           type: string
         CreationDate:
           description: "Creation Timestamp of the item. Set internally by Customa,\
@@ -5936,7 +5937,6 @@ components:
       - ReferrerChannel
       - RegisterDate
       - Salutation
-      - Segment
       - Suburb
       - TestUser
       - Title
@@ -5959,7 +5959,7 @@ components:
           Birthday: 2000-01-23T04:56:07.000+00:00
           Salutation: m
           ExternalCustomerID: 0
-          Segment: Segment
+          Segment: ""
           Newsletter: true
           ReferenceCustomer: true
           Number: Number
@@ -5999,7 +5999,7 @@ components:
           Birthday: 2000-01-23T04:56:07.000+00:00
           Salutation: m
           ExternalCustomerID: 0
-          Segment: Segment
+          Segment: ""
           Newsletter: true
           ReferenceCustomer: true
           Number: Number
@@ -6954,6 +6954,7 @@ components:
         ExternalID: ExternalID
         CustomerID: CustomerID
         ExternalSourceReceiptID: ExternalSourceReceiptID
+        Segment: ""
         Number: Number
         ExternalOrderID: 0
         ModificationDate: 2000-01-23T04:56:07.000+00:00
@@ -7101,6 +7102,11 @@ components:
           $ref: "#/components/schemas/PaymentStatusV4"
         DeliveryStatus:
           $ref: "#/components/schemas/DeliveryStatusV4"
+        Segment:
+          default: ""
+          description: "Segment of the customer at the time of purchase. Set internally\
+            \ by Customa, any given value is ignored."
+          type: string
         Items:
           default: []
           description: List of items in the receipt.
@@ -7153,6 +7159,7 @@ components:
           ExternalID: ExternalID
           CustomerID: CustomerID
           ExternalSourceReceiptID: ExternalSourceReceiptID
+          Segment: ""
           Number: Number
           ExternalOrderID: 0
           ModificationDate: 2000-01-23T04:56:07.000+00:00
@@ -7211,6 +7218,7 @@ components:
           ExternalID: ExternalID
           CustomerID: CustomerID
           ExternalSourceReceiptID: ExternalSourceReceiptID
+          Segment: ""
           Number: Number
           ExternalOrderID: 0
           ModificationDate: 2000-01-23T04:56:07.000+00:00
@@ -7594,7 +7602,7 @@ components:
         Birthday: 2000-01-23T04:56:07.000+00:00
         Salutation: m
         ExternalCustomerID: 0
-        Segment: Segment
+        Segment: ""
         Newsletter: true
         ReferenceCustomer: true
         Number: Number
@@ -7756,8 +7764,9 @@ components:
         Newsletter:
           type: boolean
         Segment:
-          description: "Segment of the customer. Read-only, changes via the API will\
-            \ have no effect."
+          default: ""
+          description: "Segment of the customer. Set internally by Customa, any given\
+            \ value is ignored."
           type: string
         CreationDate:
           description: "Creation Timestamp of the item. Set internally by Customa,\
@@ -7904,6 +7913,7 @@ components:
         ExternalID: ExternalID
         CustomerID: CustomerID
         ExternalSourceReceiptID: ExternalSourceReceiptID
+        Segment: ""
         Number: Number
         ExternalOrderID: 0
         ModificationDate: 2000-01-23T04:56:07.000+00:00
@@ -8051,6 +8061,11 @@ components:
           $ref: "#/components/schemas/PaymentStatusV4"
         DeliveryStatus:
           $ref: "#/components/schemas/DeliveryStatusV4"
+        Segment:
+          default: ""
+          description: "Segment of the customer at the time of purchase. Set internally\
+            \ by Customa, any given value is ignored."
+          type: string
         Items:
           default: []
           description: List of items in the receipt.

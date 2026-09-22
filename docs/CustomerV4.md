@@ -40,7 +40,7 @@ Name | Type | Description | Notes
 **Marketplace** | **string** | Marketplace of the customer. | 
 **TestUser** | **bool** |  | 
 **Newsletter** | **bool** |  | 
-**Segment** | **string** | Segment of the customer. Read-only, changes via the API will have no effect. | 
+**Segment** | Pointer to **string** | Segment of the customer. Set internally by Customa, any given value is ignored. | [optional] [default to ""]
 **CreationDate** | Pointer to **NullableTime** | Creation Timestamp of the item. Set internally by Customa, any given value is ignored. | [optional] 
 **ModificationDate** | Pointer to **NullableTime** | Timestamp of the last change of the item in the database. Set internally by Customa, any given value is ignored. | [optional] 
 
@@ -48,7 +48,7 @@ Name | Type | Description | Notes
 
 ### NewCustomerV4
 
-`func NewCustomerV4(number string, salutation Salutation, title string, firstName string, lastName string, company string, address string, postalCode string, suburb string, city string, country string, eMail string, phone string, referrer string, referrerChannel string, registerDate time.Time, additionalFields map[string]string, referenceCustomer bool, contactBan bool, marketplace string, testUser bool, newsletter bool, segment string, ) *CustomerV4`
+`func NewCustomerV4(number string, salutation Salutation, title string, firstName string, lastName string, company string, address string, postalCode string, suburb string, city string, country string, eMail string, phone string, referrer string, referrerChannel string, registerDate time.Time, additionalFields map[string]string, referenceCustomer bool, contactBan bool, marketplace string, testUser bool, newsletter bool, ) *CustomerV4`
 
 NewCustomerV4 instantiates a new CustomerV4 object
 This constructor will assign default values to properties that have it defined,
@@ -1012,6 +1012,11 @@ and a boolean to check if the value has been set.
 
 SetSegment sets Segment field to given value.
 
+### HasSegment
+
+`func (o *CustomerV4) HasSegment() bool`
+
+HasSegment returns a boolean if a field has been set.
 
 ### GetCreationDate
 
