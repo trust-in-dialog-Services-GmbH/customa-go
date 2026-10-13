@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.18.0
+  version: 3.19.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -5187,6 +5187,7 @@ components:
         Referrer: Referrer
         ID: ID
         Name: Name
+        Marketing: true
       properties:
         ID:
           description: "ID of the campaign. Set internally by Customa, any given value\
@@ -5199,6 +5200,9 @@ components:
         Referrer:
           description: Referrer of the campaign.
           type: string
+        Marketing:
+          description: Determines if the campaign is a marketing campaign.
+          type: boolean
         Groups:
           default: []
           description: IDs of the campaign groups this campaign belongs to.
@@ -5218,6 +5222,7 @@ components:
           nullable: true
           type: string
       required:
+      - Marketing
       - Name
       - Referrer
       title: Campaign
@@ -5236,6 +5241,7 @@ components:
           Referrer: Referrer
           ID: ID
           Name: Name
+          Marketing: true
         - CreationDate: 2000-01-23T04:56:07.000+00:00
           Groups:
           - Groups
@@ -5244,6 +5250,7 @@ components:
           Referrer: Referrer
           ID: ID
           Name: Name
+          Marketing: true
         PagesCount: 1
       properties:
         Campaigns:

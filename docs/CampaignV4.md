@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **ID** | Pointer to **NullableString** | ID of the campaign. Set internally by Customa, any given value is ignored. | [optional] 
 **Name** | **string** | Name of the campaign. | 
 **Referrer** | **string** | Referrer of the campaign. | 
+**Marketing** | **bool** | Determines if the campaign is a marketing campaign. | 
 **Groups** | Pointer to **[]string** | IDs of the campaign groups this campaign belongs to. | [optional] [default to []]
 **CreationDate** | Pointer to **NullableTime** | Creation Timestamp of the item. Set internally by Customa, any given value is ignored. | [optional] 
 **ModificationDate** | Pointer to **NullableTime** | Timestamp of the last change of the item in the database. Set internally by Customa, any given value is ignored. | [optional] 
@@ -15,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewCampaignV4
 
-`func NewCampaignV4(name string, referrer string, ) *CampaignV4`
+`func NewCampaignV4(name string, referrer string, marketing bool, ) *CampaignV4`
 
 NewCampaignV4 instantiates a new CampaignV4 object
 This constructor will assign default values to properties that have it defined,
@@ -103,6 +104,26 @@ and a boolean to check if the value has been set.
 `func (o *CampaignV4) SetReferrer(v string)`
 
 SetReferrer sets Referrer field to given value.
+
+
+### GetMarketing
+
+`func (o *CampaignV4) GetMarketing() bool`
+
+GetMarketing returns the Marketing field if non-nil, zero value otherwise.
+
+### GetMarketingOk
+
+`func (o *CampaignV4) GetMarketingOk() (*bool, bool)`
+
+GetMarketingOk returns a tuple with the Marketing field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMarketing
+
+`func (o *CampaignV4) SetMarketing(v bool)`
+
+SetMarketing sets Marketing field to given value.
 
 
 ### GetGroups
