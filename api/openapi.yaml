@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.19.0
+  version: 3.20.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -39,6 +39,8 @@ tags:
   name: project
 - description: traffic
   name: traffic
+- description: usersettings
+  name: usersettings
 paths:
   /api/v3/auth/login:
     post:
@@ -3036,6 +3038,148 @@ paths:
       summary: Returns traffic data for the given project and filters.
       tags:
       - traffic
+  /api/v4/usersettings/{name}:
+    get:
+      operationId: usersettings_get_global_v4
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9_]*"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSettingV4"
+          description: The value of the setting. Empty if the setting has not been
+            set.
+        "400":
+          description: Invalid setting name.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a global user setting.
+      tags:
+      - usersettings
+    put:
+      operationId: usersettings_set_global_v4
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9_]*"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSettingV4"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSettingV4"
+          description: The saved setting value.
+        "400":
+          description: Invalid setting name or request body.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Saves a global user setting.
+      tags:
+      - usersettings
+  /api/v4/usersettings/{project}/{name}:
+    get:
+      operationId: usersettings_get_project_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9_]*"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSettingV4"
+          description: The value of the setting. Empty if the setting has not been
+            set.
+        "400":
+          description: Invalid setting name.
+        "404":
+          description: The project was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: |-
+        Returns a user setting in the context of a project. Falls back to the global setting if there is no
+        project-specific value.
+      tags:
+      - usersettings
+    put:
+      operationId: usersettings_set_project_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9_]*"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSettingV4"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSettingV4"
+          description: The saved setting value.
+        "400":
+          description: Invalid setting name or request body.
+        "404":
+          description: The project was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Saves a user setting for a specific project.
+      tags:
+      - usersettings
 components:
   schemas:
     BasicSearchResponse:
@@ -7541,6 +7685,18 @@ components:
       required:
       - Currency
       title: Traffic Response
+      type: object
+    UserSettingV4:
+      example:
+        Value: ""
+      properties:
+        Value:
+          default: ""
+          description: The value of the setting. Empty if the setting has not been
+            set.
+          title: Value of the setting.
+          type: string
+      title: User Setting
       type: object
     CategoryV4Patch:
       example:

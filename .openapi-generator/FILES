@@ -16,6 +16,7 @@ api_segment.go
 api_settings.go
 api_stats.go
 api_traffic.go
+api_usersettings.go
 client.go
 configuration.go
 docs/AdditionalField.md
@@ -140,6 +141,8 @@ docs/TrafficRequest.md
 docs/TrafficResponse.md
 docs/TrafficRow.md
 docs/TranslatedString.md
+docs/UserSettingV4.md
+docs/UsersettingsAPI.md
 go.mod
 go.sum
 model_additional_field.go
@@ -248,6 +251,7 @@ model_traffic_request.go
 model_traffic_response.go
 model_traffic_row.go
 model_translated_string.go
+model_user_setting_v4.go
 response.go
 test/api_auth_test.go
 test/api_campaign_test.go
@@ -265,4 +269,5 @@ test/api_segment_test.go
 test/api_settings_test.go
 test/api_stats_test.go
 test/api_traffic_test.go
+test/api_usersettings_test.go
 utils.go
