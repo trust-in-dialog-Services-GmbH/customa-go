@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 3.20.0
+  version: 3.21.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -2645,6 +2645,34 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Returns Customer Segment Data.
+      tags:
+      - segment
+  /api/v4/segment/{project}/groups:
+    get:
+      description: |-
+        Which segments belong to new or regular customers depends on the segment definition of the project. The client
+        assigns customers to these groups using their segment. Customers without a calculated segment have an empty
+        segment and are part of neither list.
+      operationId: segment_groups_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SegmentGroupsV4"
+          description: The result.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns the segments of new and regular customers.
       tags:
       - segment
   /api/v4/settings:
@@ -7445,6 +7473,32 @@ components:
       - PagesCount
       - TotalCount
       title: Receipt Search Response
+      type: object
+    SegmentGroupsV4:
+      description: Segments of new and regular customers.
+      example:
+        NewCustomer:
+        - NewCustomer
+        - NewCustomer
+        RegularCustomer:
+        - RegularCustomer
+        - RegularCustomer
+      properties:
+        NewCustomer:
+          default: []
+          description: "Segments of new customers, i.e. segments defined for customers\
+            \ without a completed order. Customers without a calculated segment are\
+            \ part of neither list."
+          items:
+            type: string
+          type: array
+        RegularCustomer:
+          default: []
+          description: "Segments of regular customers, i.e. all other defined segments."
+          items:
+            type: string
+          type: array
+      title: Segment Groups
       type: object
     SettingMarketplaceValue:
       example:

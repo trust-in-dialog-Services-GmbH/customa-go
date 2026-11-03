@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DefinitionGetV3**](SegmentAPI.md#DefinitionGetV3) | **Get** /api/v3/segment/definition | Returns Customer Segment Data.
 [**DefinitionGetV4**](SegmentAPI.md#DefinitionGetV4) | **Get** /api/v4/segment/{project}/definition | Returns Customer Segment Data.
+[**SegmentGroupsGetV4**](SegmentAPI.md#SegmentGroupsGetV4) | **Get** /api/v4/segment/{project}/groups | Returns the segments of new and regular customers.
 [**SegmentsGetV3**](SegmentAPI.md#SegmentsGetV3) | **Get** /api/v3/segment | Retrieve Customer Segments.
 [**SegmentsGetV4**](SegmentAPI.md#SegmentsGetV4) | **Get** /api/v4/segment/{project} | Retrieve Customer Segments.
 
@@ -123,6 +124,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**SegmentDefinition**](SegmentDefinition.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SegmentGroupsGetV4
+
+> SegmentGroupsV4 SegmentGroupsGetV4(ctx, project).Execute()
+
+Returns the segments of new and regular customers.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+)
+
+func main() {
+	project := "project_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.SegmentAPI.SegmentGroupsGetV4(context.Background(), project).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SegmentAPI.SegmentGroupsGetV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SegmentGroupsGetV4`: SegmentGroupsV4
+	fmt.Fprintf(os.Stdout, "Response from `SegmentAPI.SegmentGroupsGetV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSegmentGroupsGetV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**SegmentGroupsV4**](SegmentGroupsV4.md)
 
 ### Authorization
 

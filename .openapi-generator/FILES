@@ -108,6 +108,7 @@ docs/Segment.md
 docs/SegmentAPI.md
 docs/SegmentCondition.md
 docs/SegmentDefinition.md
+docs/SegmentGroupsV4.md
 docs/SegmentList.md
 docs/SegmentMonetary.md
 docs/SegmentRecency.md
@@ -221,6 +222,7 @@ model_search_request.go
 model_segment.go
 model_segment_condition.go
 model_segment_definition.go
+model_segment_groups_v4.go
 model_segment_list.go
 model_segment_monetary.go
 model_segment_recency.go
