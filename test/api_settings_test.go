@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func Test_customa_SettingsAPIService(t *testing.T) {
@@ -38,20 +38,6 @@ func Test_customa_SettingsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test SettingsAPIService SettingsGetV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var name string
-
-		resp, httpRes, err := apiClient.SettingsAPI.SettingsGetV3(context.Background(), name).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test SettingsAPIService SettingsGetV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -60,18 +46,6 @@ func Test_customa_SettingsAPIService(t *testing.T) {
 		var name string
 
 		resp, httpRes, err := apiClient.SettingsAPI.SettingsGetV4(context.Background(), project, name).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test SettingsAPIService SettingsListV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.SettingsAPI.SettingsListV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -100,20 +74,6 @@ func Test_customa_SettingsAPIService(t *testing.T) {
 		var name string
 
 		resp, httpRes, err := apiClient.SettingsAPI.SettingsSetMarketplaceV4(context.Background(), project, mappingShopId, name).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test SettingsAPIService SettingsValidateV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var name string
-
-		resp, httpRes, err := apiClient.SettingsAPI.SettingsValidateV3(context.Background(), name).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

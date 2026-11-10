@@ -5,18 +5,12 @@ All URIs are relative to *https://www.customa.biz*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ProductAdditionalfieldsV4**](ProductAPI.md#ProductAdditionalfieldsV4) | **Get** /api/v4/product/{project}/additionalfields | Returns the definitions of the additional fields available for products in this project.
-[**ProductDeleteV3**](ProductAPI.md#ProductDeleteV3) | **Delete** /api/v3/product/{id} | Deletes a product by its ID.
 [**ProductDeleteV4**](ProductAPI.md#ProductDeleteV4) | **Delete** /api/v4/product/{project}/{id} | Deletes a product by its ID.
 [**ProductFieldsV4**](ProductAPI.md#ProductFieldsV4) | **Get** /api/v4/product/{project}/fields | Returns a list of fields and allowed filters for product search.
-[**ProductGetV3**](ProductAPI.md#ProductGetV3) | **Get** /api/v3/product/{id} | Retrieves a product by its ID.
 [**ProductGetV4**](ProductAPI.md#ProductGetV4) | **Get** /api/v4/product/{project}/{id} | Retrieves a product by its ID.
-[**ProductPatchV3**](ProductAPI.md#ProductPatchV3) | **Patch** /api/v3/product/{id} | Updates a product partially by its ID.
 [**ProductPatchV4**](ProductAPI.md#ProductPatchV4) | **Patch** /api/v4/product/{project}/{id} | Partially updates an existing product with the given ID.
-[**ProductPostV3**](ProductAPI.md#ProductPostV3) | **Post** /api/v3/product | Creates a new Product.
 [**ProductPostV4**](ProductAPI.md#ProductPostV4) | **Post** /api/v4/product/{project} | Creates a new product.
-[**ProductPutV3**](ProductAPI.md#ProductPutV3) | **Put** /api/v3/product/{id} | Overwrites an existing product with the given ID.
 [**ProductPutV4**](ProductAPI.md#ProductPutV4) | **Put** /api/v4/product/{project}/{id} | Overwrites an existing product with the given ID.
-[**ProductSearchV3**](ProductAPI.md#ProductSearchV3) | **Post** /api/v3/product/search | Searches for products by the given filters.
 [**ProductSearchV4**](ProductAPI.md#ProductSearchV4) | **Post** /api/v4/product/{project}/search | Searches for products by the given filters.
 
 
@@ -36,7 +30,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func main() {
@@ -89,72 +83,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ProductDeleteV3
-
-> ProductDeleteV3(ctx, id).Execute()
-
-Deletes a product by its ID.
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
-)
-
-func main() {
-	id := "id_example" // string | 
-
-	configuration := customa.NewConfiguration()
-	apiClient := customa.NewAPIClient(configuration)
-	r, err := apiClient.ProductAPI.ProductDeleteV3(context.Background(), id).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductDeleteV3``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiProductDeleteV3Request struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[apiV3Token](../README.md#apiV3Token)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ProductDeleteV4
 
 > ProductDeleteV4(ctx, project, id).Execute()
@@ -170,7 +98,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func main() {
@@ -239,7 +167,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func main() {
@@ -292,74 +220,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ProductGetV3
-
-> StrictProduct ProductGetV3(ctx, id).Execute()
-
-Retrieves a product by its ID.
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
-)
-
-func main() {
-	id := "id_example" // string | 
-
-	configuration := customa.NewConfiguration()
-	apiClient := customa.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProductAPI.ProductGetV3(context.Background(), id).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductGetV3``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ProductGetV3`: StrictProduct
-	fmt.Fprintf(os.Stdout, "Response from `ProductAPI.ProductGetV3`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiProductGetV3Request struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**StrictProduct**](StrictProduct.md)
-
-### Authorization
-
-[apiV3Token](../README.md#apiV3Token)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ProductGetV4
 
 > ProductV4 ProductGetV4(ctx, project, id).Execute()
@@ -375,7 +235,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func main() {
@@ -431,76 +291,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ProductPatchV3
-
-> ProductPatchV3(ctx, id).Product(product).Execute()
-
-Updates a product partially by its ID.
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
-)
-
-func main() {
-	id := "id_example" // string | 
-	product := *customa.NewProduct() // Product | 
-
-	configuration := customa.NewConfiguration()
-	apiClient := customa.NewAPIClient(configuration)
-	r, err := apiClient.ProductAPI.ProductPatchV3(context.Background(), id).Product(product).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductPatchV3``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiProductPatchV3Request struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **product** | [**Product**](Product.md) |  | 
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[apiV3Token](../README.md#apiV3Token)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ProductPatchV4
 
 > ProductPatchV4(ctx, project, id).ProductV4Patch(productV4Patch).Execute()
@@ -518,7 +308,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func main() {
@@ -574,72 +364,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ProductPostV3
-
-> ItemCreatedResponse ProductPostV3(ctx).StrictProduct(strictProduct).Execute()
-
-Creates a new Product.
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
-)
-
-func main() {
-	strictProduct := *customa.NewStrictProduct("12344", "PROD0001", "1234567890123", "Toaster", "ACME Inc.", "ACME Inc.", "A toaster made of stainless steel.", "A toaster made of stainless steel with a 2-slice capacity and a 7-setting browning control.", "https://example.com/image.jpg", true, "TaxClass_example", int32(100), []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}, *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR")) // StrictProduct | 
-
-	configuration := customa.NewConfiguration()
-	apiClient := customa.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProductAPI.ProductPostV3(context.Background()).StrictProduct(strictProduct).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductPostV3``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ProductPostV3`: ItemCreatedResponse
-	fmt.Fprintf(os.Stdout, "Response from `ProductAPI.ProductPostV3`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiProductPostV3Request struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **strictProduct** | [**StrictProduct**](StrictProduct.md) |  | 
-
-### Return type
-
-[**ItemCreatedResponse**](ItemCreatedResponse.md)
-
-### Authorization
-
-[apiV3Token](../README.md#apiV3Token)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ProductPostV4
 
 > ItemCreatedResponse2 ProductPostV4(ctx, project).ProductV4(productV4).Execute()
@@ -657,7 +381,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func main() {
@@ -712,76 +436,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ProductPutV3
-
-> ProductPutV3(ctx, id).StrictProduct(strictProduct).Execute()
-
-Overwrites an existing product with the given ID.
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
-)
-
-func main() {
-	id := "id_example" // string | 
-	strictProduct := *customa.NewStrictProduct("12344", "PROD0001", "1234567890123", "Toaster", "ACME Inc.", "ACME Inc.", "A toaster made of stainless steel.", "A toaster made of stainless steel with a 2-slice capacity and a 7-setting browning control.", "https://example.com/image.jpg", true, "TaxClass_example", int32(100), []customa.AdditionalField{*customa.NewAdditionalField("Example", "42")}, *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR"), *customa.NewPrice(float32(123), "EUR")) // StrictProduct | 
-
-	configuration := customa.NewConfiguration()
-	apiClient := customa.NewAPIClient(configuration)
-	r, err := apiClient.ProductAPI.ProductPutV3(context.Background(), id).StrictProduct(strictProduct).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductPutV3``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiProductPutV3Request struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **strictProduct** | [**StrictProduct**](StrictProduct.md) |  | 
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[apiV3Token](../README.md#apiV3Token)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ProductPutV4
 
 > ProductPutV4(ctx, project, id).ProductV4(productV4).Execute()
@@ -799,7 +453,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func main() {
@@ -855,72 +509,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ProductSearchV3
-
-> ProductSearchResponse ProductSearchV3(ctx).SearchRequest(searchRequest).Execute()
-
-Searches for products by the given filters.
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
-)
-
-func main() {
-	searchRequest := *customa.NewSearchRequest(int32(1), int32(10), []customa.Filter{*customa.NewFilter(customa.FilterType("IsEmpty"), "Field_example", []string{"Values_example"})}) // SearchRequest | 
-
-	configuration := customa.NewConfiguration()
-	apiClient := customa.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProductAPI.ProductSearchV3(context.Background()).SearchRequest(searchRequest).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProductAPI.ProductSearchV3``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ProductSearchV3`: ProductSearchResponse
-	fmt.Fprintf(os.Stdout, "Response from `ProductAPI.ProductSearchV3`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiProductSearchV3Request struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **searchRequest** | [**SearchRequest**](SearchRequest.md) |  | 
-
-### Return type
-
-[**ProductSearchResponse**](ProductSearchResponse.md)
-
-### Authorization
-
-[apiV3Token](../README.md#apiV3Token)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ProductSearchV4
 
 > ProductSearchResponseV4 ProductSearchV4(ctx, project).SearchRequest(searchRequest).Execute()
@@ -938,7 +526,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func main() {

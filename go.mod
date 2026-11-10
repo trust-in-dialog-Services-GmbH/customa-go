@@ -1,4 +1,4 @@
-module github.com/trust-in-dialog-Services-GmbH/customa-go/v3
+module github.com/trust-in-dialog-Services-GmbH/customa-go/v4
 
 go 1.23
 

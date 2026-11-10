@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func Test_customa_CampaigngroupAPIService(t *testing.T) {

@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func Test_customa_AuthAPIService(t *testing.T) {
@@ -22,46 +22,11 @@ func Test_customa_AuthAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
-	t.Run("Test AuthAPIService AuthLoginV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.AuthAPI.AuthLoginV3(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test AuthAPIService AuthLoginV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.AuthAPI.AuthLoginV4(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test AuthAPIService AuthLogoutV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		httpRes, err := apiClient.AuthAPI.AuthLogoutV3(context.Background()).Execute()
-
-		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test AuthAPIService AuthRefreshV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.AuthAPI.AuthRefreshV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

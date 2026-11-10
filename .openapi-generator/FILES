@@ -23,9 +23,7 @@ docs/AdditionalField.md
 docs/AdditionalFieldDefinition.md
 docs/AdditionalFieldDefinitions.md
 docs/AuthAPI.md
-docs/AuthLoginRequestV3.md
 docs/AuthLoginRequestV4.md
-docs/AuthTokenResponseV3.md
 docs/AuthTokenResponseV4.md
 docs/BasicSearchResponse.md
 docs/CampaignAPI.md
@@ -41,8 +39,6 @@ docs/CategoryAPI.md
 docs/CategorySearchResponseV4.md
 docs/CategoryV4.md
 docs/CategoryV4Patch.md
-docs/Choice.md
-docs/ChoicesList.md
 docs/Customer.md
 docs/CustomerAPI.md
 docs/CustomerGroupSearchResponseV4.md
@@ -54,7 +50,6 @@ docs/CustomerV4Patch.md
 docs/CustomergroupAPI.md
 docs/DateField.md
 docs/DeliveryStatusV4.md
-docs/ErrorResponseV3.md
 docs/ErrorResponseV4.md
 docs/FieldDefinition.md
 docs/FieldDefinitions.md
@@ -123,12 +118,12 @@ docs/SettingsAPI.md
 docs/SettingsDefinition.md
 docs/StatsAPI.md
 docs/StatsGroupings.md
-docs/StatsReceiptGroup.md
-docs/StatsReceiptGroups.md
+docs/StatsReceiptGroupV4.md
+docs/StatsReceiptGroupsV4.md
 docs/StatsReceiptItemGroup.md
 docs/StatsReceiptItemGroups.md
 docs/StatsReceiptItemType.md
-docs/StatsReceiptType.md
+docs/StatsReceiptTypeV4.md
 docs/StatsRequest.md
 docs/StrictCustomer.md
 docs/StrictProduct.md
@@ -149,9 +144,7 @@ go.sum
 model_additional_field.go
 model_additional_field_definition.go
 model_additional_field_definitions.go
-model_auth_login_request_v3.go
 model_auth_login_request_v4.go
-model_auth_token_response_v3.go
 model_auth_token_response_v4.go
 model_basic_search_response.go
 model_campaign_group_search_response_v4.go
@@ -163,8 +156,6 @@ model_campaign_v4.go
 model_category_search_response_v4.go
 model_category_v4.go
 model_category_v4_patch.go
-model_choice.go
-model_choices_list.go
 model_customer.go
 model_customer_group_search_response_v4.go
 model_customer_group_v4.go
@@ -174,7 +165,6 @@ model_customer_v4.go
 model_customer_v4_patch.go
 model_date_field.go
 model_delivery_status_v4.go
-model_error_response_v3.go
 model_error_response_v4.go
 model_field_definition.go
 model_field_definitions.go
@@ -235,12 +225,12 @@ model_setting_validation_response.go
 model_setting_value_request.go
 model_settings_definition.go
 model_stats_groupings.go
-model_stats_receipt_group.go
-model_stats_receipt_groups.go
+model_stats_receipt_group_v4.go
+model_stats_receipt_groups_v4.go
 model_stats_receipt_item_group.go
 model_stats_receipt_item_groups.go
 model_stats_receipt_item_type.go
-model_stats_receipt_type.go
+model_stats_receipt_type_v4.go
 model_stats_request.go
 model_strict_customer.go
 model_strict_product.go

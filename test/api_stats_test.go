@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func Test_customa_StatsAPIService(t *testing.T) {
@@ -29,18 +29,6 @@ func Test_customa_StatsAPIService(t *testing.T) {
 		var project string
 
 		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptFieldsV4(context.Background(), project).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test StatsAPIService StatsReceiptGroupingsV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptGroupingsV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -76,18 +64,6 @@ func Test_customa_StatsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test StatsAPIService StatsReceiptItemGroupingsV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemGroupingsV3(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test StatsAPIService StatsReceiptItemGroupingsV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -102,18 +78,6 @@ func Test_customa_StatsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test StatsAPIService StatsReceiptItemV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemV3(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test StatsAPIService StatsReceiptItemV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -121,18 +85,6 @@ func Test_customa_StatsAPIService(t *testing.T) {
 		var project string
 
 		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptItemV4(context.Background(), project).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test StatsAPIService StatsReceiptV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.StatsAPI.StatsReceiptV3(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v3"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
 )
 
 func Test_customa_ProductAPIService(t *testing.T) {
@@ -32,19 +32,6 @@ func Test_customa_ProductAPIService(t *testing.T) {
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test ProductAPIService ProductDeleteV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id string
-
-		httpRes, err := apiClient.ProductAPI.ProductDeleteV3(context.Background(), id).Execute()
-
-		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -77,20 +64,6 @@ func Test_customa_ProductAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ProductAPIService ProductGetV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id string
-
-		resp, httpRes, err := apiClient.ProductAPI.ProductGetV3(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test ProductAPIService ProductGetV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -102,19 +75,6 @@ func Test_customa_ProductAPIService(t *testing.T) {
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test ProductAPIService ProductPatchV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id string
-
-		httpRes, err := apiClient.ProductAPI.ProductPatchV3(context.Background(), id).Execute()
-
-		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -133,18 +93,6 @@ func Test_customa_ProductAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ProductAPIService ProductPostV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.ProductAPI.ProductPostV3(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test ProductAPIService ProductPostV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -159,19 +107,6 @@ func Test_customa_ProductAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ProductAPIService ProductPutV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id string
-
-		httpRes, err := apiClient.ProductAPI.ProductPutV3(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test ProductAPIService ProductPutV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -182,18 +117,6 @@ func Test_customa_ProductAPIService(t *testing.T) {
 		httpRes, err := apiClient.ProductAPI.ProductPutV4(context.Background(), project, id).Execute()
 
 		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test ProductAPIService ProductSearchV3", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.ProductAPI.ProductSearchV3(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
