@@ -8,7 +8,9 @@ api_category.go
 api_customer.go
 api_customergroup.go
 api_health.go
+api_manufacturer.go
 api_marketplace.go
+api_newsletter.go
 api_product.go
 api_project.go
 api_receipt.go
@@ -17,6 +19,7 @@ api_settings.go
 api_stats.go
 api_traffic.go
 api_usersettings.go
+api_vendor.go
 client.go
 configuration.go
 docs/AdditionalField.md
@@ -27,6 +30,7 @@ docs/AuthLoginRequestV4.md
 docs/AuthTokenResponseV4.md
 docs/BasicSearchResponse.md
 docs/CampaignAPI.md
+docs/CampaignGroupChildrenV4.md
 docs/CampaignGroupSearchResponseV4.md
 docs/CampaignGroupV4.md
 docs/CampaignSearchResponseV4.md
@@ -69,10 +73,17 @@ docs/HealthSourceV4.md
 docs/ItemCreatedResponse.md
 docs/ItemCreatedResponse2.md
 docs/LegacySearchResponse.md
+docs/ManufacturerAPI.md
+docs/ManufacturerSearchResponseV4.md
+docs/ManufacturerV4.md
 docs/MarketplaceAPI.md
 docs/MarketplaceSearchResponseV4.md
 docs/MarketplaceSettingValueValue.md
 docs/MarketplaceV4.md
+docs/NewsletterAPI.md
+docs/NewsletterSearchResponseV4.md
+docs/NewsletterStatsV4.md
+docs/NewsletterV4.md
 docs/OAuthValidationRequest.md
 docs/OAuthValidationResponse.md
 docs/PaymentStatusV4.md
@@ -139,6 +150,9 @@ docs/TrafficRow.md
 docs/TranslatedString.md
 docs/UserSettingV4.md
 docs/UsersettingsAPI.md
+docs/VendorAPI.md
+docs/VendorSearchResponseV4.md
+docs/VendorV4.md
 go.mod
 go.sum
 model_additional_field.go
@@ -147,6 +161,7 @@ model_additional_field_definitions.go
 model_auth_login_request_v4.go
 model_auth_token_response_v4.go
 model_basic_search_response.go
+model_campaign_group_children_v4.go
 model_campaign_group_search_response_v4.go
 model_campaign_group_v4.go
 model_campaign_search_response_v4.go
@@ -183,9 +198,14 @@ model_health_source_v4.go
 model_item_created_response.go
 model_item_created_response2.go
 model_legacy_search_response.go
+model_manufacturer_search_response_v4.go
+model_manufacturer_v4.go
 model_marketplace_search_response_v4.go
 model_marketplace_setting_value__value.go
 model_marketplace_v4.go
+model_newsletter_search_response_v4.go
+model_newsletter_stats_v4.go
+model_newsletter_v4.go
 model_o_auth_validation_request.go
 model_o_auth_validation_response.go
 model_payment_status_v4.go
@@ -244,6 +264,8 @@ model_traffic_response.go
 model_traffic_row.go
 model_translated_string.go
 model_user_setting_v4.go
+model_vendor_search_response_v4.go
+model_vendor_v4.go
 response.go
 test/api_auth_test.go
 test/api_campaign_test.go
@@ -253,7 +275,9 @@ test/api_category_test.go
 test/api_customer_test.go
 test/api_customergroup_test.go
 test/api_health_test.go
+test/api_manufacturer_test.go
 test/api_marketplace_test.go
+test/api_newsletter_test.go
 test/api_product_test.go
 test/api_project_test.go
 test/api_receipt_test.go
@@ -262,4 +286,5 @@ test/api_settings_test.go
 test/api_stats_test.go
 test/api_traffic_test.go
 test/api_usersettings_test.go
+test/api_vendor_test.go
 utils.go

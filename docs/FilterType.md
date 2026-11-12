@@ -9,6 +9,8 @@
 
 * `MATCH` (value: `"Match"`)
 
+* `MATCH_NOT` (value: `"MatchNot"`)
+
 * `MATCH_PREFIX` (value: `"MatchPrefix"`)
 
 * `MATCH_SUFFIX` (value: `"MatchSuffix"`)

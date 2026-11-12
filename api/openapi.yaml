@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: E-Commerce BI & CRM Tool
   title: Customa
-  version: 4.0.0
+  version: 4.1.0
 servers:
 - description: Customa
   url: https://www.customa.biz/
@@ -23,8 +23,12 @@ tags:
   name: customergroup
 - description: health
   name: health
+- description: manufacturer
+  name: manufacturer
 - description: marketplace
   name: marketplace
+- description: newsletter
+  name: newsletter
 - description: product
   name: product
 - description: project
@@ -41,6 +45,8 @@ tags:
   name: traffic
 - description: usersettings
   name: usersettings
+- description: vendor
+  name: vendor
 paths:
   /api/v4/auth/login:
     post:
@@ -206,6 +212,43 @@ paths:
       - apiV4Token: []
         apiV4BasicAuth: []
       summary: Retrieves a campaign group by its ID.
+      tags:
+      - campaigngroup
+  /api/v4/campaigngroup/{project}/{id}/children:
+    get:
+      description: |-
+        The result contains the children, grandchildren and so on of the campaign group as a flat list. The campaign
+        group itself is not part of the list.
+      operationId: campaigngroup_children_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignGroupChildrenV4"
+          description: The IDs of all descendants of the campaign group.
+        "404":
+          description: The campaign group was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves the IDs of all descendants of a campaign group.
       tags:
       - campaigngroup
   /api/v4/campaigngroup/{project}/search:
@@ -1199,6 +1242,242 @@ paths:
         Admins.
       tags:
       - health
+  /api/v4/manufacturer/{project}:
+    post:
+      operationId: manufacturer_post_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ManufacturerV4"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse2"
+          description: The manufacturer was successfully created.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Creates a new manufacturer.
+      tags:
+      - manufacturer
+  /api/v4/manufacturer/{project}/{id}:
+    delete:
+      operationId: manufacturer_delete_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The manufacturer was successfully deleted.
+        "404":
+          description: The manufacturer was not found.
+        "409":
+          description: The manufacturer cannot be deleted because it is referenced
+            by products.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Deletes a manufacturer by its ID.
+      tags:
+      - manufacturer
+    get:
+      operationId: manufacturer_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManufacturerV4"
+          description: The manufacturer was successfully retrieved.
+        "404":
+          description: The manufacturer was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a manufacturer by its ID.
+      tags:
+      - manufacturer
+    patch:
+      description: |-
+        The manufacturer must already exist. Only the fields included in the request body are changed; fields that are
+        omitted keep their current value.
+      operationId: manufacturer_patch_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ManufacturerV4"
+        required: true
+      responses:
+        "200":
+          description: The manufacturer was successfully updated.
+        "404":
+          description: The manufacturer was not found.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Partially updates an existing manufacturer with the given ID.
+      tags:
+      - manufacturer
+    put:
+      operationId: manufacturer_put_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ManufacturerV4"
+        required: true
+      responses:
+        "200":
+          description: The manufacturer was successfully updated.
+        "404":
+          description: The manufacturer was not found.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Overwrites an existing manufacturer with the given ID.
+      tags:
+      - manufacturer
+  /api/v4/manufacturer/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, manufacturers can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: manufacturer_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManufacturerSearchResponseV4"
+          description: A search response with manufacturers matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for manufacturers by the given filters.
+      tags:
+      - manufacturer
+  /api/v4/manufacturer/{project}/fields:
+    get:
+      operationId: manufacturer_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for manufacturer search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for manufacturer search.
+      tags:
+      - manufacturer
   /api/v4/marketplace/{project}/{id}:
     get:
       operationId: marketplace_get_v4
@@ -1294,6 +1573,138 @@ paths:
       summary: Returns a list of fields and allowed filters for marketplace search.
       tags:
       - marketplace
+  /api/v4/newsletter/{project}/{id}:
+    get:
+      operationId: newsletter_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsletterV4"
+          description: The newsletter was successfully retrieved.
+        "404":
+          description: The newsletter was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a newsletter by its ID.
+      tags:
+      - newsletter
+  /api/v4/newsletter/{project}/{id}/stats:
+    get:
+      description: |-
+        The figures cover the recipients of the newsletter: how many mails were planned, sent, delivered, opened,
+        clicked and unsubscribed, together with the rates derived from them.
+      operationId: newsletter_stats_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsletterStatsV4"
+          description: The figures of the newsletter.
+        "404":
+          description: The newsletter was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns the dispatch figures of a newsletter.
+      tags:
+      - newsletter
+  /api/v4/newsletter/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, newsletters can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: newsletter_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsletterSearchResponseV4"
+          description: A search response with newsletters matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for newsletters by the given filters.
+      tags:
+      - newsletter
+  /api/v4/newsletter/{project}/fields:
+    get:
+      operationId: newsletter_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for newsletter search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for newsletter search.
+      tags:
+      - newsletter
   /api/v4/product/{project}:
     post:
       description: A new product is created using the provided data. The product ID
@@ -2446,6 +2857,241 @@ paths:
       summary: Saves a user setting for a specific project.
       tags:
       - usersettings
+  /api/v4/vendor/{project}:
+    post:
+      operationId: vendor_post_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VendorV4"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemCreatedResponse2"
+          description: The vendor was successfully created.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Creates a new vendor.
+      tags:
+      - vendor
+  /api/v4/vendor/{project}/{id}:
+    delete:
+      operationId: vendor_delete_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The vendor was successfully deleted.
+        "404":
+          description: The vendor was not found.
+        "409":
+          description: The vendor cannot be deleted because it is referenced by products.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Deletes a vendor by its ID.
+      tags:
+      - vendor
+    get:
+      operationId: vendor_get_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VendorV4"
+          description: The vendor was successfully retrieved.
+        "404":
+          description: The vendor was not found.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Retrieves a vendor by its ID.
+      tags:
+      - vendor
+    patch:
+      description: |-
+        The vendor must already exist. Only the fields included in the request body are changed; fields that are
+        omitted keep their current value.
+      operationId: vendor_patch_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VendorV4"
+        required: true
+      responses:
+        "200":
+          description: The vendor was successfully updated.
+        "404":
+          description: The vendor was not found.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Partially updates an existing vendor with the given ID.
+      tags:
+      - vendor
+    put:
+      operationId: vendor_put_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          pattern: \d+
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VendorV4"
+        required: true
+      responses:
+        "200":
+          description: The vendor was successfully updated.
+        "404":
+          description: The vendor was not found.
+        "422":
+          description: The provided data is invalid.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Overwrites an existing vendor with the given ID.
+      tags:
+      - vendor
+  /api/v4/vendor/{project}/search:
+    post:
+      description: |-
+        Using the search endpoint, vendors can be filtered based on various criteria, which are combined using the
+        boolean AND operator. Multiple values can be provided for a filter, these will be combined using the boolean OR
+        operator. The results returned are paginated and sorted by the ID in ascending order.
+
+        **Please note:** As Customa may choose a lower page size than the provided one, it is recommended to use the
+        value returned by the first request when scrolling through multiple result pages.
+      operationId: vendor_search_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VendorSearchResponseV4"
+          description: A search response with vendors matching the search criteria.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Searches for vendors by the given filters.
+      tags:
+      - vendor
+  /api/v4/vendor/{project}/fields:
+    get:
+      operationId: vendor_fields_v4
+      parameters:
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldDefinitions"
+          description: Fields and filters for vendor search.
+      security:
+      - apiV4Token: []
+        apiV4BasicAuth: []
+      summary: Returns a list of fields and allowed filters for vendor search.
+      tags:
+      - vendor
 components:
   schemas:
     BasicSearchResponse:
@@ -3209,6 +3855,7 @@ components:
       - IsEmpty
       - IsNotEmpty
       - Match
+      - MatchNot
       - MatchPrefix
       - MatchSuffix
       - MatchInfix
@@ -3467,6 +4114,27 @@ components:
       - Name
       - Referrer
       title: Campaign Group
+      type: object
+    CampaignGroupChildrenV4:
+      example:
+        ChildIDs:
+        - ChildIDs
+        - ChildIDs
+        ID: ID
+      properties:
+        ID:
+          description: ID of the campaign group.
+          type: string
+        ChildIDs:
+          default: []
+          description: "IDs of all descendants of the campaign group (children, grandchildren,\
+            \ ...) as a flat list. The campaign group itself is not included."
+          items:
+            type: string
+          type: array
+      required:
+      - ID
+      title: Campaign Group Children
       type: object
     CampaignGroupSearchResponseV4:
       example:
@@ -4561,6 +5229,77 @@ components:
       - TotalCount
       title: Health Admin Logs Response
       type: object
+    ManufacturerV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ID: ID
+        Name: Name
+      properties:
+        ID:
+          description: "ID of the manufacturer. Set internally by Customa, any given\
+            \ value is ignored."
+          nullable: true
+          type: string
+        Name:
+          description: Name of the manufacturer.
+          type: string
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - Name
+      title: Manufacturer
+      type: object
+    ManufacturerSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        CurrentPage: 6
+        Manufacturers:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          Name: Name
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          Name: Name
+        PagesCount: 1
+      properties:
+        Manufacturers:
+          default: []
+          items:
+            $ref: "#/components/schemas/ManufacturerV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Manufacturer Search Response
+      type: object
     MarketplaceV4:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
@@ -4639,6 +5378,245 @@ components:
       - TotalCount
       title: Marketplace Search Response
       type: object
+    NewsletterV4:
+      example:
+        Status: ""
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        GroupNames:
+        - GroupNames
+        - GroupNames
+        SenderName: ""
+        Recipients: 0
+        Subject: ""
+        Name: ""
+        ReplyTo: ""
+        Groups:
+        - Groups
+        - Groups
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ID: ID
+        SendDate: 2000-01-23T04:56:07.000+00:00
+        SenderEmail: ""
+      properties:
+        ID:
+          description: ID of the newsletter. Set internally by Customa.
+          nullable: true
+          type: string
+        Name:
+          default: ""
+          description: "Name of the newsletter, used in the overview only."
+          type: string
+        Subject:
+          default: ""
+          description: Subject line of the mail.
+          type: string
+        Status:
+          default: ""
+          description: "Status: draft, approved, scheduled, running, paused, finished\
+            \ or cancelled."
+          type: string
+        SenderName:
+          default: ""
+          description: Sender name shown to the recipient.
+          type: string
+        SenderEmail:
+          default: ""
+          description: Sender address shown to the recipient.
+          type: string
+        ReplyTo:
+          default: ""
+          description: Address replies are sent to.
+          type: string
+        Groups:
+          default: []
+          description: IDs of the recipient lists. A newsletter goes to the union
+            of all of them; a recipient in two lists still receives one mail.
+          items:
+            type: string
+          type: array
+        GroupNames:
+          default: []
+          description: "Names of the recipient lists, in the same order as Groups."
+          items:
+            type: string
+          type: array
+        SendDate:
+          description: "Scheduled or actual time of dispatch, null while unscheduled."
+          format: date-time
+          nullable: true
+          type: string
+        Recipients:
+          default: 0
+          description: Number of recipient rows created for this newsletter.
+          type: integer
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      title: Newsletter
+      type: object
+    NewsletterStatsV4:
+      example:
+        Opened: 9
+        ClickToOpenRate: 1.2315135
+        Delivered: 5
+        Clicked: 3
+        UnsubscribeRate: 1.0246457
+        Undeliverable: 7
+        Planned: 0
+        OpenRate: 4.145608
+        BounceRate: 1.4894159
+        NotDispatched: 5
+        Bounced: 2
+        ClickRate: 7.386282
+        Pending: 1
+        Sent: 6
+        Unsubscribed: 2
+      properties:
+        Planned:
+          default: 0
+          description: Recipient rows created.
+          type: integer
+        Sent:
+          default: 0
+          description: Successfully handed over to the mail server.
+          type: integer
+        Pending:
+          default: 0
+          description: "Planned, but neither sent nor finally rejected yet."
+          type: integer
+        NotDispatched:
+          default: 0
+          description: "Finally undeliverable before hand-over (retries exhausted,\
+            \ blocked, marketplace address)."
+          type: integer
+        Delivered:
+          default: 0
+          description: "Sent minus the rows that bounced without proof of receipt.\
+            \ An approximation, see the schema description."
+          type: integer
+        Bounced:
+          default: 0
+          description: Recipient rows that produced any bounce.
+          type: integer
+        Undeliverable:
+          default: 0
+          description: "Of those, the ones without proof of receipt. Subtracted from\
+            \ Delivered."
+          type: integer
+        Opened:
+          default: 0
+          description: Recipients with at least one open. A click counts as an open.
+          type: integer
+        Clicked:
+          default: 0
+          description: Recipients with at least one click.
+          type: integer
+        Unsubscribed:
+          default: 0
+          description: Recipients who unsubscribed through this newsletter.
+          type: integer
+        OpenRate:
+          description: "Opened divided by delivered, or null without a base."
+          format: float
+          nullable: true
+          type: number
+        ClickRate:
+          description: "Clicked divided by delivered, or null without a base."
+          format: float
+          nullable: true
+          type: number
+        ClickToOpenRate:
+          description: "Clicked divided by opened, or null without a base."
+          format: float
+          nullable: true
+          type: number
+        UnsubscribeRate:
+          description: "Unsubscribed divided by delivered, or null without a base."
+          format: float
+          nullable: true
+          type: number
+        BounceRate:
+          description: "Bounced divided by sent, or null without a base."
+          format: float
+          nullable: true
+          type: number
+      title: Newsletter Statistics
+      type: object
+    NewsletterSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        CurrentPage: 6
+        Newsletters:
+        - Status: ""
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          GroupNames:
+          - GroupNames
+          - GroupNames
+          SenderName: ""
+          Recipients: 0
+          Subject: ""
+          Name: ""
+          ReplyTo: ""
+          Groups:
+          - Groups
+          - Groups
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          SendDate: 2000-01-23T04:56:07.000+00:00
+          SenderEmail: ""
+        - Status: ""
+          CreationDate: 2000-01-23T04:56:07.000+00:00
+          GroupNames:
+          - GroupNames
+          - GroupNames
+          SenderName: ""
+          Recipients: 0
+          Subject: ""
+          Name: ""
+          ReplyTo: ""
+          Groups:
+          - Groups
+          - Groups
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          SendDate: 2000-01-23T04:56:07.000+00:00
+          SenderEmail: ""
+        PagesCount: 1
+      properties:
+        Newsletters:
+          default: []
+          items:
+            $ref: "#/components/schemas/NewsletterV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Newsletter Search Response
+      type: object
     TaxClass:
       enum:
       - NormalTax
@@ -4699,6 +5677,8 @@ components:
         Categories:
         - Categories
         - Categories
+        ManufacturerID: ManufacturerID
+        VendorID: VendorID
         AdditionalFields:
           key: AdditionalFields
         TaxClass: NormalTax
@@ -4741,10 +5721,23 @@ components:
           description: Name of the product.
           type: string
         Manufacturer:
-          description: Manufacturer of the product.
+          deprecated: true
+          description: Manufacturer of the product. Deprecated. Use 'ManufacturerID'
+            instead.
+          type: string
+        ManufacturerID:
+          description: ID of the manufacturer of the product (see manufacturer endpoints).
+            Takes precedence over the deprecated 'Manufacturer'.
+          nullable: true
           type: string
         Vendor:
-          description: Vendor of the product.
+          deprecated: true
+          description: Vendor of the product. Deprecated. Use 'VendorID' instead.
+          type: string
+        VendorID:
+          description: ID of the vendor of the product (see vendor endpoints). Takes
+            precedence over the deprecated 'Vendor'.
+          nullable: true
           type: string
         Category:
           deprecated: true
@@ -4838,6 +5831,8 @@ components:
           Categories:
           - Categories
           - Categories
+          ManufacturerID: ManufacturerID
+          VendorID: VendorID
           AdditionalFields:
             key: AdditionalFields
           TaxClass: NormalTax
@@ -4873,6 +5868,8 @@ components:
           Categories:
           - Categories
           - Categories
+          ManufacturerID: ManufacturerID
+          VendorID: VendorID
           AdditionalFields:
             key: AdditionalFields
           TaxClass: NormalTax
@@ -6348,6 +7345,77 @@ components:
           type: string
       title: User Setting
       type: object
+    VendorV4:
+      example:
+        CreationDate: 2000-01-23T04:56:07.000+00:00
+        ModificationDate: 2000-01-23T04:56:07.000+00:00
+        ID: ID
+        Name: Name
+      properties:
+        ID:
+          description: "ID of the vendor. Set internally by Customa, any given value\
+            \ is ignored."
+          nullable: true
+          type: string
+        Name:
+          description: Name of the vendor.
+          type: string
+        CreationDate:
+          description: "Creation Timestamp of the item. Set internally by Customa,\
+            \ any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+        ModificationDate:
+          description: "Timestamp of the last change of the item in the database.\
+            \ Set internally by Customa, any given value is ignored."
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - Name
+      title: Vendor
+      type: object
+    VendorSearchResponseV4:
+      example:
+        TotalCount: 0
+        PageSize: 5
+        Vendors:
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          Name: Name
+        - CreationDate: 2000-01-23T04:56:07.000+00:00
+          ModificationDate: 2000-01-23T04:56:07.000+00:00
+          ID: ID
+          Name: Name
+        CurrentPage: 6
+        PagesCount: 1
+      properties:
+        Vendors:
+          default: []
+          items:
+            $ref: "#/components/schemas/VendorV4"
+          type: array
+        TotalCount:
+          description: Total number of items.
+          type: integer
+        CurrentPage:
+          description: Current page number.
+          type: integer
+        PagesCount:
+          description: Total number of pages.
+          type: integer
+        PageSize:
+          description: Number of items per page.
+          type: integer
+      required:
+      - CurrentPage
+      - PageSize
+      - PagesCount
+      - TotalCount
+      title: Vendor Search Response
+      type: object
     CategoryV4Patch:
       example:
         CreationDate: 2000-01-23T04:56:07.000+00:00
@@ -6611,6 +7679,8 @@ components:
         Categories:
         - Categories
         - Categories
+        ManufacturerID: ManufacturerID
+        VendorID: VendorID
         AdditionalFields:
           key: AdditionalFields
         TaxClass: NormalTax
@@ -6653,10 +7723,23 @@ components:
           description: Name of the product.
           type: string
         Manufacturer:
-          description: Manufacturer of the product.
+          deprecated: true
+          description: Manufacturer of the product. Deprecated. Use 'ManufacturerID'
+            instead.
+          type: string
+        ManufacturerID:
+          description: ID of the manufacturer of the product (see manufacturer endpoints).
+            Takes precedence over the deprecated 'Manufacturer'.
+          nullable: true
           type: string
         Vendor:
-          description: Vendor of the product.
+          deprecated: true
+          description: Vendor of the product. Deprecated. Use 'VendorID' instead.
+          type: string
+        VendorID:
+          description: ID of the vendor of the product (see vendor endpoints). Takes
+            precedence over the deprecated 'Vendor'.
+          nullable: true
           type: string
         Category:
           deprecated: true

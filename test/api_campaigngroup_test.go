@@ -22,6 +22,21 @@ func Test_customa_CampaigngroupAPIService(t *testing.T) {
 	configuration := customa.NewConfiguration()
 	apiClient := customa.NewAPIClient(configuration)
 
+	t.Run("Test CampaigngroupAPIService CampaigngroupChildrenV4", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var project string
+		var id string
+
+		resp, httpRes, err := apiClient.CampaigngroupAPI.CampaigngroupChildrenV4(context.Background(), project, id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CampaigngroupAPIService CampaigngroupFieldsV4", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -9,8 +9,10 @@ Name | Type | Description | Notes
 **Parent** | Pointer to **NullableString** | ID of the parent product. The parent must be standalone and not have a parent itself. | [optional] 
 **EAN** | Pointer to **string** | EAN of the product. | [optional] 
 **Name** | Pointer to **string** | Name of the product. | [optional] 
-**Manufacturer** | Pointer to **string** | Manufacturer of the product. | [optional] 
-**Vendor** | Pointer to **string** | Vendor of the product. | [optional] 
+**Manufacturer** | Pointer to **string** | Manufacturer of the product. Deprecated. Use &#39;ManufacturerID&#39; instead. | [optional] 
+**ManufacturerID** | Pointer to **NullableString** | ID of the manufacturer of the product (see manufacturer endpoints). Takes precedence over the deprecated &#39;Manufacturer&#39;. | [optional] 
+**Vendor** | Pointer to **string** | Vendor of the product. Deprecated. Use &#39;VendorID&#39; instead. | [optional] 
+**VendorID** | Pointer to **NullableString** | ID of the vendor of the product (see vendor endpoints). Takes precedence over the deprecated &#39;Vendor&#39;. | [optional] 
 **Category** | Pointer to **NullableString** | Category of the product. Deprecated. Use &#39;Categories&#39; instead. | [optional] 
 **Categories** | Pointer to **[]string** | Categories of the product. | [optional] 
 **ShortDescription** | Pointer to **string** | Short description of the product. | [optional] 
@@ -216,6 +218,41 @@ SetManufacturer sets Manufacturer field to given value.
 
 HasManufacturer returns a boolean if a field has been set.
 
+### GetManufacturerID
+
+`func (o *ProductV4Patch) GetManufacturerID() string`
+
+GetManufacturerID returns the ManufacturerID field if non-nil, zero value otherwise.
+
+### GetManufacturerIDOk
+
+`func (o *ProductV4Patch) GetManufacturerIDOk() (*string, bool)`
+
+GetManufacturerIDOk returns a tuple with the ManufacturerID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetManufacturerID
+
+`func (o *ProductV4Patch) SetManufacturerID(v string)`
+
+SetManufacturerID sets ManufacturerID field to given value.
+
+### HasManufacturerID
+
+`func (o *ProductV4Patch) HasManufacturerID() bool`
+
+HasManufacturerID returns a boolean if a field has been set.
+
+### SetManufacturerIDNil
+
+`func (o *ProductV4Patch) SetManufacturerIDNil(b bool)`
+
+ SetManufacturerIDNil sets the value for ManufacturerID to be an explicit nil
+
+### UnsetManufacturerID
+`func (o *ProductV4Patch) UnsetManufacturerID()`
+
+UnsetManufacturerID ensures that no value is present for ManufacturerID, not even an explicit nil
 ### GetVendor
 
 `func (o *ProductV4Patch) GetVendor() string`
@@ -241,6 +278,41 @@ SetVendor sets Vendor field to given value.
 
 HasVendor returns a boolean if a field has been set.
 
+### GetVendorID
+
+`func (o *ProductV4Patch) GetVendorID() string`
+
+GetVendorID returns the VendorID field if non-nil, zero value otherwise.
+
+### GetVendorIDOk
+
+`func (o *ProductV4Patch) GetVendorIDOk() (*string, bool)`
+
+GetVendorIDOk returns a tuple with the VendorID field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendorID
+
+`func (o *ProductV4Patch) SetVendorID(v string)`
+
+SetVendorID sets VendorID field to given value.
+
+### HasVendorID
+
+`func (o *ProductV4Patch) HasVendorID() bool`
+
+HasVendorID returns a boolean if a field has been set.
+
+### SetVendorIDNil
+
+`func (o *ProductV4Patch) SetVendorIDNil(b bool)`
+
+ SetVendorIDNil sets the value for VendorID to be an explicit nil
+
+### UnsetVendorID
+`func (o *ProductV4Patch) UnsetVendorID()`
+
+UnsetVendorID ensures that no value is present for VendorID, not even an explicit nil
 ### GetCategory
 
 `func (o *ProductV4Patch) GetCategory() string`

@@ -4,10 +4,84 @@ All URIs are relative to *https://www.customa.biz*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CampaigngroupChildrenV4**](CampaigngroupAPI.md#CampaigngroupChildrenV4) | **Get** /api/v4/campaigngroup/{project}/{id}/children | Retrieves the IDs of all descendants of a campaign group.
 [**CampaigngroupFieldsV4**](CampaigngroupAPI.md#CampaigngroupFieldsV4) | **Get** /api/v4/campaigngroup/{project}/fields | Returns a list of fields and allowed filters for campaign group search.
 [**CampaigngroupGetV4**](CampaigngroupAPI.md#CampaigngroupGetV4) | **Get** /api/v4/campaigngroup/{project}/{id} | Retrieves a campaign group by its ID.
 [**CampaigngroupSearchV4**](CampaigngroupAPI.md#CampaigngroupSearchV4) | **Post** /api/v4/campaigngroup/{project}/search | Searches for campaign groups by the given filters.
 
+
+
+## CampaigngroupChildrenV4
+
+> CampaignGroupChildrenV4 CampaigngroupChildrenV4(ctx, project, id).Execute()
+
+Retrieves the IDs of all descendants of a campaign group.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	customa "github.com/trust-in-dialog-Services-GmbH/customa-go/v4"
+)
+
+func main() {
+	project := "project_example" // string | 
+	id := "id_example" // string | 
+
+	configuration := customa.NewConfiguration()
+	apiClient := customa.NewAPIClient(configuration)
+	resp, r, err := apiClient.CampaigngroupAPI.CampaigngroupChildrenV4(context.Background(), project, id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CampaigngroupAPI.CampaigngroupChildrenV4``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CampaigngroupChildrenV4`: CampaignGroupChildrenV4
+	fmt.Fprintf(os.Stdout, "Response from `CampaigngroupAPI.CampaigngroupChildrenV4`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**project** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCampaigngroupChildrenV4Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**CampaignGroupChildrenV4**](CampaignGroupChildrenV4.md)
+
+### Authorization
+
+[apiV4BasicAuth](../README.md#apiV4BasicAuth), [apiV4Token](../README.md#apiV4Token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CampaigngroupFieldsV4
